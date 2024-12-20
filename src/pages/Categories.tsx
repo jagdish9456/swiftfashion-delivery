@@ -49,6 +49,36 @@ const products = [
     price: 129.99,
     image: "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=500",
   },
+  {
+    name: "Elegant Blazer",
+    price: 149.99,
+    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500",
+  },
+  {
+    name: "Formal Trousers",
+    price: 79.99,
+    image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500",
+  },
+  {
+    name: "Business Shirt",
+    price: 69.99,
+    image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=500",
+  },
+  {
+    name: "Silk Tie",
+    price: 39.99,
+    image: "https://images.unsplash.com/photo-1589756823695-278bc923f962?w=500",
+  },
+  {
+    name: "Wool Suit",
+    price: 299.99,
+    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500",
+  },
+  {
+    name: "Dress Shoes",
+    price: 159.99,
+    image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=500",
+  },
 ];
 
 export const Categories = () => {
@@ -57,8 +87,8 @@ export const Categories = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Back button and header */}
-      <div className="fixed top-0 left-0 right-0 bg-white z-10 px-4 py-3 flex items-center justify-between border-b">
+      {/* Header - reduced height */}
+      <div className="fixed top-0 left-0 right-0 bg-white z-10 px-4 py-2 flex items-center justify-between border-b">
         <div className="flex items-center">
           <Button
             variant="ghost"
@@ -68,21 +98,21 @@ export const Categories = () => {
           >
             ←
           </Button>
-          <h1 className="text-lg font-semibold">
+          <h1 className="text-base font-semibold">
             {id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
           </h1>
         </div>
         <Button
           variant="outline"
           size="icon"
-          className="hover:bg-primary-50 hover:text-primary-500"
+          className="h-8 w-8 hover:bg-primary-50 hover:text-primary-500"
         >
           <Filter className="h-4 w-4" />
         </Button>
       </div>
 
       {/* Sidebar */}
-      <aside className="w-16 bg-white shadow-sm fixed left-0 top-[53px] bottom-0">
+      <aside className="w-16 bg-white shadow-sm fixed left-0 top-[41px] bottom-0">
         <div className="p-2 overflow-y-auto max-h-full hide-scrollbar">
           <nav className="space-y-1">
             {categories.map((category) => (
@@ -98,11 +128,11 @@ export const Categories = () => {
         </div>
       </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 p-4 ml-16 mt-[53px]">
-        <div className="grid grid-cols-2 gap-3">
-          {products.map((product) => (
-            <ProductCard key={product.name} {...product} />
+      {/* Main Content - made scrollable */}
+      <main className="flex-1 p-4 ml-16 mt-[41px] overflow-y-auto">
+        <div className="grid grid-cols-2 gap-3 pb-16">
+          {products.map((product, index) => (
+            <ProductCard key={index} {...product} />
           ))}
         </div>
       </main>
