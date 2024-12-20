@@ -2,6 +2,8 @@ import { Header } from "@/components/layout/Header";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { CategorySection } from "@/components/categories/CategorySection";
 import { GridCategories } from "@/components/categories/GridCategories";
+import { OfferBanners } from "@/components/banners/OfferBanners";
+import { FullWidthBanner } from "@/components/banners/FullWidthBanner";
 import { Button } from "@/components/ui/button";
 
 const DealsSection = () => (
@@ -37,6 +39,9 @@ const Index = () => {
       <main className="pt-[116px]">
         <DealsSection />
         <GridCategories />
+        <FullWidthBanner />
+        <CategorySection />
+        <OfferBanners />
         <CategorySection />
       </main>
       <BottomNav />

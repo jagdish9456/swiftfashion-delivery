@@ -19,45 +19,56 @@ const categories: Category[] = [
     products: [
       {
         id: "1",
-        name: "Classic Suit",
+        name: "Classic Black Suit",
         price: 299.99,
-        image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
+        image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400",
       },
       {
         id: "2",
-        name: "Business Shirt",
+        name: "White Business Shirt",
         price: 79.99,
-        image: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b",
+        image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=400",
       },
       {
         id: "3",
-        name: "Formal Trousers",
-        price: 129.99,
-        image: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1",
+        name: "Navy Blue Blazer",
+        price: 199.99,
+        image: "https://images.unsplash.com/photo-1594938374182-f8830c46b5e7?w=400",
       },
-      // Add more products as needed
+      {
+        id: "4",
+        name: "Formal Trousers",
+        price: 89.99,
+        image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400",
+      },
     ],
   },
   {
     name: "Casual Wear",
     products: [
       {
-        id: "4",
+        id: "5",
         name: "Denim Jacket",
         price: 89.99,
-        image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
-      },
-      {
-        id: "5",
-        name: "T-Shirt",
-        price: 29.99,
-        image: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b",
+        image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400",
       },
       {
         id: "6",
-        name: "Jeans",
+        name: "Graphic T-Shirt",
+        price: 29.99,
+        image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400",
+      },
+      {
+        id: "7",
+        name: "Slim Fit Jeans",
         price: 69.99,
-        image: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1",
+        image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400",
+      },
+      {
+        id: "8",
+        name: "Casual Sneakers",
+        price: 59.99,
+        image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400",
       },
     ],
   },
@@ -65,22 +76,28 @@ const categories: Category[] = [
     name: "Ethnic Wear",
     products: [
       {
-        id: "7",
-        name: "Traditional Dress",
-        price: 199.99,
-        image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
+        id: "9",
+        name: "Traditional Kurta",
+        price: 89.99,
+        image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=400",
       },
       {
-        id: "8",
+        id: "10",
         name: "Silk Saree",
         price: 299.99,
-        image: "https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b",
+        image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400",
       },
       {
-        id: "9",
-        name: "Kurta Set",
-        price: 149.99,
-        image: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1",
+        id: "11",
+        name: "Embroidered Sherwani",
+        price: 399.99,
+        image: "https://images.unsplash.com/photo-1597983073493-88cd35cf93b0?w=400",
+      },
+      {
+        id: "12",
+        name: "Designer Lehenga",
+        price: 499.99,
+        image: "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=400",
       },
     ],
   },
@@ -89,7 +106,7 @@ const categories: Category[] = [
 export const CategorySection = () => {
   return (
     <section className="py-4 space-y-8">
-      {categories.map((category) => (
+      {categories.map((category, index) => (
         <div key={category.name} className="space-y-4">
           <div className="flex justify-between items-center px-4">
             <h2 className="text-lg font-semibold">{category.name}</h2>
