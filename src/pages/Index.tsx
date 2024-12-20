@@ -1,6 +1,7 @@
 import { Header } from "@/components/layout/Header";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { CategorySection } from "@/components/categories/CategorySection";
+import { GridCategories } from "@/components/categories/GridCategories";
 import { Button } from "@/components/ui/button";
 
 const DealsSection = () => (
@@ -35,6 +36,7 @@ const Index = () => {
       <Header />
       <main className="pt-[116px]">
         <DealsSection />
+        <GridCategories />
         <CategorySection />
       </main>
       <BottomNav />
