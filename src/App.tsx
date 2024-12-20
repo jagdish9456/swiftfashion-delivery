@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Login } from "@/pages/Login";
 import { Categories } from "@/pages/Categories";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import Index from "@/pages/Index";
 
 const queryClient = new QueryClient();
 
@@ -15,6 +16,14 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route
             path="/"
+            element={
+              <ProtectedRoute>
+                <Index />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/category/:id"
             element={
               <ProtectedRoute>
                 <Categories />

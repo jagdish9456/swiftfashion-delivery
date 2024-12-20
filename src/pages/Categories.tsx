@@ -1,6 +1,7 @@
 import { Filter } from "lucide-react";
 import { ProductCard } from "@/components/categories/ProductCard";
 import { Button } from "@/components/ui/button";
+import { useParams, useNavigate } from "react-router-dom";
 
 const categories = [
   "All",
@@ -51,11 +52,29 @@ const products = [
 ];
 
 export const Categories = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   return (
     <div className="flex min-h-screen bg-gray-50">
+      {/* Back button and header */}
+      <div className="fixed top-0 left-0 right-0 bg-white z-10 px-4 py-3 flex items-center border-b">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="mr-2"
+          onClick={() => navigate('/')}
+        >
+          ←
+        </Button>
+        <h1 className="text-lg font-semibold">
+          {id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+        </h1>
+      </div>
+
       {/* Sidebar */}
-      <aside className="w-48 bg-white shadow-md">
-        <div className="p-4 overflow-y-auto max-h-screen hide-scrollbar">
+      <aside className="w-48 bg-white shadow-md fixed left-0 top-[53px] bottom-0">
+        <div className="p-4 overflow-y-auto max-h-full hide-scrollbar">
           <h2 className="font-semibold text-lg mb-4 text-primary-500">Categories</h2>
           <nav className="space-y-2">
             {categories.map((category) => (
@@ -71,9 +90,9 @@ export const Categories = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-6 ml-48 mt-[53px]">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">All Products</h1>
+          <div className="flex-1" />
           <Button
             variant="outline"
             size="icon"
