@@ -10,7 +10,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -37,7 +37,7 @@ const Login = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     try {
-      if (values.mobile === "9999000099") {
+      if (values.mobile === "7289993664") {
         localStorage.setItem("isAuthenticated", "true");
         navigate("/");
         toast({
@@ -62,13 +62,13 @@ const Login = () => {
         <div className="bg-transparent py-8 px-4 sm:rounded-lg sm:px-10">
           <div className="sm:mx-auto sm:w-full sm:max-w-md mb-8">
             <h1 className="text-4xl font-bold text-pink-500 text-center mb-2">
-              zepto
+              quickyy
             </h1>
             <h2 className="text-3xl font-bold text-white text-center mb-1">
-              Groceries
+              Clothes
             </h2>
             <h3 className="text-2xl font-bold text-white text-center mb-8">
-              delivered in 10 minutes
+              delivered in 90 minutes
             </h3>
           </div>
 
