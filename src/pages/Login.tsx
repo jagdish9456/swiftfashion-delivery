@@ -22,7 +22,7 @@ const formSchema = z.object({
     .regex(/^\d+$/, "Must be only digits"),
 });
 
-const Login = () => {
+export const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -124,5 +124,3 @@ const Login = () => {
     </div>
   );
 };
-
-export default Login;
