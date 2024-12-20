@@ -1,6 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { BottomNav } from "@/components/layout/BottomNav";
-import { StoreSection } from "@/components/stores/StoreSection";
+import { CategorySection } from "@/components/categories/CategorySection";
 import { Button } from "@/components/ui/button";
 
 const DealsSection = () => (
@@ -35,10 +35,7 @@ const Index = () => {
       <Header />
       <main className="pt-[116px]">
         <DealsSection />
-        <StoreSection />
-        <div className="px-4 py-2 text-sm text-gray-500">
-          783 stores around you
-        </div>
+        <CategorySection />
       </main>
       <BottomNav />
     </div>
