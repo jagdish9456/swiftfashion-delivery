@@ -1,19 +1,23 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/contexts/CartContext";
 
 type ProductCardProps = {
+  id: string;
   name: string;
   price: number;
   image: string;
 };
 
-export const ProductCard = ({ name, price, image }: ProductCardProps) => {
+export const ProductCard = ({ id, name, price, image }: ProductCardProps) => {
   const { toast } = useToast();
+  const { addItem } = useCart();
   const [isAdding, setIsAdding] = useState(false);
 
   const handleAddToCart = () => {
     setIsAdding(true);
+    addItem({ id, name, price, image });
     toast({
       title: "Added to cart",
       description: `${name} has been added to your cart`,
@@ -32,18 +36,10 @@ export const ProductCard = ({ name, price, image }: ProductCardProps) => {
           >
             Undo
           </Button>
-          <Button 
-            size="sm"
-            onClick={() => {
-              setIsAdding(false);
-              // Navigate to cart page or open cart drawer
-            }}
-          >
-            View Cart
-          </Button>
         </div>
       ),
     });
+    setTimeout(() => setIsAdding(false), 1000);
   };
 
   return (
