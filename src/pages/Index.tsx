@@ -32,7 +32,7 @@ const DealsSection = () => (
   </div>
 );
 
-const Index = () => {
+export const Index = () => {
   return (
     <div className="min-h-screen bg-gray-50 pb-16">
       <Header />

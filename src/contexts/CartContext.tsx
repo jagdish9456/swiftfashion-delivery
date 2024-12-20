@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from "react";
+import { CartPopup } from "@/components/cart/CartPopup";
 
 type CartItem = {
   id: string;
