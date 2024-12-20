@@ -4,18 +4,18 @@ import { Button } from "@/components/ui/button";
 import { useParams, useNavigate } from "react-router-dom";
 
 const categories = [
-  "All",
-  "T-Shirts",
-  "Shirts",
-  "Pants",
-  "Dresses",
-  "Skirts",
-  "Jackets",
-  "Sweaters",
-  "Activewear",
-  "Accessories",
-  "Shoes",
-  "Bags",
+  { name: "All", icon: "🏷️" },
+  { name: "T-Shirts", icon: "👕" },
+  { name: "Shirts", icon: "👔" },
+  { name: "Pants", icon: "👖" },
+  { name: "Dresses", icon: "👗" },
+  { name: "Skirts", icon: "👘" },
+  { name: "Jackets", icon: "🧥" },
+  { name: "Sweaters", icon: "🧶" },
+  { name: "Activewear", icon: "🎽" },
+  { name: "Accessories", icon: "👜" },
+  { name: "Shoes", icon: "👞" },
+  { name: "Bags", icon: "🎒" },
 ];
 
 const products = [
@@ -58,31 +58,40 @@ export const Categories = () => {
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Back button and header */}
-      <div className="fixed top-0 left-0 right-0 bg-white z-10 px-4 py-3 flex items-center border-b">
+      <div className="fixed top-0 left-0 right-0 bg-white z-10 px-4 py-3 flex items-center justify-between border-b">
+        <div className="flex items-center">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="mr-2"
+            onClick={() => navigate('/')}
+          >
+            ←
+          </Button>
+          <h1 className="text-lg font-semibold">
+            {id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+          </h1>
+        </div>
         <Button
-          variant="ghost"
-          size="sm"
-          className="mr-2"
-          onClick={() => navigate('/')}
+          variant="outline"
+          size="icon"
+          className="hover:bg-primary-50 hover:text-primary-500"
         >
-          ←
+          <Filter className="h-4 w-4" />
         </Button>
-        <h1 className="text-lg font-semibold">
-          {id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-        </h1>
       </div>
 
       {/* Sidebar */}
-      <aside className="w-48 bg-white shadow-md fixed left-0 top-[53px] bottom-0">
-        <div className="p-4 overflow-y-auto max-h-full hide-scrollbar">
-          <h2 className="font-semibold text-lg mb-4 text-primary-500">Categories</h2>
-          <nav className="space-y-2">
+      <aside className="w-16 bg-white shadow-sm fixed left-0 top-[53px] bottom-0">
+        <div className="p-2 overflow-y-auto max-h-full hide-scrollbar">
+          <nav className="space-y-1">
             {categories.map((category) => (
               <button
-                key={category}
-                className="w-full text-left px-3 py-2 rounded-lg text-sm hover:bg-primary-50 hover:text-primary-500 transition-colors"
+                key={category.name}
+                className="w-full flex flex-col items-center p-2 rounded-lg text-sm hover:bg-primary-50 hover:text-primary-500 transition-colors"
               >
-                {category}
+                <span className="text-lg mb-1">{category.icon}</span>
+                <span className="text-[10px]">{category.name}</span>
               </button>
             ))}
           </nav>
@@ -90,19 +99,8 @@ export const Categories = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 ml-48 mt-[53px]">
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex-1" />
-          <Button
-            variant="outline"
-            size="icon"
-            className="hover:bg-primary-50 hover:text-primary-500"
-          >
-            <Filter className="h-4 w-4" />
-          </Button>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <main className="flex-1 p-4 ml-16 mt-[53px]">
+        <div className="grid grid-cols-2 gap-3">
           {products.map((product) => (
             <ProductCard key={product.name} {...product} />
           ))}

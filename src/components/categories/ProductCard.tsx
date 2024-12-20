@@ -8,7 +8,7 @@ type ProductCardProps = {
 
 export const ProductCard = ({ name, price, image }: ProductCardProps) => {
   return (
-    <div className="rounded-lg overflow-hidden bg-white shadow-md hover:shadow-lg transition-shadow">
+    <div className="rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
       <div className="aspect-square relative overflow-hidden">
         <img
           src={image}
@@ -16,18 +16,18 @@ export const ProductCard = ({ name, price, image }: ProductCardProps) => {
           className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
         />
       </div>
-      <div className="p-3 space-y-2">
-        <h3 className="font-medium text-sm truncate">{name}</h3>
+      <div className="p-2 space-y-1">
+        <h3 className="font-medium text-xs truncate">{name}</h3>
         <div className="flex items-center justify-between">
-          <span className="text-primary-500 font-semibold">
+          <span className="text-primary-500 font-semibold text-sm">
             ${price.toFixed(2)}
           </span>
           <Button
             variant="outline"
             size="sm"
-            className="text-xs hover:bg-primary-500 hover:text-white"
+            className="h-7 text-xs hover:bg-primary-500 hover:text-white"
           >
-            Add to Cart
+            Add
           </Button>
         </div>
       </div>

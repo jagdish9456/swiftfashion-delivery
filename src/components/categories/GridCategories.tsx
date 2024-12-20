@@ -68,13 +68,13 @@ export const GridCategories = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="px-4 py-6">
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
+    <div className="px-3 py-4">
+      <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2">
         {categories.map((category) => (
           <Button
             key={category.name}
             variant="outline"
-            className="h-auto p-3 flex flex-col items-center gap-2 hover:bg-primary-50 hover:border-primary-200"
+            className="h-auto p-2 flex flex-col items-center gap-1 hover:bg-primary-50 hover:border-primary-200"
             onClick={() => navigate(`/category/${category.id}`)}
           >
             <div className="w-full aspect-square rounded-lg overflow-hidden bg-gray-100">
@@ -84,7 +84,7 @@ export const GridCategories = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="text-xs font-medium text-center line-clamp-2">
+            <span className="text-[10px] font-medium text-center line-clamp-2">
               {category.name}
             </span>
           </Button>
