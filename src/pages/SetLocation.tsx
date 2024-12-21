@@ -2,33 +2,28 @@ import { ArrowLeft, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import { AddressListDialog } from "@/components/address/AddressListDialog";
-
-const mapContainerStyle = {
-  width: "100%",
-  height: "100%",
-};
-
-const defaultCenter = {
-  lat: 12.9716,  // Default to Bangalore coordinates
-  lng: 77.5946,
-};
+import { useLoadScript } from "@react-google-maps/api";
+import { SavedAddressList } from "@/components/address/SavedAddressList";
+import { LocationMap } from "@/components/address/LocationMap";
 
 interface Address {
   address: string;
   area: string;
 }
 
+const defaultCenter = {
+  lat: 12.9716,  // Default to Bangalore coordinates
+  lng: 77.5946,
+};
+
 export const SetLocation = () => {
   const navigate = useNavigate();
+  const [showAddressList, setShowAddressList] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState({
     address: "Akshya Nagar",
     area: "Raurthy Nagar, Bangalore-56001",
     coordinates: defaultCenter,
   });
-
-  const [showAddressList, setShowAddressList] = useState(false);
   const [savedAddresses, setSavedAddresses] = useState<Address[]>([]);
 
   const { isLoaded, loadError } = useLoadScript({
@@ -36,12 +31,10 @@ export const SetLocation = () => {
   });
 
   useEffect(() => {
-    // Load saved addresses from localStorage
     const addresses = localStorage.getItem("savedAddresses");
     if (addresses) {
       setSavedAddresses(JSON.parse(addresses));
     } else {
-      // Set some default addresses if none exist
       const defaultAddresses = [
         {
           address: "Akshya Nagar",
@@ -85,7 +78,6 @@ export const SetLocation = () => {
   };
 
   const handleConfirmLocation = () => {
-    // Save the new address to the list if it doesn't exist
     const newAddress = {
       address: selectedLocation.address,
       area: selectedLocation.area,
@@ -101,10 +93,7 @@ export const SetLocation = () => {
       setSavedAddresses(updatedAddresses);
     }
 
-    localStorage.setItem("userLocation", JSON.stringify({
-      address: selectedLocation.address,
-      area: selectedLocation.area,
-    }));
+    localStorage.setItem("userLocation", JSON.stringify(newAddress));
     navigate(-1);
   };
 
@@ -137,64 +126,60 @@ export const SetLocation = () => {
           >
             <ArrowLeft className="h-4 w-4" />
           </Button>
-          <h1 className="text-base font-medium">Confirm delivery Location</h1>
+          <h1 className="text-base font-medium">
+            {showAddressList ? "Select Delivery Address" : "Confirm delivery Location"}
+          </h1>
         </div>
       </header>
 
       <div className="h-[calc(100vh-56px)] mt-[56px]">
-        <div className="h-[70%] bg-gray-100 relative">
-          <GoogleMap
-            mapContainerStyle={mapContainerStyle}
-            zoom={15}
-            center={selectedLocation.coordinates}
-            onClick={handleMapClick}
-            options={{
-              zoomControl: true,
-              streetViewControl: false,
-              mapTypeControl: false,
-              fullscreenControl: false,
-            }}
-          >
-            <Marker position={selectedLocation.coordinates} />
-          </GoogleMap>
-        </div>
-
-        <div className="fixed bottom-0 left-0 right-0 bg-white rounded-t-xl shadow-lg animate-slideUp">
-          <div className="p-4 space-y-4">
-            <div className="flex items-start gap-3">
-              <MapPin className="h-5 w-5 text-primary mt-1" />
-              <div className="flex-1">
-                <h2 className="font-medium">{selectedLocation.address}</h2>
-                <p className="text-sm text-gray-500">
-                  {selectedLocation.area}
-                </p>
-              </div>
-              <Button 
-                variant="outline" 
-                className="h-8 text-primary"
-                onClick={() => setShowAddressList(true)}
-              >
-                CHANGE
-              </Button>
+        {showAddressList ? (
+          <div className="p-4">
+            <SavedAddressList
+              addresses={savedAddresses}
+              onSelectAddress={handleSelectSavedAddress}
+              onAddNewClick={() => setShowAddressList(false)}
+            />
+          </div>
+        ) : (
+          <>
+            <div className="h-[70%] bg-gray-100 relative">
+              <LocationMap
+                center={selectedLocation.coordinates}
+                onClick={handleMapClick}
+              />
             </div>
 
-            <Button
-              className="w-full"
-              onClick={handleConfirmLocation}
-            >
-              Confirm Location
-            </Button>
-          </div>
-        </div>
-      </div>
+            <div className="fixed bottom-0 left-0 right-0 bg-white rounded-t-xl shadow-lg animate-slideUp">
+              <div className="p-4 space-y-4">
+                <div className="flex items-start gap-3">
+                  <MapPin className="h-5 w-5 text-primary mt-1" />
+                  <div className="flex-1">
+                    <h2 className="font-medium">{selectedLocation.address}</h2>
+                    <p className="text-sm text-gray-500">
+                      {selectedLocation.area}
+                    </p>
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    className="h-8 text-primary"
+                    onClick={() => setShowAddressList(true)}
+                  >
+                    CHANGE
+                  </Button>
+                </div>
 
-      <AddressListDialog
-        open={showAddressList}
-        onOpenChange={setShowAddressList}
-        addresses={savedAddresses}
-        onSelectAddress={handleSelectSavedAddress}
-        onAddNewClick={() => setShowAddressList(false)}
-      />
+                <Button
+                  className="w-full"
+                  onClick={handleConfirmLocation}
+                >
+                  Confirm Location
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };
