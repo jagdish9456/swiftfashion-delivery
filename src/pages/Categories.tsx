@@ -156,7 +156,7 @@ export const Categories = () => {
         </main>
 
         {/* Right Banner Section */}
-        <div className="hidden lg:block w-64 p-4 bg-[#F1F0FB] border-l">
+        <aside className="hidden lg:block w-64 p-4 bg-[#F1F0FB] border-l">
           {/* Top Banner */}
           <div className="mb-8">
             <div className="rounded-lg bg-gradient-to-r from-primary-100 to-primary-50 p-4 shadow-sm">
@@ -181,7 +181,7 @@ export const Categories = () => {
               <p className="text-xs text-gray-500">Valid until Dec 31, 2024</p>
             </div>
           </div>
-        </div>
+        </aside>
       </div>
     </div>
   );
