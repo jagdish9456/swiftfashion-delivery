@@ -1,20 +1,18 @@
 import { useState } from "react";
-import { BottomNav } from "@/components/layout/BottomNav";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Send } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from "react-router-dom";
 import { generateProductRecommendations } from "@/services/openai";
-import { toast } from "sonner";
+import { ProductList } from "@/components/categories/ProductList";
+import { toast } from "@/hooks/use-toast";
 
-interface Product {
+type Product = {
   id: string;
   name: string;
   price: number;
-  category: string;
-  colors: string[];
-  description: string;
-}
+  image: string;
+};
 
 export const AIChat = () => {
   const navigate = useNavigate();
@@ -30,8 +28,18 @@ export const AIChat = () => {
     try {
       const recommendations = await generateProductRecommendations(message);
       setProducts(recommendations);
+      if (recommendations.length === 0) {
+        toast({
+          title: "No products found",
+          description: "Try different search terms or be more specific",
+        });
+      }
     } catch (error) {
-      toast.error("Failed to get recommendations. Please try again.");
+      toast({
+        title: "Error",
+        description: "Failed to get recommendations. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -47,7 +55,7 @@ export const AIChat = () => {
       </div>
       
       <main className="p-4">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto space-y-6">
           <form onSubmit={handleSubmit} className="relative">
             <Textarea
               value={message}
@@ -65,25 +73,13 @@ export const AIChat = () => {
             </Button>
           </form>
 
-          <div className="mt-6 grid grid-cols-2 gap-4">
-            {products.map((product) => (
-              <div 
-                key={product.id} 
-                className="bg-white p-4 rounded-lg shadow-sm"
-              >
-                <h3 className="font-medium text-sm line-clamp-2">{product.name}</h3>
-                <p className="text-primary-600 font-medium mt-1">
-                  ${product.price}
-                </p>
-                <p className="text-gray-600 text-sm mt-1 line-clamp-2">
-                  {product.description}
-                </p>
-              </div>
-            ))}
-          </div>
+          {products.length > 0 && (
+            <div className="mt-6">
+              <ProductList products={products} isLoading={isLoading} />
+            </div>
+          )}
         </div>
       </main>
-      <BottomNav />
     </div>
   );
 };

@@ -11,7 +11,8 @@
       "sizes": ["XS", "S", "M", "L", "XL"],
       "season": ["Summer", "Spring"],
       "wearType": "Casual Wear",
-      "description": "Breathable cotton t-shirt perfect for everyday wear"
+      "description": "Breathable cotton t-shirt perfect for everyday wear",
+      "image": "/placeholder.svg"
     },
     {
       "id": "2",
@@ -24,7 +25,8 @@
       "sizes": ["28", "30", "32", "34", "36"],
       "season": ["All Season"],
       "wearType": "Casual Wear",
-      "description": "Classic dark wash slim fit jeans with stretch comfort"
+      "description": "Classic dark wash slim fit jeans with stretch comfort",
+      "image": "/placeholder.svg"
     },
     {
       "id": "3",
@@ -37,7 +39,8 @@
       "sizes": ["XS", "S", "M", "L"],
       "season": ["Summer"],
       "wearType": "Casual Wear",
-      "description": "Light and breezy floral print dress perfect for summer days"
+      "description": "Light and breezy floral print dress perfect for summer days",
+      "image": "/placeholder.svg"
     },
     {
       "id": "4",
@@ -50,7 +53,8 @@
       "sizes": ["S", "M", "L", "XL"],
       "season": ["Winter"],
       "wearType": "Formal Wear",
-      "description": "Elegant wool blend coat for cold winter days"
+      "description": "Elegant wool blend coat for cold winter days",
+      "image": "/placeholder.svg"
     },
     {
       "id": "5",
@@ -63,7 +67,8 @@
       "sizes": ["S", "M", "L", "XL"],
       "season": ["All Season"],
       "wearType": "Sports Wear",
-      "description": "Moisture-wicking athletic shorts for high-performance activities"
+      "description": "Moisture-wicking athletic shorts for high-performance activities",
+      "image": "/placeholder.svg"
     }
   ]
 }
