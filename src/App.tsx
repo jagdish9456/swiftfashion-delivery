@@ -11,6 +11,8 @@ import { Profile } from "@/pages/Profile";
 import { Orders } from "@/pages/Orders";
 import { Cart } from "@/pages/Cart";
 import { NearYou } from "@/pages/NearYou";
+import { Notifications } from "@/pages/Notifications";
+import { PromoPopup } from "@/components/popups/PromoPopup";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +31,9 @@ function App() {
             <Route path="/orders" element={<Orders />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/near-you" element={<NearYou />} />
+            <Route path="/notifications" element={<Notifications />} />
           </Routes>
+          <PromoPopup />
           <Toaster />
         </Router>
       </CartProvider>

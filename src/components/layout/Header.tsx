@@ -2,9 +2,8 @@ import { Bell, MapPin, Mic, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 // Mock data for search suggestions
 const searchSuggestions = {
@@ -70,7 +69,12 @@ export const Header = () => {
             </div>
           </Button>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="h-8 w-8">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-8 w-8"
+              onClick={() => navigate("/notifications")}
+            >
               <Bell className="h-4 w-4" />
             </Button>
             <Button 
