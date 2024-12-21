@@ -6,7 +6,7 @@ import { OfferBanners } from "@/components/banners/OfferBanners";
 import { FullWidthBanner } from "@/components/banners/FullWidthBanner";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/categories/ProductCard";
-import { StoreSection } from "@/components/stores/StoreSection";
+import { TopChoices } from "@/components/sections/TopChoices";
 import { useNavigate } from "react-router-dom";
 
 const DealsSection = () => (
@@ -58,63 +58,63 @@ const TopProducts = () => {
   const products = [
     {
       id: "tp1",
-      name: "Premium Watch",
-      price: 199.99,
-      image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=500",
+      name: "Elegant Evening Dress",
+      price: 299.99,
+      image: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=500",
     },
     {
       id: "tp2",
-      name: "Designer Sunglasses",
-      price: 129.99,
-      image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500",
+      name: "Designer Blazer",
+      price: 189.99,
+      image: "https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=500",
     },
     {
       id: "tp3",
-      name: "Leather Wallet",
-      price: 79.99,
-      image: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=500",
+      name: "Premium Denim Jeans",
+      price: 129.99,
+      image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500",
     },
     {
       id: "tp4",
-      name: "Wireless Earbuds",
-      price: 149.99,
-      image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500",
+      name: "Cashmere Sweater",
+      price: 159.99,
+      image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500",
     },
     {
       id: "tp5",
-      name: "Smart Band",
-      price: 89.99,
-      image: "https://images.unsplash.com/photo-1557438159-51eec7a6c9e8?w=500",
+      name: "Silk Blouse",
+      price: 119.99,
+      image: "https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=500",
     },
     {
       id: "tp6",
-      name: "Backpack",
-      price: 69.99,
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500",
+      name: "Leather Jacket",
+      price: 249.99,
+      image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500",
     },
     {
       id: "tp7",
-      name: "Running Shoes",
-      price: 119.99,
-      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500",
+      name: "Formal Trousers",
+      price: 99.99,
+      image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500",
     },
     {
       id: "tp8",
-      name: "Wireless Charger",
-      price: 39.99,
-      image: "https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=500",
+      name: "Summer Dress",
+      price: 79.99,
+      image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=500",
     },
     {
       id: "tp9",
-      name: "Laptop Sleeve",
-      price: 29.99,
-      image: "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=500",
+      name: "Winter Coat",
+      price: 329.99,
+      image: "https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?w=500",
     },
     {
       id: "tp10",
-      name: "Water Bottle",
-      price: 24.99,
-      image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=500",
+      name: "Designer Scarf",
+      price: 59.99,
+      image: "https://images.unsplash.com/photo-1601924921557-45e6dea0a157?w=500",
     },
   ];
 
@@ -193,15 +193,15 @@ export const Index = () => {
     <div className="min-h-screen bg-gray-50 pb-16">
       <Header />
       <main className="pt-[116px]">
-        <ChristmasBanner />
         <DealsSection />
+        <ChristmasBanner />
         <GridCategories />
         <CategoryRowSection />
         <FullWidthBanner />
         <CategorySection />
         <OfferBanners />
         <TopProducts />
-        <StoreSection />
+        <TopChoices />
       </main>
       <BottomNav />
     </div>

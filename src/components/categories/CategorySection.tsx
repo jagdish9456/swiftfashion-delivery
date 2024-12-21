@@ -79,10 +79,10 @@ export const CategorySection = () => {
       </div>
       <div
         ref={scrollContainerRef}
-        className="flex gap-3 overflow-x-auto hide-scrollbar snap-x snap-mandatory"
+        className="flex gap-6 overflow-x-auto hide-scrollbar snap-x snap-mandatory"
       >
         {stores.map((store) => (
-          <div key={store.name} className="snap-start w-[30%] flex-none min-w-[120px]">
+          <div key={store.name} className="snap-start w-[30%] flex-none min-w-[140px]">
             <StoreCard {...store} />
           </div>
         ))}
