@@ -194,7 +194,6 @@ export const Categories = () => {
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({});
   const observer = useRef<IntersectionObserver | null>(null);
   
-  // Initial load
   useEffect(() => {
     setDisplayedProducts(allProducts.slice(0, 16));
     setHasMore(allProducts.length > 16);
@@ -239,105 +238,103 @@ export const Categories = () => {
   const secondHalfProducts = displayedProducts.slice(midPoint);
 
   return (
-    <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-gray-50">
-        <CategorySidebar />
-        <div className="flex-1">
-          {/* Header */}
-          <div className="fixed top-0 left-0 right-0 bg-white z-10 px-4 py-2 flex items-center justify-between border-b">
-            <div className="flex items-center">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="mr-2"
-                onClick={() => navigate('/')}
-              >
-                ←
-              </Button>
-              <h1 className="text-base font-semibold">
-                {id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-              </h1>
-            </div>
+    <div className="flex min-h-screen w-full bg-gray-50">
+      <CategorySidebar />
+      <div className="flex-1">
+        {/* Header */}
+        <div className="fixed top-0 left-0 right-0 bg-white z-10 px-4 py-2 flex items-center justify-between border-b md:left-64">
+          <div className="flex items-center">
             <Button
-              variant="outline"
-              size="icon"
-              className="h-8 w-8 hover:bg-primary-50 hover:text-primary-500"
-              onClick={() => setIsFilterOpen(true)}
+              variant="ghost"
+              size="sm"
+              className="mr-2"
+              onClick={() => navigate('/')}
             >
-              <Filter className="h-4 w-4" />
+              ←
             </Button>
+            <h1 className="text-base font-semibold">
+              {id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+            </h1>
+          </div>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8 hover:bg-primary-50 hover:text-primary-500"
+            onClick={() => setIsFilterOpen(true)}
+          >
+            <Filter className="h-4 w-4" />
+          </Button>
+        </div>
+
+        {/* Filter Sheet */}
+        <FilterSheet
+          open={isFilterOpen}
+          onOpenChange={setIsFilterOpen}
+          selectedFilters={selectedFilters}
+          onApplyFilters={handleApplyFilters}
+        />
+
+        {/* Main Content */}
+        <div className="flex-1 mt-[41px] md:ml-64">
+          {/* New Arrivals Banner */}
+          <div className="p-2 bg-[#F2FCE2]">
+            <div className="rounded-lg p-3">
+              <h3 className="text-base font-semibold text-primary-800 mb-1">New Arrivals</h3>
+              <p className="text-sm text-primary-600 mb-2">
+                Check out our latest collection in {id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+              </p>
+              <Button 
+                variant="secondary" 
+                className="w-full sm:w-auto bg-white hover:bg-primary-50"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              >
+                Explore Now
+              </Button>
+            </div>
           </div>
 
-          {/* Filter Sheet */}
-          <FilterSheet
-            open={isFilterOpen}
-            onOpenChange={setIsFilterOpen}
-            selectedFilters={selectedFilters}
-            onApplyFilters={handleApplyFilters}
-          />
+          {/* Products Grid */}
+          <main className="p-4">
+            {/* First half of products */}
+            <div className="grid grid-cols-2 gap-3">
+              {firstHalfProducts.map((product) => (
+                <ProductCard key={product.id} {...product} />
+              ))}
+            </div>
 
-          {/* Main Content */}
-          <div className="flex-1 mt-[41px]">
-            {/* New Arrivals Banner */}
-            <div className="p-2 bg-[#F2FCE2]">
-              <div className="rounded-lg p-3">
-                <h3 className="text-base font-semibold text-primary-800 mb-1">New Arrivals</h3>
-                <p className="text-sm text-primary-600 mb-2">
-                  Check out our latest collection in {id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                </p>
-                <Button 
-                  variant="secondary" 
-                  className="w-full sm:w-auto bg-white hover:bg-primary-50"
-                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                >
-                  Explore Now
-                </Button>
+            {/* Special Offer Banner in the middle */}
+            <div className="my-6 p-3 bg-white rounded-lg shadow-sm">
+              <h3 className="text-base font-semibold mb-2">Special Offer</h3>
+              <div className="p-3 bg-primary-50 rounded-lg">
+                <p className="text-sm text-gray-600 mb-1">Get 20% off on formal wear</p>
+                <p className="text-xl font-bold text-primary-500 mb-2">FORMAL20</p>
+                <p className="text-xs text-gray-500">Valid until Dec 31, 2024</p>
               </div>
             </div>
 
-            {/* Products Grid */}
-            <main className="p-4">
-              {/* First half of products */}
-              <div className="grid grid-cols-2 gap-3">
-                {firstHalfProducts.map((product) => (
-                  <ProductCard key={product.id} {...product} />
+            {/* Second half of products */}
+            <div className="grid grid-cols-2 gap-3">
+              {secondHalfProducts.map((product, index) => (
+                <div
+                  ref={index === secondHalfProducts.length - 1 ? lastProductRef : null}
+                  key={product.id}
+                >
+                  <ProductCard {...product} />
+                </div>
+              ))}
+            </div>
+
+            {/* Loading skeletons */}
+            {isLoading && (
+              <div className="grid grid-cols-2 gap-3 mt-3">
+                {[1, 2, 3, 4].map((n) => (
+                  <ProductSkeleton key={n} />
                 ))}
               </div>
-
-              {/* Special Offer Banner in the middle */}
-              <div className="my-6 p-3 bg-white rounded-lg shadow-sm">
-                <h3 className="text-base font-semibold mb-2">Special Offer</h3>
-                <div className="p-3 bg-primary-50 rounded-lg">
-                  <p className="text-sm text-gray-600 mb-1">Get 20% off on formal wear</p>
-                  <p className="text-xl font-bold text-primary-500 mb-2">FORMAL20</p>
-                  <p className="text-xs text-gray-500">Valid until Dec 31, 2024</p>
-                </div>
-              </div>
-
-              {/* Second half of products */}
-              <div className="grid grid-cols-2 gap-3">
-                {secondHalfProducts.map((product, index) => (
-                  <div
-                    ref={index === secondHalfProducts.length - 1 ? lastProductRef : null}
-                    key={product.id}
-                  >
-                    <ProductCard {...product} />
-                  </div>
-                ))}
-              </div>
-
-              {/* Loading skeletons */}
-              {isLoading && (
-                <div className="grid grid-cols-2 gap-3 mt-3">
-                  {[1, 2, 3, 4].map((n) => (
-                    <ProductSkeleton key={n} />
-                  ))}
-                </div>
-              )}
-            </main>
-          </div>
+            )}
+          </main>
         </div>
       </div>
-    </SidebarProvider>
+    </div>
   );
 };
