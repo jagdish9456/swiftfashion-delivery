@@ -26,6 +26,46 @@ const menCategories = [
     name: "Sportswear",
     image: "https://images.unsplash.com/photo-1483721310020-03333e577078?w=200",
   },
+  {
+    id: "mens-winter",
+    name: "Winter Collection",
+    image: "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=200",
+  },
+  {
+    id: "mens-summer",
+    name: "Summer Collection",
+    image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=200",
+  },
+  {
+    id: "mens-accessories",
+    name: "Accessories",
+    image: "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=200",
+  },
+  {
+    id: "mens-footwear",
+    name: "Footwear",
+    image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=200",
+  },
+  {
+    id: "mens-designer",
+    name: "Designer Wear",
+    image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=200",
+  },
+  {
+    id: "mens-traditional",
+    name: "Traditional Wear",
+    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=200",
+  },
+  {
+    id: "mens-party",
+    name: "Party Wear",
+    image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=200",
+  },
+  {
+    id: "mens-business",
+    name: "Business Attire",
+    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=200",
+  },
 ];
 
 const womenCategories = [
@@ -48,6 +88,46 @@ const womenCategories = [
     id: "womens-party-wear",
     name: "Party Wear",
     image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=200",
+  },
+  {
+    id: "womens-winter",
+    name: "Winter Collection",
+    image: "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=200",
+  },
+  {
+    id: "womens-summer",
+    name: "Summer Collection",
+    image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=200",
+  },
+  {
+    id: "womens-accessories",
+    name: "Accessories",
+    image: "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=200",
+  },
+  {
+    id: "womens-footwear",
+    name: "Footwear",
+    image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=200",
+  },
+  {
+    id: "womens-designer",
+    name: "Designer Wear",
+    image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=200",
+  },
+  {
+    id: "womens-traditional",
+    name: "Traditional Wear",
+    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=200",
+  },
+  {
+    id: "womens-bridal",
+    name: "Bridal Collection",
+    image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=200",
+  },
+  {
+    id: "womens-western",
+    name: "Western Wear",
+    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=200",
   },
 ];
 
@@ -75,12 +155,12 @@ export const GenderCategories = () => {
           </TabsList>
 
           <TabsContent value="men" className="mt-0">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-4 gap-2">
               {menCategories.map((category) => (
                 <Button
                   key={category.id}
                   variant="outline"
-                  className="h-auto p-2 flex flex-col items-center gap-2 hover:bg-primary-50 hover:border-primary-200"
+                  className="h-auto p-2 flex flex-col items-center gap-1 hover:bg-primary-50 hover:border-primary-200"
                   onClick={() => navigate(`/category/${category.id}`)}
                 >
                   <div className="w-full aspect-square rounded-lg overflow-hidden bg-gray-100">
@@ -90,7 +170,7 @@ export const GenderCategories = () => {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <span className="text-sm font-medium text-center">
+                  <span className="text-[10px] font-medium text-center line-clamp-2">
                     {category.name}
                   </span>
                 </Button>
@@ -99,12 +179,12 @@ export const GenderCategories = () => {
           </TabsContent>
 
           <TabsContent value="women" className="mt-0">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-4 gap-2">
               {womenCategories.map((category) => (
                 <Button
                   key={category.id}
                   variant="outline"
-                  className="h-auto p-2 flex flex-col items-center gap-2 hover:bg-primary-50 hover:border-primary-200"
+                  className="h-auto p-2 flex flex-col items-center gap-1 hover:bg-primary-50 hover:border-primary-200"
                   onClick={() => navigate(`/category/${category.id}`)}
                 >
                   <div className="w-full aspect-square rounded-lg overflow-hidden bg-gray-100">
@@ -114,7 +194,7 @@ export const GenderCategories = () => {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <span className="text-sm font-medium text-center">
+                  <span className="text-[10px] font-medium text-center line-clamp-2">
                     {category.name}
                   </span>
                 </Button>
