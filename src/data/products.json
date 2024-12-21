@@ -25,7 +25,45 @@
       "season": ["All Season"],
       "wearType": "Casual Wear",
       "description": "Classic dark wash slim fit jeans with stretch comfort"
+    },
+    {
+      "id": "3",
+      "name": "Floral Summer Dress",
+      "price": 89.99,
+      "category": "Dresses",
+      "colors": ["Multicolor"],
+      "type": ["Casual", "Floral", "Summer"],
+      "material": "100% Rayon",
+      "sizes": ["XS", "S", "M", "L"],
+      "season": ["Summer"],
+      "wearType": "Casual Wear",
+      "description": "Light and breezy floral print dress perfect for summer days"
+    },
+    {
+      "id": "4",
+      "name": "Wool Blend Winter Coat",
+      "price": 199.99,
+      "category": "Outerwear",
+      "colors": ["Black", "Grey"],
+      "type": ["Formal", "Winter", "Coat"],
+      "material": "80% Wool, 20% Polyester",
+      "sizes": ["S", "M", "L", "XL"],
+      "season": ["Winter"],
+      "wearType": "Formal Wear",
+      "description": "Elegant wool blend coat for cold winter days"
+    },
+    {
+      "id": "5",
+      "name": "Athletic Performance Shorts",
+      "price": 34.99,
+      "category": "Sportswear",
+      "colors": ["Black", "Navy"],
+      "type": ["Athletic", "Sports", "Performance"],
+      "material": "88% Polyester, 12% Spandex",
+      "sizes": ["S", "M", "L", "XL"],
+      "season": ["All Season"],
+      "wearType": "Sports Wear",
+      "description": "Moisture-wicking athletic shorts for high-performance activities"
     }
-    // ... Add 48 more products with similar structure
   ]
 }

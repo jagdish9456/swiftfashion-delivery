@@ -1,15 +1,13 @@
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 import products from "../data/products.json";
 
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: "YOUR_OPENAI_API_KEY_HERE", // Replace this with your API key
 });
 
-const openai = new OpenAIApi(configuration);
-
 export const generateProductRecommendations = async (userInput: string) => {
   try {
-    const completion = await openai.createChatCompletion({
+    const completion = await openai.chat.completions.create({
       model: "gpt-4",
       messages: [
         {
@@ -23,7 +21,7 @@ export const generateProductRecommendations = async (userInput: string) => {
       ]
     });
 
-    const response = completion.data.choices[0]?.message?.content;
+    const response = completion.choices[0]?.message?.content;
     if (!response) return [];
 
     try {
