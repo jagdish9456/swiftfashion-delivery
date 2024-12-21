@@ -8,7 +8,7 @@ export const CartFooter = ({ items }: CartFooterProps) => {
   const totalAmount = items.reduce((sum, item) => sum + item.price, 0);
 
   return (
-    <div className="fixed bottom-16 left-0 right-0 bg-white border-t p-4">
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-4">
           <img src="/placeholder.svg" alt="Original" className="h-5" />

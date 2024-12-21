@@ -42,7 +42,7 @@ export const Cart = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-gray-50 pb-32">
       <div className="bg-white p-4 flex items-center justify-between border-b sticky top-0 z-10">
         <div className="flex items-center gap-3">
           <button onClick={() => navigate(-1)} className="p-2">
