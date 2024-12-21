@@ -5,7 +5,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { FooterText } from "@/components/layout/FooterText";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState, useRef, useCallback } from "react";
-import { FilterSheet } from "@/components/filters/FilterSheet";
 
 const categories = [
   { name: "All", icon: "🏷️" },
@@ -188,8 +187,6 @@ export const Categories = () => {
   const [displayedProducts, setDisplayedProducts] = useState<typeof allProducts>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({});
   const observer = useRef<IntersectionObserver | null>(null);
   
   // Initial load
@@ -214,6 +211,7 @@ export const Categories = () => {
 
   const loadMore = () => {
     setIsLoading(true);
+    // Simulate API delay
     setTimeout(() => {
       const currentLength = displayedProducts.length;
       const nextProducts = allProducts.slice(currentLength, currentLength + 8);
@@ -221,14 +219,6 @@ export const Categories = () => {
       setHasMore(currentLength + 8 < allProducts.length);
       setIsLoading(false);
     }, 1500);
-  };
-
-  const handleApplyFilters = (filters: Record<string, string[]>) => {
-    setSelectedFilters(filters);
-    // Here you would typically filter the products based on the selected filters
-    // For now, we'll just reset the products list
-    setDisplayedProducts(allProducts.slice(0, 16));
-    setHasMore(true);
   };
 
   // Split products for special offer banner
@@ -257,22 +247,30 @@ export const Categories = () => {
           variant="outline"
           size="icon"
           className="h-8 w-8 hover:bg-primary-50 hover:text-primary-500"
-          onClick={() => setIsFilterOpen(true)}
         >
           <Filter className="h-4 w-4" />
         </Button>
       </div>
 
-      {/* Filter Sheet */}
-      <FilterSheet
-        open={isFilterOpen}
-        onOpenChange={setIsFilterOpen}
-        selectedFilters={selectedFilters}
-        onApplyFilters={handleApplyFilters}
-      />
+      {/* Sidebar */}
+      <aside className="w-16 bg-white shadow-sm fixed left-0 top-[41px] bottom-0">
+        <div className="p-2 overflow-y-auto max-h-full hide-scrollbar">
+          <nav className="space-y-1">
+            {categories.map((category) => (
+              <button
+                key={category.name}
+                className="w-full flex flex-col items-center p-2 rounded-lg text-sm hover:bg-primary-50 hover:text-primary-500 transition-colors"
+              >
+                <span className="text-lg mb-1">{category.icon}</span>
+                <span className="text-[10px]">{category.name}</span>
+              </button>
+            ))}
+          </nav>
+        </div>
+      </aside>
 
       {/* Main Content */}
-      <div className="flex-1 mt-[41px]">
+      <div className="flex-1 ml-16 mt-[41px]">
         {/* New Arrivals Banner */}
         <div className="p-2 bg-[#F2FCE2]">
           <div className="rounded-lg p-3">
@@ -329,6 +327,10 @@ export const Categories = () => {
               ))}
             </div>
           )}
+
+          <div className="flex justify-end mt-4">
+            <FooterText />
+          </div>
         </main>
       </div>
     </div>

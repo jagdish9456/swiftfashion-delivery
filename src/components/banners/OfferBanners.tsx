@@ -1,15 +1,8 @@
-import { useNavigate } from "react-router-dom";
-
 export const OfferBanners = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="px-4 py-6 space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div 
-          className="rounded-lg overflow-hidden relative group cursor-pointer"
-          onClick={() => navigate("/category/designer-wear")}
-        >
+        <div className="rounded-lg overflow-hidden relative group">
           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors" />
           <img
             src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=800"
@@ -24,10 +17,7 @@ export const OfferBanners = () => {
             </button>
           </div>
         </div>
-        <div 
-          className="rounded-lg overflow-hidden relative group cursor-pointer"
-          onClick={() => navigate("/category/summer-collection")}
-        >
+        <div className="rounded-lg overflow-hidden relative group">
           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors" />
           <img
             src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800"
