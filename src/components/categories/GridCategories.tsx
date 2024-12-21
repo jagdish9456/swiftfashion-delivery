@@ -199,6 +199,10 @@ export const GridCategories = ({ gender = "all" }: { gender?: "all" | "men" | "w
     ? womenCategories 
     : categories;
 
+  const handleCategoryClick = (categoryId: string) => {
+    navigate(`/category/${categoryId}`);
+  };
+
   return (
     <div className="px-3 py-4">
       <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2">
@@ -207,7 +211,7 @@ export const GridCategories = ({ gender = "all" }: { gender?: "all" | "men" | "w
             key={category.name}
             variant="outline"
             className="h-auto p-2 flex flex-col items-center gap-1 hover:bg-primary-50 hover:border-primary-200"
-            onClick={() => navigate(`/category/${category.id}`)}
+            onClick={() => handleCategoryClick(category.id)}
           >
             <div className="w-full aspect-square rounded-lg overflow-hidden bg-gray-100">
               <img
