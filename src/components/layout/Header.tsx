@@ -1,9 +1,9 @@
-import { Bell, MapPin, Mic, UserRound } from "lucide-react";
+import { Bell, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { LocationButton } from "./LocationButton";
+import { SearchBar } from "./SearchBar";
 
 // Mock data for search suggestions
 const searchSuggestions = {
@@ -27,7 +27,6 @@ export const Header = () => {
     address: "Set Location",
     area: "Choose delivery area"
   });
-  const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -38,7 +37,6 @@ export const Header = () => {
   }, []);
 
   const handleSelect = (type: 'category' | 'product', id: string) => {
-    setOpen(false);
     setSearch("");
     if (type === 'category') {
       navigate(`/category/${id}`);
@@ -47,27 +45,11 @@ export const Header = () => {
     }
   };
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearch(value);
-    setOpen(value.length >= 2);
-  };
-
   return (
     <header className="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm">
       <div className="flex flex-col p-3 gap-2">
         <div className="flex items-center justify-between">
-          <Button 
-            variant="ghost" 
-            className="flex items-center gap-1.5 text-left py-1"
-            onClick={() => navigate("/set-location")}
-          >
-            <MapPin className="h-3.5 w-3.5 text-primary-500" />
-            <div className="flex flex-col">
-              <span className="text-xs font-medium">{location.address}</span>
-              <span className="text-[10px] text-gray-500">{location.area}</span>
-            </div>
-          </Button>
+          <LocationButton address={location.address} area={location.area} />
           <div className="flex items-center gap-2">
             <Button 
               variant="ghost" 
@@ -87,60 +69,13 @@ export const Header = () => {
             </Button>
           </div>
         </div>
-        <div className="flex gap-2">
-          <div className="relative flex-1">
-            <Input
-              placeholder="Search Items"
-              className="pl-3 pr-8 py-1 w-full bg-gray-50 h-9 text-sm"
-              value={search}
-              onChange={handleSearchChange}
-            />
-            {search.length >= 2 && (
-              <div className="absolute left-0 right-0 top-full mt-1 bg-white rounded-md shadow-lg border">
-                <Command>
-                  <CommandList>
-                    <CommandEmpty>No results found.</CommandEmpty>
-                    <CommandGroup heading="Categories">
-                      {searchSuggestions.categories
-                        .filter(cat => 
-                          cat.name.toLowerCase().includes(search.toLowerCase())
-                        )
-                        .map(category => (
-                          <CommandItem
-                            key={category.id}
-                            onSelect={() => handleSelect('category', category.id)}
-                          >
-                            {category.name}
-                          </CommandItem>
-                        ))}
-                    </CommandGroup>
-                    <CommandGroup heading="Products">
-                      {searchSuggestions.products
-                        .filter(prod => 
-                          prod.name.toLowerCase().includes(search.toLowerCase())
-                        )
-                        .map(product => (
-                          <CommandItem
-                            key={product.id}
-                            onSelect={() => handleSelect('product', product.id)}
-                          >
-                            {product.name}
-                          </CommandItem>
-                        ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </div>
-            )}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute right-0 top-0 h-full"
-            >
-              <Mic className="h-3.5 w-3.5 text-gray-500" />
-            </Button>
-          </div>
-        </div>
+        <SearchBar 
+          search={search}
+          onSearchChange={setSearch}
+          onSelect={handleSelect}
+          suggestions={searchSuggestions}
+          showSuggestions={search.length >= 2}
+        />
       </div>
     </header>
   );

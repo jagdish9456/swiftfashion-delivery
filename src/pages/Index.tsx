@@ -3,7 +3,6 @@ import { BottomNav } from "@/components/layout/BottomNav";
 import { CategorySection } from "@/components/categories/CategorySection";
 import { GridCategories } from "@/components/categories/GridCategories";
 import { OfferBanners } from "@/components/banners/OfferBanners";
-import { FullWidthBanner } from "@/components/banners/FullWidthBanner";
 import { TopChoices } from "@/components/sections/TopChoices";
 import { ClothingCategories } from "@/components/categories/ClothingCategories";
 import { DealsSection } from "@/components/sections/DealsSection";
@@ -11,6 +10,7 @@ import { ChristmasBanner } from "@/components/banners/ChristmasBanner";
 import { TopProducts } from "@/components/sections/TopProducts";
 import { FooterText } from "@/components/layout/FooterText";
 import { useNavigate } from "react-router-dom";
+import { Sun, Leaf, Sparkles, Flower, Cloud } from "lucide-react";
 
 export const Index = () => {
   const navigate = useNavigate();
@@ -20,9 +20,26 @@ export const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-16">
+    <div className="min-h-screen pb-16 relative">
+      <div className="fixed inset-0 pointer-events-none opacity-5 z-0">
+        <div className="absolute top-[10%] left-[5%]">
+          <Sun className="w-24 h-24 text-primary-200" />
+        </div>
+        <div className="absolute top-[30%] right-[8%]">
+          <Leaf className="w-20 h-20 text-primary-200" />
+        </div>
+        <div className="absolute top-[50%] left-[12%]">
+          <Sparkles className="w-16 h-16 text-primary-200" />
+        </div>
+        <div className="absolute top-[70%] right-[15%]">
+          <Flower className="w-24 h-24 text-primary-200" />
+        </div>
+        <div className="absolute top-[85%] left-[20%]">
+          <Cloud className="w-20 h-20 text-primary-200" />
+        </div>
+      </div>
       <Header />
-      <main className="pt-[116px]">
+      <main className="pt-[116px] relative z-10">
         <div onClick={() => handleBannerClick("summer-collection")}>
           <DealsSection />
         </div>

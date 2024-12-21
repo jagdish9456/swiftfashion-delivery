@@ -10,7 +10,7 @@ export const PromoPopup = () => {
     const hasSeenPromo = Cookies.get("hasSeenPromo");
     if (!hasSeenPromo) {
       setIsOpen(true);
-      Cookies.set("hasSeenPromo", "true", { expires: 1/96 }); // 15 minutes
+      Cookies.set("hasSeenPromo", "true", { expires: 1/720 }); // 2 minutes
     }
   }, []);
 
@@ -32,9 +32,9 @@ export const PromoPopup = () => {
           <p className="text-lg mb-4 text-gray-600">on your order above ₹199</p>
           <div className="relative">
             <img 
-              src="https://images.unsplash.com/photo-1612833603922-5a6de85f6483?w=400" 
-              alt="Delivery" 
-              className="mx-auto h-48 object-contain"
+              src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=400" 
+              alt="Quick Delivery" 
+              className="mx-auto h-48 object-contain rounded-lg"
             />
             <div className="absolute inset-0 pointer-events-none">
               <img 
