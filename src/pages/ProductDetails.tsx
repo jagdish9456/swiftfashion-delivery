@@ -2,9 +2,16 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Heart, Search, ShoppingBag, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
@@ -23,7 +30,11 @@ const ProductDetails = () => {
     discount: "60% off",
     rating: 4.3,
     ratingCount: 2814,
-    image: "/lovable-uploads/55a80d4f-cc66-44c0-add1-267784bef2cf.png",
+    images: [
+      "/lovable-uploads/55a80d4f-cc66-44c0-add1-267784bef2cf.png",
+      "/lovable-uploads/e9378036-26ff-4163-be71-29ae045c1c09.png",
+      "/lovable-uploads/55a80d4f-cc66-44c0-add1-267784bef2cf.png",
+    ],
     details: {
       color: "Pink",
       length: "Regular",
@@ -68,8 +79,7 @@ const ProductDetails = () => {
       id: product.id,
       name: product.name,
       price: product.price,
-      image: product.image,
-      quantity: 1,
+      image: product.images[0],
     });
     toast({
       title: "Added to bag",
@@ -112,35 +122,47 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {/* Product Image */}
+      {/* Product Image Carousel */}
       <div className="pt-[48px]">
-        <div className="aspect-square bg-gray-100">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-full object-cover"
-          />
-        </div>
+        <Carousel className="w-full">
+          <CarouselContent>
+            {product.images.map((image, index) => (
+              <CarouselItem key={index}>
+                <div className="aspect-square w-full">
+                  <img
+                    src={image}
+                    alt={`${product.name} - View ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="left-2" />
+          <CarouselNext className="right-2" />
+        </Carousel>
       </div>
 
       {/* Product Info */}
       <div className="px-4 py-3 space-y-4">
         <div>
           <h2 className="text-lg font-medium">{product.name}</h2>
-          <div className="flex items-center gap-2 mt-1">
-            <span className="text-xl font-semibold">${product.price}</span>
-            <span className="text-gray-500 line-through text-sm">
-              ${product.originalPrice}
-            </span>
-            <span className="text-primary-500 text-sm">{product.discount}</span>
-          </div>
-          <div className="flex items-center gap-2 mt-2">
-            <span className="bg-primary-500 text-white text-sm px-2 py-0.5 rounded">
-              {product.rating} ★
-            </span>
-            <span className="text-sm text-gray-500">
-              {product.ratingCount} ratings
-            </span>
+          <div className="flex items-center justify-between mt-1">
+            <div className="flex items-center gap-2">
+              <span className="text-xl font-semibold">${product.price}</span>
+              <span className="text-gray-500 line-through text-sm">
+                ${product.originalPrice}
+              </span>
+              <span className="text-primary-500 text-sm">{product.discount}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="bg-primary-500 text-white text-sm px-2 py-0.5 rounded">
+                {product.rating} ★
+              </span>
+              <span className="text-sm text-gray-500">
+                {product.ratingCount} ratings
+              </span>
+            </div>
           </div>
         </div>
 
