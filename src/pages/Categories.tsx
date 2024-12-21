@@ -1,10 +1,10 @@
 import { Filter } from "lucide-react";
-import { ProductCard } from "@/components/categories/ProductCard";
 import { Button } from "@/components/ui/button";
 import { useParams, useNavigate } from "react-router-dom";
 import { FooterText } from "@/components/layout/FooterText";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState, useRef, useCallback } from "react";
+import { FilterSheet } from "@/components/filters/FilterSheet";
+import { ProductList } from "@/components/categories/ProductList";
 
 const categories = [
   { name: "All", icon: "🏷️" },
@@ -168,28 +168,15 @@ const allProducts = [
   }
 ];
 
-const ProductSkeleton = () => (
-  <div className="rounded-lg overflow-hidden bg-white shadow-sm">
-    <Skeleton className="aspect-square w-full" />
-    <div className="p-2 space-y-2">
-      <Skeleton className="h-4 w-3/4" />
-      <div className="flex items-center justify-between">
-        <Skeleton className="h-4 w-1/4" />
-        <Skeleton className="h-7 w-16" />
-      </div>
-    </div>
-  </div>
-);
-
 export const Categories = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [displayedProducts, setDisplayedProducts] = useState<typeof allProducts>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const observer = useRef<IntersectionObserver | null>(null);
   
-  // Initial load
   useEffect(() => {
     setDisplayedProducts(allProducts.slice(0, 16));
     setHasMore(allProducts.length > 16);
@@ -211,7 +198,6 @@ export const Categories = () => {
 
   const loadMore = () => {
     setIsLoading(true);
-    // Simulate API delay
     setTimeout(() => {
       const currentLength = displayedProducts.length;
       const nextProducts = allProducts.slice(currentLength, currentLength + 8);
@@ -221,7 +207,11 @@ export const Categories = () => {
     }, 1500);
   };
 
-  // Split products for special offer banner
+  const handleApplyFilters = () => {
+    setIsFilterOpen(false);
+    // Filter logic will be implemented here
+  };
+
   const midPoint = Math.min(8, Math.floor(displayedProducts.length / 2));
   const firstHalfProducts = displayedProducts.slice(0, midPoint);
   const secondHalfProducts = displayedProducts.slice(midPoint);
@@ -247,6 +237,7 @@ export const Categories = () => {
           variant="outline"
           size="icon"
           className="h-8 w-8 hover:bg-primary-50 hover:text-primary-500"
+          onClick={() => setIsFilterOpen(true)}
         >
           <Filter className="h-4 w-4" />
         </Button>
@@ -290,14 +281,12 @@ export const Categories = () => {
 
         {/* Products Grid */}
         <main className="p-4">
-          {/* First half of products */}
-          <div className="grid grid-cols-2 gap-3">
-            {firstHalfProducts.map((product) => (
-              <ProductCard key={product.id} {...product} />
-            ))}
-          </div>
+          <ProductList
+            products={firstHalfProducts}
+            isLoading={false}
+          />
 
-          {/* Special Offer Banner in the middle */}
+          {/* Special Offer Banner */}
           <div className="my-6 p-3 bg-white rounded-lg shadow-sm">
             <h3 className="text-base font-semibold mb-2">Special Offer</h3>
             <div className="p-3 bg-primary-50 rounded-lg">
@@ -307,32 +296,23 @@ export const Categories = () => {
             </div>
           </div>
 
-          {/* Second half of products */}
-          <div className="grid grid-cols-2 gap-3">
-            {secondHalfProducts.map((product, index) => (
-              <div
-                ref={index === secondHalfProducts.length - 1 ? lastProductRef : null}
-                key={product.id}
-              >
-                <ProductCard {...product} />
-              </div>
-            ))}
-          </div>
-
-          {/* Loading skeletons */}
-          {isLoading && (
-            <div className="grid grid-cols-2 gap-3 mt-3">
-              {[1, 2, 3, 4].map((n) => (
-                <ProductSkeleton key={n} />
-              ))}
-            </div>
-          )}
+          <ProductList
+            products={secondHalfProducts}
+            isLoading={isLoading}
+            lastProductRef={lastProductRef}
+          />
 
           <div className="flex justify-end mt-4">
             <FooterText />
           </div>
         </main>
       </div>
+
+      <FilterSheet
+        open={isFilterOpen}
+        onOpenChange={setIsFilterOpen}
+        onApplyFilters={handleApplyFilters}
+      />
     </div>
   );
 };

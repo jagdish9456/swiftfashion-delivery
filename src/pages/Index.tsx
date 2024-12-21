@@ -10,17 +10,30 @@ import { DealsSection } from "@/components/sections/DealsSection";
 import { ChristmasBanner } from "@/components/banners/ChristmasBanner";
 import { TopProducts } from "@/components/sections/TopProducts";
 import { FooterText } from "@/components/layout/FooterText";
+import { useNavigate } from "react-router-dom";
 
 export const Index = () => {
+  const navigate = useNavigate();
+
+  const handleBannerClick = (category: string) => {
+    navigate(`/category/${category}`);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 pb-16">
       <Header />
       <main className="pt-[116px]">
-        <DealsSection />
-        <ChristmasBanner />
+        <div onClick={() => handleBannerClick("summer-collection")}>
+          <DealsSection />
+        </div>
+        <div onClick={() => handleBannerClick("christmas-special")}>
+          <ChristmasBanner />
+        </div>
         <GridCategories />
         <CategorySection />
-        <OfferBanners />
+        <div onClick={() => handleBannerClick("designer-collection")}>
+          <OfferBanners />
+        </div>
         <TopProducts />
         <ClothingCategories />
         <TopChoices />
