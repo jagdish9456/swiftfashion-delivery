@@ -40,11 +40,11 @@ export const Index = () => {
       </div>
       
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-50/40 via-white to-transparent">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary-50/60 via-white/90 to-transparent">
           <img 
             src="/lovable-uploads/86e79fd8-4097-4263-bd37-30056aff88a1.png" 
             alt="Background Pattern" 
-            className="w-full h-full object-cover opacity-20 mix-blend-overlay"
+            className="w-full h-full object-cover opacity-40 mix-blend-soft-light"
           />
         </div>
       </div>
