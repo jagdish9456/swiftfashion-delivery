@@ -17,11 +17,14 @@ type FilterOption = {
 };
 
 const storeTypes: FilterOption[] = [
-  { id: "grocery", label: "Grocery Store", count: 33 },
-  { id: "restaurant", label: "Restaurant", count: 29 },
-  { id: "fashion", label: "Fashion Store", count: 28 },
-  { id: "electronics", label: "Electronics Store", count: 31 },
-  { id: "beauty", label: "Beauty Store", count: 30 },
+  { id: "ethnic", label: "Ethnic Wear", count: 33 },
+  { id: "modern", label: "Modern Fashion", count: 29 },
+  { id: "saree", label: "Saree Shop", count: 28 },
+  { id: "kids", label: "Kids Wear", count: 31 },
+  { id: "designer", label: "Designer Wear", count: 30 },
+  { id: "traditional", label: "Traditional Wear", count: 27 },
+  { id: "wedding", label: "Wedding Collection", count: 25 },
+  { id: "fusion", label: "Indo-Western", count: 24 },
 ];
 
 const brands: FilterOption[] = [
