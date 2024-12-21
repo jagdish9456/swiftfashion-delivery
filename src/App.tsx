@@ -9,6 +9,7 @@ import { GenderCategories } from "@/pages/GenderCategories";
 import { SetLocation } from "@/pages/SetLocation";
 import { Profile } from "@/pages/Profile";
 import { Orders } from "@/pages/Orders";
+import { Cart } from "@/pages/Cart";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ function App() {
             <Route path="/set-location" element={<SetLocation />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/cart" element={<Cart />} />
           </Routes>
           <Toaster />
         </Router>

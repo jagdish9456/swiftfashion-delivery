@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Package2, Heart, Gift, Headphones, ChevronRight, ArrowLeft } from "lucide-react";
+import { Package2, Heart, Gift, Headphones, ChevronRight, ArrowLeft, Bell } from "lucide-react";
 
 export const Profile = () => {
   const navigate = useNavigate();
@@ -55,17 +55,30 @@ export const Profile = () => {
             </div>
             <div className="flex items-center justify-between bg-white p-3 rounded-lg border">
               <div>
-                <h3 className="font-medium">Flipkart Axis Bank Credit Card</h3>
+                <h3 className="font-medium">Quickky Credit Card</h3>
               </div>
               <ChevronRight className="h-5 w-5 text-gray-400" />
             </div>
             <div className="flex items-center justify-between bg-white p-3 rounded-lg border">
               <div>
-                <h3 className="font-medium">Flipkart EMI</h3>
+                <h3 className="font-medium">Quickky EMI</h3>
                 <p className="text-sm text-gray-500">Complete your application to avail now</p>
               </div>
               <ChevronRight className="h-5 w-5 text-gray-400" />
             </div>
+          </div>
+        </div>
+
+        <div className="p-4">
+          <div className="flex items-center justify-between bg-white p-3 rounded-lg border">
+            <div className="flex items-center gap-3">
+              <Bell className="h-5 w-5 text-primary-500" />
+              <div>
+                <h3 className="font-medium">Notification Settings</h3>
+                <p className="text-sm text-gray-500">Manage your notification preferences</p>
+              </div>
+            </div>
+            <ChevronRight className="h-5 w-5 text-gray-400" />
           </div>
         </div>
       </main>
