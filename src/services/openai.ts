@@ -3,6 +3,7 @@ import products from "../data/products.json";
 
 const openai = new OpenAI({
   apiKey: "YOUR_OPENAI_API_KEY_HERE", // Replace this with your API key
+  dangerouslyAllowBrowser: true // Added this option to allow browser usage
 });
 
 export const generateProductRecommendations = async (userInput: string) => {
