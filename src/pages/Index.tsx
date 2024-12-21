@@ -6,6 +6,8 @@ import { OfferBanners } from "@/components/banners/OfferBanners";
 import { FullWidthBanner } from "@/components/banners/FullWidthBanner";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/categories/ProductCard";
+import { StoreSection } from "@/components/stores/StoreSection";
+import { useNavigate } from "react-router-dom";
 
 const DealsSection = () => (
   <div className="grid grid-cols-3 gap-4 px-4 py-6">
@@ -128,6 +130,64 @@ const TopProducts = () => {
   );
 };
 
+const CategoryRowSection = () => {
+  const navigate = useNavigate();
+  const products = [
+    {
+      id: "1",
+      name: "Elegant Watch",
+      price: 299.99,
+      image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=500",
+    },
+    {
+      id: "2",
+      name: "Designer Bag",
+      price: 199.99,
+      image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500",
+    },
+    {
+      id: "3",
+      name: "Sunglasses",
+      price: 129.99,
+      image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500",
+    },
+    {
+      id: "4",
+      name: "Leather Wallet",
+      price: 79.99,
+      image: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=500",
+    },
+    {
+      id: "5",
+      name: "Smart Band",
+      price: 149.99,
+      image: "https://images.unsplash.com/photo-1557438159-51eec7a6c9e8?w=500",
+    }
+  ];
+
+  return (
+    <div className="px-4 py-6">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold">Featured Categories</h2>
+        <Button 
+          variant="ghost" 
+          className="text-primary-500 hover:text-primary-600"
+          onClick={() => navigate('/category/all')}
+        >
+          View All
+        </Button>
+      </div>
+      <div className="flex gap-3 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-4">
+        {products.map((product) => (
+          <div key={product.id} className="snap-start w-[160px] flex-none">
+            <ProductCard {...product} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export const Index = () => {
   return (
     <div className="min-h-screen bg-gray-50 pb-16">
@@ -136,11 +196,12 @@ export const Index = () => {
         <ChristmasBanner />
         <DealsSection />
         <GridCategories />
+        <CategoryRowSection />
         <FullWidthBanner />
         <CategorySection />
         <OfferBanners />
         <TopProducts />
-        <CategorySection />
+        <StoreSection />
       </main>
       <BottomNav />
     </div>
