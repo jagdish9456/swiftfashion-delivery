@@ -1,17 +1,36 @@
 import { Bell, MapPin, Mic, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export const Header = () => {
+  const navigate = useNavigate();
+  const [location, setLocation] = useState({
+    address: "Set Location",
+    area: "Choose delivery area"
+  });
+
+  useEffect(() => {
+    const savedLocation = localStorage.getItem("userLocation");
+    if (savedLocation) {
+      setLocation(JSON.parse(savedLocation));
+    }
+  }, []);
+
   return (
     <header className="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm">
       <div className="flex flex-col p-3 gap-2">
         <div className="flex items-center justify-between">
-          <Button variant="ghost" className="flex items-center gap-1.5 text-left py-1">
+          <Button 
+            variant="ghost" 
+            className="flex items-center gap-1.5 text-left py-1"
+            onClick={() => navigate("/set-location")}
+          >
             <MapPin className="h-3.5 w-3.5 text-primary-500" />
             <div className="flex flex-col">
-              <span className="text-xs font-medium">Set Location</span>
-              <span className="text-[10px] text-gray-500">Choose delivery area</span>
+              <span className="text-xs font-medium">{location.address}</span>
+              <span className="text-[10px] text-gray-500">{location.area}</span>
             </div>
           </Button>
           <div className="flex items-center gap-2">
