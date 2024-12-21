@@ -155,8 +155,24 @@ export const Categories = () => {
           </div>
         </main>
 
-        {/* Right Banner */}
+        {/* Right Banner Section */}
         <div className="hidden lg:block w-64 p-4 bg-[#F1F0FB] border-l">
+          {/* Top Banner */}
+          <div className="mb-8">
+            <div className="rounded-lg bg-gradient-to-r from-primary-100 to-primary-50 p-4 shadow-sm">
+              <h3 className="text-lg font-semibold text-primary-800 mb-2">New Arrivals</h3>
+              <p className="text-sm text-primary-600 mb-3">Check out our latest collection in {id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</p>
+              <Button 
+                variant="secondary" 
+                className="w-full bg-white hover:bg-primary-50"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              >
+                Explore Now
+              </Button>
+            </div>
+          </div>
+
+          {/* Special Offer Banner */}
           <div className="sticky top-[60px]">
             <h3 className="text-lg font-semibold mb-3">Special Offer</h3>
             <div className="rounded-lg bg-white p-4 shadow-sm">
