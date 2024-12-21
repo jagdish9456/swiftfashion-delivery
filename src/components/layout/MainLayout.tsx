@@ -7,9 +7,11 @@ interface MainLayoutProps {
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <div className="min-h-screen bg-gray-50 pb-16">
+    <div className="min-h-screen bg-gray-50">
       <Header />
-      <main className="pt-[116px]">{children}</main>
+      <main className="pt-[116px] pb-20 h-[calc(100vh-116px)] overflow-y-auto">
+        {children}
+      </main>
       <BottomNav />
     </div>
   );
