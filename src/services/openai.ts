@@ -2,7 +2,7 @@ import OpenAI from "openai";
 import products from "../data/products.json";
 
 const openai = new OpenAI({
-  apiKey: "YOUR_OPENAI_API_KEY_HERE", // Replace this with your API key
+  apiKey: "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", // Replace this with your API key
   dangerouslyAllowBrowser: true // Added this option to allow browser usage
 });
 
