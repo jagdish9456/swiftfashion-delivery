@@ -141,17 +141,32 @@ export const Categories = () => {
         </div>
       </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 p-4 ml-16 mt-[41px] overflow-y-auto">
-        <div className="grid grid-cols-2 gap-3 pb-16">
-          {products.map((product) => (
-            <ProductCard key={product.id} {...product} />
-          ))}
+      {/* Main Content with Banner */}
+      <div className="flex-1 ml-16 mt-[41px] flex">
+        {/* Products Grid */}
+        <main className="flex-1 p-4 overflow-y-auto">
+          <div className="grid grid-cols-2 gap-3 pb-16">
+            {products.map((product) => (
+              <ProductCard key={product.id} {...product} />
+            ))}
+          </div>
+          <div className="flex justify-end">
+            <FooterText />
+          </div>
+        </main>
+
+        {/* Right Banner */}
+        <div className="hidden lg:block w-64 p-4 bg-[#F1F0FB] border-l">
+          <div className="sticky top-[60px]">
+            <h3 className="text-lg font-semibold mb-3">Special Offer</h3>
+            <div className="rounded-lg bg-white p-4 shadow-sm">
+              <p className="text-sm text-gray-600 mb-2">Get 20% off on formal wear</p>
+              <p className="text-2xl font-bold text-primary-500 mb-3">FORMAL20</p>
+              <p className="text-xs text-gray-500">Valid until Dec 31, 2024</p>
+            </div>
+          </div>
         </div>
-        <div className="flex justify-end">
-          <FooterText />
-        </div>
-      </main>
+      </div>
     </div>
   );
 };
