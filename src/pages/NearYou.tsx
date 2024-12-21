@@ -64,19 +64,11 @@ export const NearYou = () => {
         </div>
 
         <div className="mb-6">
-          <div className="relative">
-            <img
-              src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800"
-              alt="Featured Stores"
-              className="w-full h-40 object-cover"
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-              <div className="text-center text-white px-4">
-                <h2 className="text-2xl font-bold mb-2">Discover Local Fashion</h2>
-                <p className="text-sm">Find the best clothing stores near you</p>
-              </div>
-            </div>
-          </div>
+          <img
+            src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800"
+            alt="Featured Stores"
+            className="w-full h-32 object-cover rounded-lg"
+          />
         </div>
 
         <div className="space-y-4">

@@ -1,86 +1,100 @@
 import { StoreCard } from "./StoreCard";
 import { useInView } from "react-intersection-observer";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const allStores = [
   {
-    id: "1",
-    name: "Ethnic Elegance",
-    image: "https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?w=800",
+    name: "Fresh Picks Mart",
+    image: "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800",
     discount: 60,
     deliveryTime: "33 mins",
-    type: "Ethnic Wear"
+    type: "Grocery Store",
   },
   {
-    id: "2",
-    name: "Modern Trends",
-    image: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=800",
+    name: "Market Marvel",
+    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800",
     discount: 40,
     deliveryTime: "32 mins",
-    type: "Modern Fashion"
+    type: "Supermarket",
   },
   {
-    id: "3",
-    name: "Saree Paradise",
-    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800",
+    name: "Easy Eats",
+    image: "https://images.unsplash.com/photo-1546213290-e1b492ab3eee?w=800",
     discount: 20,
     deliveryTime: "30 mins",
-    type: "Saree Shop"
+    type: "Restaurant",
   },
   {
-    id: "4",
-    name: "Kids Fashion Hub",
-    image: "https://images.unsplash.com/photo-1560506840-ec148e82a604?w=800",
+    name: "Corner Shop",
+    image: "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800",
     discount: 25,
     deliveryTime: "23 mins",
-    type: "Kids Wear"
+    type: "Convenience Store",
   },
   {
-    id: "5",
-    name: "Designer Studio",
-    image: "https://images.unsplash.com/photo-1589810635657-232948472d98?w=800",
+    name: "Fashion Hub",
+    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800",
     discount: 30,
     deliveryTime: "25 mins",
-    type: "Designer Wear"
+    type: "Fashion Store",
   },
   {
-    id: "6",
-    name: "Traditional Treasures",
-    image: "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=800",
+    name: "Tech Zone",
+    image: "https://images.unsplash.com/photo-1546213290-e1b492ab3eee?w=800",
     discount: 15,
     deliveryTime: "35 mins",
-    type: "Traditional Wear"
+    type: "Electronics Store",
   },
   {
-    id: "7",
-    name: "Wedding Collection",
-    image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800",
+    name: "Beauty Boutique",
+    image: "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800",
     discount: 45,
     deliveryTime: "28 mins",
-    type: "Wedding Wear"
+    type: "Beauty Store",
   },
   {
-    id: "8",
-    name: "Fusion Fashion",
-    image: "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800",
+    name: "Sports Central",
+    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800",
     discount: 35,
     deliveryTime: "27 mins",
-    type: "Indo-Western"
-  }
+    type: "Sports Store",
+  },
+  {
+    name: "Home Essentials",
+    image: "https://images.unsplash.com/photo-1546213290-e1b492ab3eee?w=800",
+    discount: 50,
+    deliveryTime: "31 mins",
+    type: "Home Store",
+  },
+  {
+    name: "Pet Paradise",
+    image: "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800",
+    discount: 20,
+    deliveryTime: "29 mins",
+    type: "Pet Store",
+  },
+  {
+    name: "Book Haven",
+    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800",
+    discount: 25,
+    deliveryTime: "26 mins",
+    type: "Book Store",
+  },
+  {
+    name: "Toy World",
+    image: "https://images.unsplash.com/photo-1546213290-e1b492ab3eee?w=800",
+    discount: 40,
+    deliveryTime: "33 mins",
+    type: "Toy Store",
+  },
 ];
 
 export const StoreSection = () => {
-  const navigate = useNavigate();
   const [visibleStores, setVisibleStores] = useState(allStores.slice(0, 8));
   const { ref, inView } = useInView({
     threshold: 0,
-    triggerOnce: true
+    triggerOnce: true,
   });
-
-  const handleStoreClick = (storeId: string) => {
-    navigate(`/category/${storeId}?store=true`);
-  };
 
   if (inView && visibleStores.length < allStores.length) {
     setTimeout(() => {
@@ -90,26 +104,20 @@ export const StoreSection = () => {
 
   return (
     <section className="py-4">
-      <div className="grid grid-cols-2 gap-4 px-2">
+      <div className="flex justify-between items-center px-4 mb-4">
+        <h2 className="text-base font-medium">Top stores for you</h2>
+        <button className="text-primary-500 text-sm">View All</button>
+      </div>
+      <div className="grid grid-cols-2 gap-4 px-4">
         {visibleStores.map((store) => (
-          <div 
-            key={store.id}
-            onClick={() => handleStoreClick(store.id)}
-            className="cursor-pointer"
-          >
-            <StoreCard {...store} />
-          </div>
+          <StoreCard key={store.name} {...store} />
         ))}
         {visibleStores.length < allStores.length && (
-          <div ref={ref} className="col-span-2 space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              {[1, 2].map((n) => (
-                <div key={n} className="animate-pulse space-y-4">
-                  <div className="h-32 bg-gray-200 rounded-lg w-full" />
-                  <div className="h-4 bg-gray-200 rounded w-3/4" />
-                  <div className="h-4 bg-gray-200 rounded w-1/2" />
-                </div>
-              ))}
+          <div ref={ref} className="col-span-2 flex justify-center py-4">
+            <div className="animate-pulse space-y-4">
+              <div className="h-32 bg-gray-200 rounded-lg w-full"></div>
+              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
             </div>
           </div>
         )}
