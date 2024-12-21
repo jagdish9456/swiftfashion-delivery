@@ -9,6 +9,7 @@ import { ClothingCategories } from "@/components/categories/ClothingCategories";
 import { DealsSection } from "@/components/sections/DealsSection";
 import { ChristmasBanner } from "@/components/banners/ChristmasBanner";
 import { TopProducts } from "@/components/sections/TopProducts";
+import { FooterText } from "@/components/layout/FooterText";
 
 export const Index = () => {
   return (
@@ -23,6 +24,7 @@ export const Index = () => {
         <TopProducts />
         <ClothingCategories />
         <TopChoices />
+        <FooterText />
       </main>
       <BottomNav />
     </div>
