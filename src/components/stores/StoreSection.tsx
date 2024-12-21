@@ -7,7 +7,7 @@ const allStores = [
   {
     id: "1",
     name: "Ethnic Elegance",
-    image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=800",
+    image: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=800",
     discount: 60,
     deliveryTime: "33 mins",
     type: "Ethnic Wear"
@@ -15,7 +15,7 @@ const allStores = [
   {
     id: "2",
     name: "Modern Fashion Hub",
-    image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=800",
+    image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=800",
     discount: 40,
     deliveryTime: "32 mins",
     type: "Modern Fashion"
@@ -23,7 +23,7 @@ const allStores = [
   {
     id: "3",
     name: "Saree Paradise",
-    image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=800",
+    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800",
     discount: 20,
     deliveryTime: "30 mins",
     type: "Saree Shop"
@@ -31,7 +31,7 @@ const allStores = [
   {
     id: "4",
     name: "Kids Fashion World",
-    image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=800",
+    image: "https://images.unsplash.com/photo-1621452773781-0f992fd1f5cb?w=800",
     discount: 25,
     deliveryTime: "23 mins",
     type: "Kids Wear"
@@ -39,7 +39,7 @@ const allStores = [
   {
     id: "5",
     name: "Men's Fashion Studio",
-    image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=800",
+    image: "https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=800",
     discount: 30,
     deliveryTime: "25 mins",
     type: "Men's Fashion"
@@ -47,7 +47,7 @@ const allStores = [
   {
     id: "6",
     name: "Women's Boutique",
-    image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=800",
+    image: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=800",
     discount: 15,
     deliveryTime: "35 mins",
     type: "Women's Fashion"
@@ -55,7 +55,7 @@ const allStores = [
   {
     id: "7",
     name: "Designer Wear",
-    image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=800",
+    image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800",
     discount: 45,
     deliveryTime: "28 mins",
     type: "Designer Boutique"
@@ -63,7 +63,7 @@ const allStores = [
   {
     id: "8",
     name: "Traditional Attire",
-    image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=800",
+    image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=800",
     discount: 35,
     deliveryTime: "27 mins",
     type: "Traditional Wear"

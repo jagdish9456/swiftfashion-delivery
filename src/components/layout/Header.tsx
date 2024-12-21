@@ -40,11 +40,18 @@ export const Header = () => {
 
   const handleSelect = (type: 'category' | 'product', id: string) => {
     setOpen(false);
+    setSearch("");
     if (type === 'category') {
       navigate(`/category/${id}`);
     } else {
       navigate(`/product/${id}`);
     }
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearch(value);
+    setOpen(value.length >= 2);
   };
 
   return (
@@ -78,16 +85,14 @@ export const Header = () => {
         </div>
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <Popover open={open} onOpenChange={setOpen}>
-              <PopoverTrigger asChild>
-                <Input
-                  placeholder="Search Items"
-                  className="pl-3 pr-8 py-1 w-full bg-gray-50 h-9 text-sm"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-              </PopoverTrigger>
-              <PopoverContent className="p-0 w-[calc(100vw-32px)]" align="start">
+            <Input
+              placeholder="Search Items"
+              className="pl-3 pr-8 py-1 w-full bg-gray-50 h-9 text-sm"
+              value={search}
+              onChange={handleSearchChange}
+            />
+            {search.length >= 2 && (
+              <div className="absolute left-0 right-0 top-full mt-1 bg-white rounded-md shadow-lg border">
                 <Command>
                   <CommandList>
                     <CommandEmpty>No results found.</CommandEmpty>
@@ -121,8 +126,8 @@ export const Header = () => {
                     </CommandGroup>
                   </CommandList>
                 </Command>
-              </PopoverContent>
-            </Popover>
+              </div>
+            )}
             <Button
               variant="ghost"
               size="icon"
