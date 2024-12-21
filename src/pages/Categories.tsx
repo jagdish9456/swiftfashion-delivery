@@ -8,7 +8,14 @@ import { FooterText } from "@/components/layout/FooterText";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-const fetchProducts = async (categoryId) => {
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+}
+
+const fetchProducts = async (categoryId: string): Promise<Product[]> => {
   const response = await fetch(`/api/products?category=${categoryId}`);
   if (!response.ok) {
     throw new Error("Network response was not ok");
@@ -20,18 +27,29 @@ export const Categories = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isFromStore = location.search.includes("store=true");
-  const storeName = isFromStore ? "Store Name" : "Category Name"; // Replace with actual store name logic
+  const storeName = isFromStore ? "Store Name" : "Category Name"; 
 
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({});
 
-  const categoryId = location.pathname.split("/").pop();
-  const { data: products, isLoading } = useQuery(["products", categoryId], () => fetchProducts(categoryId));
+  const categoryId = location.pathname.split("/").pop() || "";
+  
+  const { data: products = [], isLoading } = useQuery({
+    queryKey: ["products", categoryId],
+    queryFn: () => fetchProducts(categoryId)
+  });
 
   const handleApplyFilters = () => {
-    // Apply filter logic here
     setShowFilters(false);
+  };
+
+  const handleBack = () => {
+    if (isFromStore) {
+      navigate("/near-you");
+    } else {
+      navigate(-1);
+    }
   };
 
   return (
@@ -43,7 +61,7 @@ export const Categories = () => {
               variant="ghost"
               size="icon"
               className="h-8 w-8"
-              onClick={() => navigate(isFromStore ? "/near-you" : -1)}
+              onClick={handleBack}
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
@@ -70,7 +88,7 @@ export const Categories = () => {
         </div>
       </div>
 
-      <ProductList products={products || []} isLoading={isLoading} />
+      <ProductList products={products} isLoading={isLoading} />
 
       <FilterSheet
         open={showFilters}
