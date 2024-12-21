@@ -1,5 +1,9 @@
 import { ClothingCategoryRow } from "./ClothingCategoryRow";
 
+interface ClothingCategoriesProps {
+  categoryId?: string;
+}
+
 const formalWear = [
   {
     id: "fw1",
@@ -135,7 +139,7 @@ const casualWear = [
   },
 ];
 
-export const ClothingCategories = () => {
+export const ClothingCategories = ({ categoryId }: ClothingCategoriesProps) => {
   return (
     <div className="py-4">
       <ClothingCategoryRow
