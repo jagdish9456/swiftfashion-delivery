@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { X } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
 
 type FilterOption = {
   id: string;
@@ -24,24 +25,21 @@ const sizes: FilterOption[] = [
   { id: "xxl", label: "XXL", count: 30 },
 ];
 
-const colors: FilterOption[] = [
-  { id: "black", label: "Black" },
-  { id: "white", label: "White" },
-  { id: "blue", label: "Blue" },
-  { id: "red", label: "Red" },
+const storeTypes: FilterOption[] = [
+  { id: "ethnic", label: "Ethnic Wear" },
+  { id: "modern", label: "Modern Fashion" },
+  { id: "saree", label: "Saree Shop" },
+  { id: "kids", label: "Kids Wear" },
+  { id: "mens", label: "Men's Fashion" },
+  { id: "womens", label: "Women's Fashion" },
 ];
 
 const brands: FilterOption[] = [
+  { id: "levis", label: "Levi's" },
+  { id: "zara", label: "Zara" },
+  { id: "hm", label: "H&M" },
+  { id: "uniqlo", label: "Uniqlo" },
   { id: "nike", label: "Nike" },
-  { id: "adidas", label: "Adidas" },
-  { id: "puma", label: "Puma" },
-  { id: "reebok", label: "Reebok" },
-];
-
-const categories: FilterOption[] = [
-  { id: "formal", label: "Formal Wear" },
-  { id: "casual", label: "Casual Wear" },
-  { id: "sports", label: "Sports Wear" },
 ];
 
 type FilterSheetProps = {
@@ -56,6 +54,7 @@ export const FilterSheet = ({ open, onOpenChange, onApplyFilters }: FilterSheetP
     colors: [] as string[],
     brands: [] as string[],
     categories: [] as string[],
+    storeTypes: [] as string[],
   });
 
   const handleFilterChange = (section: keyof typeof selectedFilters, id: string) => {
@@ -74,6 +73,7 @@ export const FilterSheet = ({ open, onOpenChange, onApplyFilters }: FilterSheetP
       colors: [],
       brands: [],
       categories: [],
+      storeTypes: [],
     });
   };
 
@@ -87,27 +87,47 @@ export const FilterSheet = ({ open, onOpenChange, onApplyFilters }: FilterSheetP
     section: keyof typeof selectedFilters;
   }) => (
     <div className="py-4">
-      <h3 className="text-sm font-medium mb-2">{title}</h3>
-      <div className="space-y-2">
-        {options.map((option) => (
-          <label
-            key={option.id}
-            className="flex items-center justify-between hover:bg-gray-50 p-2 rounded-lg cursor-pointer"
-          >
-            <div className="flex items-center gap-2">
-              <Checkbox
-                checked={selectedFilters[section].includes(option.id)}
-                onCheckedChange={() => handleFilterChange(section, option.id)}
-                className="rounded-sm"
-              />
-              <span className="text-sm">{option.label}</span>
+      {title === "Distance" ? (
+        <div className="space-y-4">
+          <h3 className="text-sm font-medium mb-2">{title}</h3>
+          <div className="px-2">
+            <Slider
+              defaultValue={[5]}
+              max={20}
+              step={1}
+              className="w-full"
+            />
+            <div className="flex justify-between mt-2 text-sm text-gray-500">
+              <span>0 km</span>
+              <span>20 km</span>
             </div>
-            {option.count && (
-              <span className="text-sm text-gray-500">{option.count}</span>
-            )}
-          </label>
-        ))}
-      </div>
+          </div>
+        </div>
+      ) : (
+        <>
+          <h3 className="text-sm font-medium mb-2">{title}</h3>
+          <div className="space-y-2">
+            {options.map((option) => (
+              <label
+                key={option.id}
+                className="flex items-center justify-between hover:bg-gray-50 p-2 rounded-lg cursor-pointer"
+              >
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    checked={selectedFilters[section].includes(option.id)}
+                    onCheckedChange={() => handleFilterChange(section, option.id)}
+                    className="rounded-sm"
+                  />
+                  <span className="text-sm">{option.label}</span>
+                </div>
+                {option.count && (
+                  <span className="text-sm text-gray-500">{option.count}</span>
+                )}
+              </label>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 
@@ -129,13 +149,8 @@ export const FilterSheet = ({ open, onOpenChange, onApplyFilters }: FilterSheetP
 
           <ScrollArea className="flex-1 px-4">
             <FilterSection title="Size" options={sizes} section="sizes" />
-            <FilterSection title="Color" options={colors} section="colors" />
+            <FilterSection title="Store Type" options={storeTypes} section="storeTypes" />
             <FilterSection title="Brand" options={brands} section="brands" />
-            <FilterSection
-              title="Categories"
-              options={categories}
-              section="categories"
-            />
           </ScrollArea>
 
           <div className="border-t p-4 flex gap-2">
