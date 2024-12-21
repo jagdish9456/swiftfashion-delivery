@@ -148,10 +148,10 @@ export const Categories = () => {
       {/* Main Content */}
       <div className="flex-1 ml-16 mt-[41px]">
         {/* New Arrivals Banner */}
-        <div className="p-4 bg-[#F2FCE2]">
-          <div className="rounded-lg p-4">
-            <h3 className="text-lg font-semibold text-primary-800 mb-2">New Arrivals</h3>
-            <p className="text-sm text-primary-600 mb-3">
+        <div className="p-2 bg-[#F2FCE2]">
+          <div className="rounded-lg p-3">
+            <h3 className="text-base font-semibold text-primary-800 mb-1">New Arrivals</h3>
+            <p className="text-sm text-primary-600 mb-2">
               Check out our latest collection in {id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
             </p>
             <Button 
@@ -167,30 +167,30 @@ export const Categories = () => {
         {/* Products Grid */}
         <main className="p-4">
           {/* First half of products */}
-          <div className="grid grid-cols-2 gap-3 pb-8">
+          <div className="grid grid-cols-2 gap-3">
             {firstHalfProducts.map((product) => (
               <ProductCard key={product.id} {...product} />
             ))}
           </div>
 
           {/* Special Offer Banner in the middle */}
-          <div className="my-8 p-4 bg-white rounded-lg shadow-sm">
-            <h3 className="text-lg font-semibold mb-3">Special Offer</h3>
-            <div className="p-4 bg-primary-50 rounded-lg">
-              <p className="text-sm text-gray-600 mb-2">Get 20% off on formal wear</p>
-              <p className="text-2xl font-bold text-primary-500 mb-3">FORMAL20</p>
+          <div className="my-6 p-3 bg-white rounded-lg shadow-sm">
+            <h3 className="text-base font-semibold mb-2">Special Offer</h3>
+            <div className="p-3 bg-primary-50 rounded-lg">
+              <p className="text-sm text-gray-600 mb-1">Get 20% off on formal wear</p>
+              <p className="text-xl font-bold text-primary-500 mb-2">FORMAL20</p>
               <p className="text-xs text-gray-500">Valid until Dec 31, 2024</p>
             </div>
           </div>
 
           {/* Second half of products */}
-          <div className="grid grid-cols-2 gap-3 pb-16">
+          <div className="grid grid-cols-2 gap-3">
             {secondHalfProducts.map((product) => (
               <ProductCard key={product.id} {...product} />
             ))}
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-end mt-4">
             <FooterText />
           </div>
         </main>
