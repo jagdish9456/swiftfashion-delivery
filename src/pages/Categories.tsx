@@ -2,6 +2,7 @@ import { Filter } from "lucide-react";
 import { ProductCard } from "@/components/categories/ProductCard";
 import { Button } from "@/components/ui/button";
 import { useParams, useNavigate } from "react-router-dom";
+import { FooterText } from "@/components/layout/FooterText";
 
 const categories = [
   { name: "All", icon: "🏷️" },
@@ -146,6 +147,9 @@ export const Categories = () => {
           {products.map((product) => (
             <ProductCard key={product.id} {...product} />
           ))}
+        </div>
+        <div className="flex justify-end">
+          <FooterText />
         </div>
       </main>
     </div>
