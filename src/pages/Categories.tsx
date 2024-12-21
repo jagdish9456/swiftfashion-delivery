@@ -98,6 +98,10 @@ export const Categories = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  // Split products array for displaying special offer in the middle
+  const firstHalfProducts = products.slice(0, 6);
+  const secondHalfProducts = products.slice(6);
+
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Header */}
@@ -141,47 +145,55 @@ export const Categories = () => {
         </div>
       </aside>
 
-      {/* Main Content with Banner */}
-      <div className="flex-1 ml-16 mt-[41px] flex">
+      {/* Main Content */}
+      <div className="flex-1 ml-16 mt-[41px]">
+        {/* New Arrivals Banner */}
+        <div className="p-4 bg-[#F2FCE2]">
+          <div className="rounded-lg p-4">
+            <h3 className="text-lg font-semibold text-primary-800 mb-2">New Arrivals</h3>
+            <p className="text-sm text-primary-600 mb-3">
+              Check out our latest collection in {id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+            </p>
+            <Button 
+              variant="secondary" 
+              className="w-full sm:w-auto bg-white hover:bg-primary-50"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
+              Explore Now
+            </Button>
+          </div>
+        </div>
+
         {/* Products Grid */}
-        <main className="flex-1 p-4 overflow-y-auto">
-          <div className="grid grid-cols-2 gap-3 pb-16">
-            {products.map((product) => (
+        <main className="p-4">
+          {/* First half of products */}
+          <div className="grid grid-cols-2 gap-3 pb-8">
+            {firstHalfProducts.map((product) => (
               <ProductCard key={product.id} {...product} />
             ))}
           </div>
-          <div className="flex justify-end">
-            <FooterText />
-          </div>
-        </main>
 
-        {/* Right Banner Section */}
-        <aside className="w-64 p-4 bg-[#F1F0FB] border-l">
-          {/* Top Banner */}
-          <div className="mb-8">
-            <div className="rounded-lg bg-gradient-to-r from-primary-100 to-primary-50 p-4 shadow-sm">
-              <h3 className="text-lg font-semibold text-primary-800 mb-2">New Arrivals</h3>
-              <p className="text-sm text-primary-600 mb-3">Check out our latest collection in {id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</p>
-              <Button 
-                variant="secondary" 
-                className="w-full bg-white hover:bg-primary-50"
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              >
-                Explore Now
-              </Button>
-            </div>
-          </div>
-
-          {/* Special Offer Banner */}
-          <div className="sticky top-[60px]">
+          {/* Special Offer Banner in the middle */}
+          <div className="my-8 p-4 bg-white rounded-lg shadow-sm">
             <h3 className="text-lg font-semibold mb-3">Special Offer</h3>
-            <div className="rounded-lg bg-white p-4 shadow-sm">
+            <div className="p-4 bg-primary-50 rounded-lg">
               <p className="text-sm text-gray-600 mb-2">Get 20% off on formal wear</p>
               <p className="text-2xl font-bold text-primary-500 mb-3">FORMAL20</p>
               <p className="text-xs text-gray-500">Valid until Dec 31, 2024</p>
             </div>
           </div>
-        </aside>
+
+          {/* Second half of products */}
+          <div className="grid grid-cols-2 gap-3 pb-16">
+            {secondHalfProducts.map((product) => (
+              <ProductCard key={product.id} {...product} />
+            ))}
+          </div>
+
+          <div className="flex justify-end">
+            <FooterText />
+          </div>
+        </main>
       </div>
     </div>
   );
