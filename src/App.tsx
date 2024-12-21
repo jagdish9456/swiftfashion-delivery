@@ -10,6 +10,7 @@ import { SetLocation } from "@/pages/SetLocation";
 import { Profile } from "@/pages/Profile";
 import { Orders } from "@/pages/Orders";
 import { Cart } from "@/pages/Cart";
+import { NearYou } from "@/pages/NearYou";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/near-you" element={<NearYou />} />
           </Routes>
           <Toaster />
         </Router>
