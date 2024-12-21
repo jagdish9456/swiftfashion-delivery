@@ -90,7 +90,7 @@ export const StoreSection = () => {
 
   return (
     <section className="py-4">
-      <div className="grid grid-cols-2 gap-4 px-2">
+      <div className="grid grid-cols-2 gap-4 px-4">
         {visibleStores.map((store) => (
           <div 
             key={store.id}
@@ -102,14 +102,10 @@ export const StoreSection = () => {
         ))}
         {visibleStores.length < allStores.length && (
           <div ref={ref} className="col-span-2 space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              {[1, 2].map((n) => (
-                <div key={n} className="animate-pulse space-y-4">
-                  <div className="h-32 bg-gray-200 rounded-lg w-full" />
-                  <div className="h-4 bg-gray-200 rounded w-3/4" />
-                  <div className="h-4 bg-gray-200 rounded w-1/2" />
-                </div>
-              ))}
+            <div className="animate-pulse space-y-4">
+              <div className="h-32 bg-gray-200 rounded-lg w-full" />
+              <div className="h-4 bg-gray-200 rounded w-3/4" />
+              <div className="h-4 bg-gray-200 rounded w-1/2" />
             </div>
           </div>
         )}
