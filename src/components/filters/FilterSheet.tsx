@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { X } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
 
 type FilterOption = {
   id: string;
@@ -16,32 +16,19 @@ type FilterOption = {
   count?: number;
 };
 
-const sizes: FilterOption[] = [
-  { id: "s", label: "S", count: 33 },
-  { id: "m", label: "M", count: 29 },
-  { id: "l", label: "L", count: 28 },
-  { id: "xl", label: "XL", count: 31 },
-  { id: "xxl", label: "XXL", count: 30 },
-];
-
-const colors: FilterOption[] = [
-  { id: "black", label: "Black" },
-  { id: "white", label: "White" },
-  { id: "blue", label: "Blue" },
-  { id: "red", label: "Red" },
+const storeTypes: FilterOption[] = [
+  { id: "grocery", label: "Grocery Store", count: 33 },
+  { id: "restaurant", label: "Restaurant", count: 29 },
+  { id: "fashion", label: "Fashion Store", count: 28 },
+  { id: "electronics", label: "Electronics Store", count: 31 },
+  { id: "beauty", label: "Beauty Store", count: 30 },
 ];
 
 const brands: FilterOption[] = [
-  { id: "nike", label: "Nike" },
-  { id: "adidas", label: "Adidas" },
-  { id: "puma", label: "Puma" },
-  { id: "reebok", label: "Reebok" },
-];
-
-const categories: FilterOption[] = [
-  { id: "formal", label: "Formal Wear" },
-  { id: "casual", label: "Casual Wear" },
-  { id: "sports", label: "Sports Wear" },
+  { id: "walmart", label: "Walmart" },
+  { id: "target", label: "Target" },
+  { id: "costco", label: "Costco" },
+  { id: "wholeFoods", label: "Whole Foods" },
 ];
 
 type FilterSheetProps = {
@@ -52,11 +39,10 @@ type FilterSheetProps = {
 
 export const FilterSheet = ({ open, onOpenChange, onApplyFilters }: FilterSheetProps) => {
   const [selectedFilters, setSelectedFilters] = React.useState({
-    sizes: [] as string[],
-    colors: [] as string[],
+    storeTypes: [] as string[],
     brands: [] as string[],
-    categories: [] as string[],
   });
+  const [distance, setDistance] = React.useState([5]);
 
   const handleFilterChange = (section: keyof typeof selectedFilters, id: string) => {
     setSelectedFilters((prev) => {
@@ -70,11 +56,10 @@ export const FilterSheet = ({ open, onOpenChange, onApplyFilters }: FilterSheetP
 
   const clearAllFilters = () => {
     setSelectedFilters({
-      sizes: [],
-      colors: [],
+      storeTypes: [],
       brands: [],
-      categories: [],
     });
+    setDistance([5]);
   };
 
   const FilterSection = ({ 
@@ -128,14 +113,23 @@ export const FilterSheet = ({ open, onOpenChange, onApplyFilters }: FilterSheetP
           </SheetHeader>
 
           <ScrollArea className="flex-1 px-4">
-            <FilterSection title="Size" options={sizes} section="sizes" />
-            <FilterSection title="Color" options={colors} section="colors" />
-            <FilterSection title="Brand" options={brands} section="brands" />
-            <FilterSection
-              title="Categories"
-              options={categories}
-              section="categories"
-            />
+            <div className="py-4">
+              <h3 className="text-sm font-medium mb-4">Distance (km)</h3>
+              <Slider
+                value={distance}
+                onValueChange={setDistance}
+                max={20}
+                step={1}
+                className="w-full"
+              />
+              <div className="flex justify-between mt-2">
+                <span className="text-sm text-gray-500">0 km</span>
+                <span className="text-sm text-gray-500">{distance[0]} km</span>
+                <span className="text-sm text-gray-500">20 km</span>
+              </div>
+            </div>
+            <FilterSection title="Store Type" options={storeTypes} section="storeTypes" />
+            <FilterSection title="Brands" options={brands} section="brands" />
           </ScrollArea>
 
           <div className="border-t p-4 flex gap-2">
