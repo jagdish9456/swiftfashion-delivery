@@ -30,11 +30,11 @@ export const GenderCategories = () => {
           </TabsList>
 
           <TabsContent value="men" className="mt-0">
-            <GridCategories />
+            <GridCategories gender="men" />
           </TabsContent>
 
           <TabsContent value="women" className="mt-0">
-            <GridCategories />
+            <GridCategories gender="women" />
           </TabsContent>
         </Tabs>
       </div>
