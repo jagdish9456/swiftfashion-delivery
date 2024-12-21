@@ -1,4 +1,4 @@
-import { Bell, MapPin, Mic } from "lucide-react";
+import { Bell, MapPin, Mic, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -14,9 +14,14 @@ export const Header = () => {
               <span className="text-xs text-gray-500">Choose delivery area</span>
             </div>
           </Button>
-          <Button variant="ghost" size="icon">
-            <Bell className="h-5 w-5" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon">
+              <Bell className="h-5 w-5" />
+            </Button>
+            <Button variant="ghost" size="icon">
+              <UserRound className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
         <div className="flex gap-2">
           <div className="relative flex-1">
