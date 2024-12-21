@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { man, woman } from "lucide-react";
+import { UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { FooterText } from "@/components/layout/FooterText";
@@ -65,11 +65,11 @@ export const GenderCategories = () => {
         <Tabs defaultValue="men" className="w-full" onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-2 mb-6">
             <TabsTrigger value="men" className="flex items-center gap-2">
-              <man className="h-4 w-4" />
+              <UserRound className="h-4 w-4" />
               Men
             </TabsTrigger>
             <TabsTrigger value="women" className="flex items-center gap-2">
-              <woman className="h-4 w-4" />
+              <UserRound className="h-4 w-4" />
               Women
             </TabsTrigger>
           </TabsList>
