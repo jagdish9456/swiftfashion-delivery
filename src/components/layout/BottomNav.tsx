@@ -1,9 +1,9 @@
-import { Home, Search, ShoppingBag, User } from "lucide-react";
+import { Home, Grid, ShoppingBag, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const navItems = [
   { icon: Home, label: "Home", path: "/" },
-  { icon: Search, label: "Search", path: "/search" },
+  { icon: Grid, label: "Categories", path: "/gender-categories" },
   { icon: ShoppingBag, label: "Cart", path: "/cart" },
   { icon: User, label: "Profile", path: "/profile" },
 ];
