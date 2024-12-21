@@ -1,20 +1,14 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Heart, Search, ShoppingBag, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { ProductHeader } from "@/components/product/ProductHeader";
+import { ProductImageCarousel } from "@/components/product/ProductImageCarousel";
+import { ProductInfo } from "@/components/product/ProductInfo";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Check } from "lucide-react";
+import { useState } from "react";
 
 const ProductDetails = () => {
-  const navigate = useNavigate();
   const { toast } = useToast();
   const { addItem } = useCart();
   const [selectedSize, setSelectedSize] = useState("S");
@@ -24,40 +18,40 @@ const ProductDetails = () => {
   // Mock data - In a real app, this would come from an API
   const product = {
     id: "1",
-    name: "Solid Polo Collar T-shirt",
+    name: "Premium Cotton Casual Shirt",
     price: 36,
     originalPrice: 60,
     discount: "60% off",
     rating: 4.3,
     ratingCount: 2814,
     images: [
-      "/lovable-uploads/55a80d4f-cc66-44c0-add1-267784bef2cf.png",
-      "/lovable-uploads/e9378036-26ff-4163-be71-29ae045c1c09.png",
-      "/lovable-uploads/55a80d4f-cc66-44c0-add1-267784bef2cf.png",
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800",
+      "https://images.unsplash.com/photo-1578932750294-f5075e85f44a?w=800",
+      "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800",
     ],
     details: {
       color: "Pink",
       length: "Regular",
-      type: "Polo",
-      sleeve: "Half Sleeve",
+      type: "Casual",
+      sleeve: "Full Sleeve",
     },
-    description: "Slip into this trendy and attractive polo t-shirt and look stylish effortlessly. Made to accentuate any body type, it will give you that extra oomph and make you stand out wherever you are. Keep the accessories minimal for that added elegant look, just your favourite watch and sunglasses, and of course, don't forget your pretty smile!",
+    description: "Slip into this trendy and attractive casual shirt and look stylish effortlessly. Made with premium cotton to accentuate any body type, it will give you that extra oomph and make you stand out wherever you are. Keep the accessories minimal for that added elegant look, just your favourite watch and sunglasses, and of course, don't forget your pretty smile!",
     similarProducts: [
       {
         id: "2",
-        name: "Solid Polo Collar T-shirt",
+        name: "Classic Linen Shirt",
         price: 36,
         originalPrice: 60,
         discount: "60% off",
-        image: "/lovable-uploads/55a80d4f-cc66-44c0-add1-267784bef2cf.png",
+        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800",
       },
       {
         id: "3",
-        name: "Men Slim Fit Casual Shirt",
+        name: "Slim Fit Oxford Shirt",
         price: 19.9,
         originalPrice: 57,
         discount: "65% off",
-        image: "/lovable-uploads/e9378036-26ff-4163-be71-29ae045c1c09.png",
+        image: "https://images.unsplash.com/photo-1578932750294-f5075e85f44a?w=800",
       },
     ],
   };
@@ -89,82 +83,18 @@ const ProductDetails = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      {/* Header */}
-      <div className="fixed top-0 left-0 right-0 bg-white z-10 px-4 py-2 flex items-center justify-between border-b">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8"
-            onClick={() => navigate(-1)}
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <h1 className="text-base font-medium truncate max-w-[200px]">
-            {product.name}
-          </h1>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="h-8 w-8">
-            <Search className="h-5 w-5" />
-          </Button>
-          <Button variant="ghost" size="icon" className="h-8 w-8">
-            <Heart className="h-5 w-5" />
-          </Button>
-          <div className="relative">
-            <Button variant="ghost" size="icon" className="h-8 w-8">
-              <ShoppingBag className="h-5 w-5" />
-            </Button>
-            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-              3
-            </span>
-          </div>
-        </div>
-      </div>
+      <ProductHeader name={product.name} />
+      <ProductImageCarousel images={product.images} name={product.name} />
 
-      {/* Product Image Carousel */}
-      <div className="pt-[48px]">
-        <Carousel className="w-full">
-          <CarouselContent>
-            {product.images.map((image, index) => (
-              <CarouselItem key={index}>
-                <div className="aspect-square w-full">
-                  <img
-                    src={image}
-                    alt={`${product.name} - View ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="left-2" />
-          <CarouselNext className="right-2" />
-        </Carousel>
-      </div>
-
-      {/* Product Info */}
       <div className="px-4 py-3 space-y-4">
-        <div>
-          <h2 className="text-lg font-medium">{product.name}</h2>
-          <div className="flex items-center justify-between mt-1">
-            <div className="flex items-center gap-2">
-              <span className="text-xl font-semibold">${product.price}</span>
-              <span className="text-gray-500 line-through text-sm">
-                ${product.originalPrice}
-              </span>
-              <span className="text-primary-500 text-sm">{product.discount}</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <span className="bg-primary-500 text-white text-sm px-2 py-0.5 rounded">
-                {product.rating} ★
-              </span>
-              <span className="text-sm text-gray-500">
-                {product.ratingCount} ratings
-              </span>
-            </div>
-          </div>
-        </div>
+        <ProductInfo
+          name={product.name}
+          price={product.price}
+          originalPrice={product.originalPrice}
+          discount={product.discount}
+          rating={product.rating}
+          ratingCount={product.ratingCount}
+        />
 
         {/* Size Selection */}
         <div>
