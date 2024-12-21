@@ -3,6 +3,8 @@ import { ProductCard } from "@/components/categories/ProductCard";
 import { Button } from "@/components/ui/button";
 import { useParams, useNavigate } from "react-router-dom";
 import { FooterText } from "@/components/layout/FooterText";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 const categories = [
   { name: "All", icon: "🏷️" },
@@ -19,7 +21,7 @@ const categories = [
   { name: "Bags", icon: "🎒" },
 ];
 
-const products = [
+const allProducts = [
   {
     id: "1",
     name: "Classic White T-Shirt",
@@ -92,15 +94,137 @@ const products = [
     price: 159.99,
     image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=500",
   },
+  {
+    id: "13",
+    name: "Designer Watch",
+    price: 199.99,
+    image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=500",
+  },
+  {
+    id: "14",
+    name: "Leather Briefcase",
+    price: 179.99,
+    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500",
+  },
+  {
+    id: "15",
+    name: "Silk Scarf",
+    price: 49.99,
+    image: "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=500",
+  },
+  {
+    id: "16",
+    name: "Cufflinks Set",
+    price: 89.99,
+    image: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=500",
+  },
+  {
+    id: "17",
+    name: "Designer Sunglasses",
+    price: 159.99,
+    image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500",
+  },
+  {
+    id: "18",
+    name: "Premium Belt",
+    price: 79.99,
+    image: "https://images.unsplash.com/photo-1553531384-cc64ac80f931?w=500",
+  },
+  {
+    id: "19",
+    name: "Formal Hat",
+    price: 69.99,
+    image: "https://images.unsplash.com/photo-1514327605112-b887c0e61c0a?w=500",
+  },
+  {
+    id: "20",
+    name: "Pocket Square Set",
+    price: 39.99,
+    image: "https://images.unsplash.com/photo-1598032895397-b9472444bf93?w=500",
+  },
+  {
+    id: "21",
+    name: "Formal Socks Pack",
+    price: 29.99,
+    image: "https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?w=500",
+  },
+  {
+    id: "22",
+    name: "Business Card Holder",
+    price: 45.99,
+    image: "https://images.unsplash.com/photo-1607435097405-db48f377bff6?w=500",
+  },
+  {
+    id: "23",
+    name: "Dress Shirt Set",
+    price: 129.99,
+    image: "https://images.unsplash.com/photo-1602810316498-ab67cf68c8e1?w=500",
+  },
+  {
+    id: "24",
+    name: "Formal Umbrella",
+    price: 59.99,
+    image: "https://images.unsplash.com/photo-1517144447511-aebb25bbc5d2?w=500",
+  }
 ];
+
+const ProductSkeleton = () => (
+  <div className="rounded-lg overflow-hidden bg-white shadow-sm">
+    <Skeleton className="aspect-square w-full" />
+    <div className="p-2 space-y-2">
+      <Skeleton className="h-4 w-3/4" />
+      <div className="flex items-center justify-between">
+        <Skeleton className="h-4 w-1/4" />
+        <Skeleton className="h-7 w-16" />
+      </div>
+    </div>
+  </div>
+);
 
 export const Categories = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [displayedProducts, setDisplayedProducts] = useState<typeof allProducts>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const observer = useRef<IntersectionObserver | null>(null);
+  
+  // Initial load
+  useEffect(() => {
+    setDisplayedProducts(allProducts.slice(0, 16));
+    setHasMore(allProducts.length > 16);
+  }, []);
 
-  // Split products array for displaying special offer in the middle
-  const firstHalfProducts = products.slice(0, 6);
-  const secondHalfProducts = products.slice(6);
+  const lastProductRef = useCallback((node: HTMLDivElement | null) => {
+    if (isLoading) return;
+    
+    if (observer.current) observer.current.disconnect();
+    
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        loadMore();
+      }
+    });
+    
+    if (node) observer.current.observe(node);
+  }, [isLoading, hasMore]);
+
+  const loadMore = () => {
+    setIsLoading(true);
+    // Simulate API delay
+    setTimeout(() => {
+      const currentLength = displayedProducts.length;
+      const nextProducts = allProducts.slice(currentLength, currentLength + 8);
+      setDisplayedProducts(prev => [...prev, ...nextProducts]);
+      setHasMore(currentLength + 8 < allProducts.length);
+      setIsLoading(false);
+    }, 1500);
+  };
+
+  // Split products for special offer banner
+  const midPoint = Math.min(8, Math.floor(displayedProducts.length / 2));
+  const firstHalfProducts = displayedProducts.slice(0, midPoint);
+  const secondHalfProducts = displayedProducts.slice(midPoint);
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -185,10 +309,24 @@ export const Categories = () => {
 
           {/* Second half of products */}
           <div className="grid grid-cols-2 gap-3">
-            {secondHalfProducts.map((product) => (
-              <ProductCard key={product.id} {...product} />
+            {secondHalfProducts.map((product, index) => (
+              <div
+                ref={index === secondHalfProducts.length - 1 ? lastProductRef : null}
+                key={product.id}
+              >
+                <ProductCard {...product} />
+              </div>
             ))}
           </div>
+
+          {/* Loading skeletons */}
+          {isLoading && (
+            <div className="grid grid-cols-2 gap-3 mt-3">
+              {[1, 2, 3, 4].map((n) => (
+                <ProductSkeleton key={n} />
+              ))}
+            </div>
+          )}
 
           <div className="flex justify-end mt-4">
             <FooterText />
