@@ -12,7 +12,9 @@ import { Orders } from "@/pages/Orders";
 import { Cart } from "@/pages/Cart";
 import { NearYou } from "@/pages/NearYou";
 import { Notifications } from "@/pages/Notifications";
+import { AIChat } from "@/pages/AIChat";
 import { PromoPopup } from "@/components/popups/PromoPopup";
+import { FloatingAIButton } from "@/components/ai/FloatingAIButton";
 
 const queryClient = new QueryClient();
 
@@ -32,7 +34,9 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/near-you" element={<NearYou />} />
             <Route path="/notifications" element={<Notifications />} />
+            <Route path="/ai-chat" element={<AIChat />} />
           </Routes>
+          <FloatingAIButton />
           <PromoPopup />
           <Toaster />
         </Router>
