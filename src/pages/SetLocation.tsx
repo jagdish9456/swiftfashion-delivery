@@ -2,19 +2,72 @@ import { ArrowLeft, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+
+const mapContainerStyle = {
+  width: "100%",
+  height: "100%",
+};
+
+const defaultCenter = {
+  lat: 12.9716,  // Default to Bangalore coordinates
+  lng: 77.5946,
+};
 
 export const SetLocation = () => {
   const navigate = useNavigate();
   const [selectedLocation, setSelectedLocation] = useState({
-    address: "",
-    area: "",
+    address: "Akshya Nagar",
+    area: "Raurthy Nagar, Bangalore-56001",
+    coordinates: defaultCenter,
   });
 
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "YOUR_GOOGLE_MAPS_API_KEY", // Replace with your API key
+  });
+
+  const handleMapClick = async (e: google.maps.MapMouseEvent) => {
+    if (e.latLng) {
+      const lat = e.latLng.lat();
+      const lng = e.latLng.lng();
+      
+      try {
+        const response = await fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=YOUR_GOOGLE_MAPS_API_KEY`
+        );
+        const data = await response.json();
+        
+        if (data.results[0]) {
+          const address = data.results[0].formatted_address;
+          const addressComponents = address.split(',');
+          
+          setSelectedLocation({
+            address: addressComponents[0],
+            area: addressComponents.slice(1, 3).join(','),
+            coordinates: { lat, lng },
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching address:', error);
+      }
+    }
+  };
+
   const handleConfirmLocation = () => {
-    // Store location in localStorage
-    localStorage.setItem("userLocation", JSON.stringify(selectedLocation));
+    localStorage.setItem("userLocation", JSON.stringify({
+      address: selectedLocation.address,
+      area: selectedLocation.area,
+    }));
     navigate(-1);
   };
+
+  if (loadError) {
+    return <div>Error loading maps</div>;
+  }
+
+  if (!isLoaded) {
+    return <div>Loading maps...</div>;
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -33,11 +86,21 @@ export const SetLocation = () => {
       </header>
 
       <div className="h-[calc(100vh-56px)] mt-[56px]">
-        <div className="h-[70%] bg-gray-100">
-          {/* Map placeholder - will be replaced with actual Google Maps */}
-          <div className="w-full h-full flex items-center justify-center">
-            <MapPin className="h-8 w-8 text-primary" />
-          </div>
+        <div className="h-[70%] bg-gray-100 relative">
+          <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            zoom={15}
+            center={selectedLocation.coordinates}
+            onClick={handleMapClick}
+            options={{
+              zoomControl: true,
+              streetViewControl: false,
+              mapTypeControl: false,
+              fullscreenControl: false,
+            }}
+          >
+            <Marker position={selectedLocation.coordinates} />
+          </GoogleMap>
         </div>
 
         <div className="fixed bottom-0 left-0 right-0 bg-white rounded-t-xl shadow-lg animate-slideUp">
@@ -45,12 +108,20 @@ export const SetLocation = () => {
             <div className="flex items-start gap-3">
               <MapPin className="h-5 w-5 text-primary mt-1" />
               <div className="flex-1">
-                <h2 className="font-medium">Akshya Nagar</h2>
+                <h2 className="font-medium">{selectedLocation.address}</h2>
                 <p className="text-sm text-gray-500">
-                  Raurthy Nagar, Bangalore-56001
+                  {selectedLocation.area}
                 </p>
               </div>
-              <Button variant="outline" className="h-8 text-primary">
+              <Button 
+                variant="outline" 
+                className="h-8 text-primary"
+                onClick={() => setSelectedLocation({
+                  address: "Akshya Nagar",
+                  area: "Raurthy Nagar, Bangalore-56001",
+                  coordinates: defaultCenter,
+                })}
+              >
                 CHANGE
               </Button>
             </div>
