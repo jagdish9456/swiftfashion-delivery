@@ -38,6 +38,17 @@ export const Index = () => {
           <Cloud className="w-20 h-20 text-primary-200" />
         </div>
       </div>
+      
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-white to-transparent">
+          <img 
+            src="/lovable-uploads/86e79fd8-4097-4263-bd37-30056aff88a1.png" 
+            alt="Background Pattern" 
+            className="w-full h-full object-cover opacity-5"
+          />
+        </div>
+      </div>
+
       <Header />
       <main className="pt-[116px] relative z-10">
         <div onClick={() => handleBannerClick("summer-collection")}>

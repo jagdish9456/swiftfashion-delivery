@@ -17,7 +17,7 @@ export const PromoPopup = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-sm animate-in fade-in">
+    <div className="fixed inset-0 z-[200] flex items-end justify-center bg-black/60 backdrop-blur-sm animate-in fade-in">
       <div className="relative w-full max-w-lg mx-4 mb-4 overflow-hidden bg-gradient-to-br from-orange-50 to-yellow-100 rounded-2xl animate-slideUp">
         <Button 
           variant="ghost" 
