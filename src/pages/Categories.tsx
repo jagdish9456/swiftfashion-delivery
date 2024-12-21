@@ -15,45 +15,13 @@ interface Product {
   image: string;
 }
 
-// Static products data for store view
-const storeProducts: Product[] = [
-  {
-    id: "1",
-    name: "Elegant Ethnic Dress",
-    price: 89.99,
-    image: "https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?w=800",
-  },
-  {
-    id: "2",
-    name: "Traditional Saree",
-    price: 129.99,
-    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800",
-  },
-  {
-    id: "3",
-    name: "Designer Kurta",
-    price: 69.99,
-    image: "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=800",
-  },
-  {
-    id: "4",
-    name: "Festival Collection",
-    price: 149.99,
-    image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800",
-  },
-  {
-    id: "5",
-    name: "Wedding Lehenga",
-    price: 299.99,
-    image: "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800",
-  },
-  {
-    id: "6",
-    name: "Party Wear Suit",
-    price: 199.99,
-    image: "https://images.unsplash.com/photo-1589810635657-232948472d98?w=800",
+const fetchProducts = async (categoryId: string): Promise<Product[]> => {
+  const response = await fetch(`/api/products?category=${categoryId}`);
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
   }
-];
+  return response.json();
+};
 
 export const Categories = () => {
   const navigate = useNavigate();
@@ -63,13 +31,13 @@ export const Categories = () => {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState({});
 
   const categoryId = location.pathname.split("/").pop() || "";
   
-  const { data: products = storeProducts, isLoading } = useQuery({
+  const { data: products = [], isLoading } = useQuery({
     queryKey: ["products", categoryId],
-    queryFn: () => Promise.resolve(storeProducts),
-    enabled: isFromStore
+    queryFn: () => fetchProducts(categoryId)
   });
 
   const handleApplyFilters = () => {
@@ -111,7 +79,7 @@ export const Categories = () => {
             />
           </div>
           <Button
-            variant="ghost"
+            variant="outline"
             size="icon"
             onClick={() => setShowFilters(true)}
           >
