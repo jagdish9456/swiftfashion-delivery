@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +11,13 @@ import {
 
 export const FloatingAIButton = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showTooltip, setShowTooltip] = useState(true);
+
+  // Hide button if we're on the AI chat page
+  if (location.pathname === "/ai-chat") {
+    return null;
+  }
 
   useEffect(() => {
     const timer = setTimeout(() => {

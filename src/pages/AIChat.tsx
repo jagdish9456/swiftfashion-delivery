@@ -6,19 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { generateProductRecommendations } from "@/services/openai";
 import { ProductList } from "@/components/categories/ProductList";
 import { toast } from "@/hooks/use-toast";
-
-type Product = {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-};
+import { BottomNav } from "@/components/layout/BottomNav";
 
 export const AIChat = () => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,7 +42,7 @@ export const AIChat = () => {
   return (
     <div className="min-h-screen pb-16 bg-gray-50">
       <div className="bg-white text-gray-900 p-4 flex items-center gap-2 shadow-sm">
-        <button onClick={() => navigate(-1)} className="p-2">
+        <button onClick={() => navigate("/")} className="p-2">
           <ArrowLeft className="h-5 w-5" />
         </button>
         <h1 className="text-lg font-medium">AI Shopping Assistant</h1>
@@ -80,6 +74,7 @@ export const AIChat = () => {
           )}
         </div>
       </main>
+      <BottomNav />
     </div>
   );
 };
