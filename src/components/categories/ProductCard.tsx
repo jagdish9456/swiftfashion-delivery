@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/contexts/CartContext";
@@ -11,11 +12,13 @@ type ProductCardProps = {
 };
 
 export const ProductCard = ({ id, name, price, image }: ProductCardProps) => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const { addItem } = useCart();
   const [isAdding, setIsAdding] = useState(false);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setIsAdding(true);
     addItem({ id, name, price, image });
     toast({
@@ -43,7 +46,10 @@ export const ProductCard = ({ id, name, price, image }: ProductCardProps) => {
   };
 
   return (
-    <div className="rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
+    <div 
+      className="rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+      onClick={() => navigate(`/product/${id}`)}
+    >
       <div className="aspect-square relative overflow-hidden">
         <img
           src={image}
