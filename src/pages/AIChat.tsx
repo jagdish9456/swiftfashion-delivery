@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Header } from "@/components/layout/Header";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { Button } from "@/components/ui/button";
-import { Send } from "lucide-react";
+import { ArrowLeft, Send } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
+import { useNavigate } from "react-router-dom";
 
 export const AIChat = () => {
+  const navigate = useNavigate();
   const [message, setMessage] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -16,17 +17,22 @@ export const AIChat = () => {
   };
 
   return (
-    <div className="min-h-screen pb-16">
-      <Header />
-      <main className="pt-[116px] px-4">
+    <div className="min-h-screen pb-16 bg-gray-50">
+      <div className="bg-white text-gray-900 p-4 flex items-center gap-2 shadow-sm">
+        <button onClick={() => navigate(-1)} className="p-2">
+          <ArrowLeft className="h-5 w-5" />
+        </button>
+        <h1 className="text-lg font-medium">AI Shopping Assistant</h1>
+      </div>
+      
+      <main className="p-4">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-xl font-semibold mb-4">AI Shopping Assistant</h1>
           <form onSubmit={handleSubmit} className="relative">
             <Textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Ask me anything about our products..."
-              className="min-h-[100px] pr-12 resize-none"
+              className="min-h-[100px] pr-12 resize-none bg-white"
             />
             <Button
               type="submit"
