@@ -16,8 +16,8 @@ function App() {
             <Route path="/" element={<Index />} />
             <Route path="/category/:id" element={<Categories />} />
           </Routes>
+          <Toaster />
         </Router>
-        <Toaster />
       </CartProvider>
     </QueryClientProvider>
   );
