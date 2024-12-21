@@ -13,13 +13,31 @@ export const generateProductRecommendations = async (userInput: string) => {
       messages: [
         {
           role: "system",
-          content: `You are a shopping assistant. Analyze the user's input and return a JSON array of product IDs that best match their requirements from our product catalog. Consider factors like type, color, size, season, and price range. The response should be a valid JSON array of strings containing only the product IDs.`
+          content: `You are a shopping assistant helping users find products from our catalog. 
+          Analyze the user's input and return product IDs that best match their requirements.
+          Consider these product attributes: type, color, material, season, price range, and style.
+          Even if the match isn't perfect, try to return at least 2-3 relevant products.
+          The response should be a valid JSON array of strings containing only the product IDs.
+          
+          Available products: ${JSON.stringify(products.products.map(p => ({
+            id: p.id,
+            name: p.name,
+            category: p.category,
+            type: p.type,
+            colors: p.colors,
+            material: p.material,
+            season: p.season,
+            price: p.price
+          })))}
+          `
         },
         {
           role: "user",
           content: userInput
         }
-      ]
+      ],
+      temperature: 0.7,
+      max_tokens: 150
     });
 
     const response = completion.choices[0]?.message?.content;
