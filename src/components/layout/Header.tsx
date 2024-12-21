@@ -3,6 +3,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+
+// Mock data for search suggestions
+const searchSuggestions = {
+  categories: [
+    { id: "formal-wear", name: "Formal Wear" },
+    { id: "casual-wear", name: "Casual Wear" },
+    { id: "ethnic-wear", name: "Ethnic Wear" },
+    { id: "sportswear", name: "Sportswear" },
+  ],
+  products: [
+    { id: "1", name: "Classic White Shirt", category: "formal-wear" },
+    { id: "2", name: "Blue Denim Jeans", category: "casual-wear" },
+    { id: "3", name: "Traditional Saree", category: "ethnic-wear" },
+    { id: "4", name: "Sports Track Suit", category: "sportswear" },
+  ]
+};
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -10,6 +28,8 @@ export const Header = () => {
     address: "Set Location",
     area: "Choose delivery area"
   });
+  const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const savedLocation = localStorage.getItem("userLocation");
@@ -17,6 +37,15 @@ export const Header = () => {
       setLocation(JSON.parse(savedLocation));
     }
   }, []);
+
+  const handleSelect = (type: 'category' | 'product', id: string) => {
+    setOpen(false);
+    if (type === 'category') {
+      navigate(`/category/${id}`);
+    } else {
+      navigate(`/product/${id}`);
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm">
@@ -49,10 +78,51 @@ export const Header = () => {
         </div>
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <Input
-              placeholder="Search Items"
-              className="pl-3 pr-8 py-1 w-full bg-gray-50 h-9 text-sm"
-            />
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
+                <Input
+                  placeholder="Search Items"
+                  className="pl-3 pr-8 py-1 w-full bg-gray-50 h-9 text-sm"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </PopoverTrigger>
+              <PopoverContent className="p-0 w-[calc(100vw-32px)]" align="start">
+                <Command>
+                  <CommandList>
+                    <CommandEmpty>No results found.</CommandEmpty>
+                    <CommandGroup heading="Categories">
+                      {searchSuggestions.categories
+                        .filter(cat => 
+                          cat.name.toLowerCase().includes(search.toLowerCase())
+                        )
+                        .map(category => (
+                          <CommandItem
+                            key={category.id}
+                            onSelect={() => handleSelect('category', category.id)}
+                          >
+                            {category.name}
+                          </CommandItem>
+                        ))}
+                    </CommandGroup>
+                    <CommandGroup heading="Products">
+                      {searchSuggestions.products
+                        .filter(prod => 
+                          prod.name.toLowerCase().includes(search.toLowerCase())
+                        )
+                        .map(product => (
+                          <CommandItem
+                            key={product.id}
+                            onSelect={() => handleSelect('product', product.id)}
+                          >
+                            {product.name}
+                          </CommandItem>
+                        ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
             <Button
               variant="ghost"
               size="icon"

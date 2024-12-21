@@ -78,8 +78,8 @@ export const StoreSection = () => {
     triggerOnce: true
   });
 
-  const handleStoreClick = (storeId: string) => {
-    navigate(`/categories?storeId=${storeId}&category=formal`);
+  const handleStoreClick = () => {
+    navigate('/category/formal-wear');
   };
 
   if (inView && visibleStores.length < allStores.length) {
@@ -92,11 +92,7 @@ export const StoreSection = () => {
     <section className="py-4">
       <div className="grid grid-cols-2 gap-4 px-4">
         {visibleStores.map((store) => (
-          <div 
-            key={store.id} 
-            onClick={() => handleStoreClick(store.id)}
-            className="cursor-pointer"
-          >
+          <div key={store.name} onClick={handleStoreClick} className="cursor-pointer">
             <StoreCard {...store} />
           </div>
         ))}
