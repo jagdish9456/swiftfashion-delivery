@@ -5,17 +5,15 @@ import { BottomNav } from "@/components/layout/BottomNav";
 import { FooterText } from "@/components/layout/FooterText";
 import { FullWidthBanner } from "@/components/banners/FullWidthBanner";
 import { GridCategories } from "@/components/categories/GridCategories";
+import { Header } from "@/components/layout/Header";
 
 export const GenderCategories = () => {
   const [activeTab, setActiveTab] = useState("men");
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
-      <div className="fixed top-0 left-0 right-0 bg-white z-10 px-4 py-2 flex items-center justify-between border-b">
-        <h1 className="text-lg font-semibold">Categories</h1>
-      </div>
-
-      <div className="pt-14 px-4">
+      <Header />
+      <div className="pt-32 px-4">
         <FullWidthBanner />
         <Tabs defaultValue="men" className="w-full" onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-2 mb-6">

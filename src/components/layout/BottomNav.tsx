@@ -5,7 +5,7 @@ const navItems = [
   { icon: Home, label: "Home", path: "/" },
   { icon: Grid, label: "Categories", path: "/gender-categories" },
   { icon: ShoppingBag, label: "Cart", path: "/cart" },
-  { icon: MapPin, label: "Shops Near You", path: "/shops" },
+  { icon: MapPin, label: "Near You", path: "/shops" },
 ];
 
 export const BottomNav = () => {
