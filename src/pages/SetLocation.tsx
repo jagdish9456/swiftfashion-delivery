@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { AddressListDialog } from "@/components/address/AddressListDialog";
 
 const mapContainerStyle = {
   width: "100%",
@@ -14,6 +15,11 @@ const defaultCenter = {
   lng: 77.5946,
 };
 
+interface Address {
+  address: string;
+  area: string;
+}
+
 export const SetLocation = () => {
   const navigate = useNavigate();
   const [selectedLocation, setSelectedLocation] = useState({
@@ -22,9 +28,34 @@ export const SetLocation = () => {
     coordinates: defaultCenter,
   });
 
+  const [showAddressList, setShowAddressList] = useState(false);
+  const [savedAddresses, setSavedAddresses] = useState<Address[]>([]);
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyAU3N2Sk9jEEgaxJ7EpixGmI3N1Sh4j7Ss",
   });
+
+  useEffect(() => {
+    // Load saved addresses from localStorage
+    const addresses = localStorage.getItem("savedAddresses");
+    if (addresses) {
+      setSavedAddresses(JSON.parse(addresses));
+    } else {
+      // Set some default addresses if none exist
+      const defaultAddresses = [
+        {
+          address: "Akshya Nagar",
+          area: "Raurthy Nagar, Bangalore-56001",
+        },
+        {
+          address: "JP Nagar",
+          area: "Phase 6, Bangalore-56078",
+        },
+      ];
+      localStorage.setItem("savedAddresses", JSON.stringify(defaultAddresses));
+      setSavedAddresses(defaultAddresses);
+    }
+  }, []);
 
   const handleMapClick = async (e: google.maps.MapMouseEvent) => {
     if (e.latLng) {
@@ -54,11 +85,36 @@ export const SetLocation = () => {
   };
 
   const handleConfirmLocation = () => {
+    // Save the new address to the list if it doesn't exist
+    const newAddress = {
+      address: selectedLocation.address,
+      area: selectedLocation.area,
+    };
+    
+    const addressExists = savedAddresses.some(
+      addr => addr.address === newAddress.address && addr.area === newAddress.area
+    );
+    
+    if (!addressExists) {
+      const updatedAddresses = [...savedAddresses, newAddress];
+      localStorage.setItem("savedAddresses", JSON.stringify(updatedAddresses));
+      setSavedAddresses(updatedAddresses);
+    }
+
     localStorage.setItem("userLocation", JSON.stringify({
       address: selectedLocation.address,
       area: selectedLocation.area,
     }));
     navigate(-1);
+  };
+
+  const handleSelectSavedAddress = (address: Address) => {
+    setSelectedLocation({
+      ...selectedLocation,
+      address: address.address,
+      area: address.area,
+    });
+    setShowAddressList(false);
   };
 
   if (loadError) {
@@ -116,11 +172,7 @@ export const SetLocation = () => {
               <Button 
                 variant="outline" 
                 className="h-8 text-primary"
-                onClick={() => setSelectedLocation({
-                  address: "Akshya Nagar",
-                  area: "Raurthy Nagar, Bangalore-56001",
-                  coordinates: defaultCenter,
-                })}
+                onClick={() => setShowAddressList(true)}
               >
                 CHANGE
               </Button>
@@ -135,6 +187,14 @@ export const SetLocation = () => {
           </div>
         </div>
       </div>
+
+      <AddressListDialog
+        open={showAddressList}
+        onOpenChange={setShowAddressList}
+        addresses={savedAddresses}
+        onSelectAddress={handleSelectSavedAddress}
+        onAddNewClick={() => setShowAddressList(false)}
+      />
     </div>
   );
 };
