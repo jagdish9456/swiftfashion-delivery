@@ -44,7 +44,7 @@ export const Index = () => {
           <img 
             src="/lovable-uploads/86e79fd8-4097-4263-bd37-30056aff88a1.png" 
             alt="Background Pattern" 
-            className="w-full h-full object-cover opacity-5"
+            className="w-full h-full object-cover opacity-10"
           />
         </div>
       </div>
