@@ -23,7 +23,7 @@ export const SetLocation = () => {
   });
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyCpykb5kDNhjGbS9iyxngUhiAknQId6lPo",
+    googleMapsApiKey: "AIzaSyAU3N2Sk9jEEgaxJ7EpixGmI3N1Sh4j7Ss",
   });
 
   const handleMapClick = async (e: google.maps.MapMouseEvent) => {
@@ -33,7 +33,7 @@ export const SetLocation = () => {
       
       try {
         const response = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyCpykb5kDNhjGbS9iyxngUhiAknQId6lPo`
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyAU3N2Sk9jEEgaxJ7EpixGmI3N1Sh4j7Ss`
         );
         const data = await response.json();
         
