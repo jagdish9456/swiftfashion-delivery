@@ -20,8 +20,8 @@ export const Index = () => {
         <GridCategories />
         <CategorySection />
         <OfferBanners />
-        <ClothingCategories />
         <TopProducts />
+        <ClothingCategories />
         <TopChoices />
       </main>
       <BottomNav />

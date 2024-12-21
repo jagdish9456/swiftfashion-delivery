@@ -60,14 +60,14 @@ export const ClothingCategoryRow = ({
       </div>
       <div
         ref={scrollContainerRef}
-        className="flex gap-4 overflow-x-auto hide-scrollbar snap-x snap-mandatory px-4"
+        className="flex gap-3 overflow-x-auto hide-scrollbar snap-x snap-mandatory px-4"
       >
         {products.map((product) => (
-          <div key={product.id} className="snap-start w-[160px] flex-none">
+          <div key={product.id} className="snap-start w-[120px] flex-none">
             <ProductCard {...product} />
           </div>
         ))}
-        <div className="snap-start flex-none w-[100px] flex items-center justify-center">
+        <div className="snap-start flex-none w-[80px] flex items-center justify-center">
           <Button
             variant="ghost"
             className="h-full text-primary-500 hover:text-primary-600"
