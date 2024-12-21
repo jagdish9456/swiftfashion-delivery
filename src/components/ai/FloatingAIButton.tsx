@@ -14,11 +14,6 @@ export const FloatingAIButton = () => {
   const location = useLocation();
   const [showTooltip, setShowTooltip] = useState(true);
 
-  // Hide button if we're on the AI chat page
-  if (location.pathname === "/ai-chat") {
-    return null;
-  }
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowTooltip(false);
@@ -26,6 +21,11 @@ export const FloatingAIButton = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  // Hide button if we're on the AI chat page
+  if (location.pathname === "/ai-chat") {
+    return null;
+  }
 
   return (
     <div className="fixed right-4 bottom-20 z-50">
