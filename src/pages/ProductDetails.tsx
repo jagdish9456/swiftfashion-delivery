@@ -3,6 +3,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ProductHeader } from "@/components/product/ProductHeader";
 import { ProductImageCarousel } from "@/components/product/ProductImageCarousel";
 import { ProductInfo } from "@/components/product/ProductInfo";
+import { ProductsCarousel } from "@/components/product/ProductsCarousel";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Check } from "lucide-react";
@@ -24,6 +25,7 @@ const ProductDetails = () => {
     discount: "60% off",
     rating: 4.3,
     ratingCount: 2814,
+    brand: "StyleCraft",
     images: [
       "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800",
       "https://images.unsplash.com/photo-1578932750294-f5075e85f44a?w=800",
@@ -36,25 +38,77 @@ const ProductDetails = () => {
       sleeve: "Full Sleeve",
     },
     description: "Slip into this trendy and attractive casual shirt and look stylish effortlessly. Made with premium cotton to accentuate any body type, it will give you that extra oomph and make you stand out wherever you are. Keep the accessories minimal for that added elegant look, just your favourite watch and sunglasses, and of course, don't forget your pretty smile!",
-    similarProducts: [
-      {
-        id: "2",
-        name: "Classic Linen Shirt",
-        price: 36,
-        originalPrice: 60,
-        discount: "60% off",
-        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800",
-      },
-      {
-        id: "3",
-        name: "Slim Fit Oxford Shirt",
-        price: 19.9,
-        originalPrice: 57,
-        discount: "65% off",
-        image: "https://images.unsplash.com/photo-1578932750294-f5075e85f44a?w=800",
-      },
-    ],
   };
+
+  const similarProducts = [
+    {
+      id: "2",
+      name: "Classic Linen Shirt",
+      price: 36,
+      originalPrice: 60,
+      discount: "60% off",
+      image: "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800",
+    },
+    {
+      id: "3",
+      name: "Slim Fit Oxford Shirt",
+      price: 19.9,
+      originalPrice: 57,
+      discount: "65% off",
+      image: "https://images.unsplash.com/photo-1604695573706-53170668f6a6?w=800",
+    },
+    {
+      id: "4",
+      name: "Casual Denim Shirt",
+      price: 45,
+      originalPrice: 75,
+      discount: "40% off",
+      image: "https://images.unsplash.com/photo-1588359348347-9bc6cbbb689e?w=800",
+    },
+    {
+      id: "5",
+      name: "Striped Cotton Shirt",
+      price: 29.9,
+      originalPrice: 49.9,
+      discount: "40% off",
+      image: "https://images.unsplash.com/photo-1607345366928-199ea26cfe3e?w=800",
+    },
+  ];
+
+  const brandProducts = [
+    {
+      id: "6",
+      name: `${product.brand} Premium Polo`,
+      price: 42,
+      originalPrice: 70,
+      discount: "40% off",
+      image: "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=800",
+    },
+    {
+      id: "7",
+      name: `${product.brand} Summer T-Shirt`,
+      price: 24.9,
+      originalPrice: 49.9,
+      discount: "50% off",
+      image: "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800",
+    },
+    {
+      id: "8",
+      name: `${product.brand} Formal Shirt`,
+      price: 54.9,
+      originalPrice: 89.9,
+      discount: "39% off",
+      image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=800",
+    },
+    {
+      id: "9",
+      name: `${product.brand} Casual Blazer`,
+      price: 89.9,
+      originalPrice: 149.9,
+      discount: "40% off",
+      image: "https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?w=800",
+    },
+  ];
 
   const sizeChart = {
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
@@ -107,8 +161,8 @@ const ProductDetails = () => {
                 </Button>
               </DialogTrigger>
               <DialogContent>
+                <DialogTitle>Size Chart</DialogTitle>
                 <div className="p-4">
-                  <h4 className="font-medium mb-4">Size Chart</h4>
                   <div className="flex gap-2 mb-4">
                     <Button
                       variant="outline"
@@ -215,35 +269,16 @@ const ProductDetails = () => {
         </div>
 
         {/* Similar Products */}
-        <div>
-          <h3 className="font-medium mb-3">SIMILAR PRODUCTS</h3>
-          <div className="grid grid-cols-2 gap-4">
-            {product.similarProducts.map((item) => (
-              <div
-                key={item.id}
-                className="border rounded-lg overflow-hidden bg-white"
-              >
-                <div className="aspect-square">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-2">
-                  <h4 className="text-sm font-medium truncate">{item.name}</h4>
-                  <div className="flex items-center gap-1 mt-1">
-                    <span className="text-sm font-semibold">${item.price}</span>
-                    <span className="text-xs text-gray-500 line-through">
-                      ${item.originalPrice}
-                    </span>
-                    <span className="text-xs text-green-600">{item.discount}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <ProductsCarousel
+          products={similarProducts}
+          title="SIMILAR PRODUCTS"
+        />
+
+        {/* More from this brand */}
+        <ProductsCarousel
+          products={brandProducts}
+          title={`MORE FROM ${product.brand.toUpperCase()}`}
+        />
       </div>
 
       {/* Bottom Buttons */}
