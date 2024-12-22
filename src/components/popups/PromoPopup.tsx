@@ -17,8 +17,8 @@ export const PromoPopup = () => {
   if (!isOpen || location.pathname !== '/') return null;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in p-4">
-      <div className="relative w-full max-w-lg mx-auto overflow-hidden bg-gradient-to-br from-primary-50 to-primary-100/50 rounded-2xl animate-slideUp">
+    <div className="fixed inset-0 z-[200] flex items-end justify-center bg-black/60 backdrop-blur-sm animate-in fade-in">
+      <div className="w-full max-w-lg mx-auto overflow-hidden bg-gradient-to-br from-primary-50 to-primary-100/50 rounded-t-2xl animate-slideUp">
         <Button 
           variant="ghost" 
           size="icon" 

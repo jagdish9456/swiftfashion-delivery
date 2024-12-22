@@ -1,45 +1,41 @@
 import { ProductCard } from "./ProductCard";
-import { Skeleton } from "@/components/ui/skeleton";
 
-type Product = {
+interface Product {
   id: string;
   name: string;
+  description: string;
   price: number;
-  image: string;
-};
+  images: Array<{
+    url: string;
+    alt: string;
+    isDefault: boolean;
+  }>;
+  brand: string;
+}
 
-type ProductListProps = {
+interface ProductListProps {
   products: Product[];
-  isLoading: boolean;
-  lastProductRef?: (node: HTMLDivElement | null) => void;
-};
+  isLoading?: boolean;
+}
 
-const ProductSkeleton = () => (
-  <div className="rounded-lg overflow-hidden bg-white shadow-sm">
-    <Skeleton className="aspect-square w-full" />
-    <div className="p-2 space-y-2">
-      <Skeleton className="h-4 w-3/4" />
-      <div className="flex items-center justify-between">
-        <Skeleton className="h-4 w-1/4" />
-        <Skeleton className="h-7 w-16" />
-      </div>
-    </div>
-  </div>
-);
+export const ProductList = ({ products, isLoading }: ProductListProps) => {
+  if (isLoading) {
+    return <div className="animate-pulse">Loading...</div>;
+  }
 
-export const ProductList = ({ products, isLoading, lastProductRef }: ProductListProps) => {
   return (
-    <div className="grid grid-cols-2 gap-3">
-      {products.map((product, index) => (
-        <div
-          ref={index === products.length - 1 ? lastProductRef : null}
+    <div className="grid grid-cols-2 gap-4">
+      {products.map((product) => (
+        <ProductCard
           key={product.id}
-        >
-          <ProductCard {...product} />
-        </div>
+          id={product.id}
+          name={product.name}
+          description={product.description}
+          price={product.price}
+          image={product.images?.[0]?.url || "/placeholder.svg"}
+          brand={product.brand}
+        />
       ))}
-      {isLoading &&
-        [1, 2, 3, 4].map((n) => <ProductSkeleton key={n} />)}
     </div>
   );
 };
