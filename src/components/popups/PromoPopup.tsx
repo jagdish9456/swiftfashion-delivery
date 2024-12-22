@@ -11,7 +11,7 @@ export const PromoPopup = () => {
     if (location.pathname === '/') {
       // Check if this is a page refresh by looking at performance navigation type
       const isPageRefresh = window.performance
-        ? (window.performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming).type === 'reload'
+        ? window.performance.getEntriesByType('navigation')[0].type === 'reload'
         : false;
 
       if (isPageRefresh) {
