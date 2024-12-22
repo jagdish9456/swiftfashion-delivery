@@ -1,7 +1,9 @@
-import { Mic } from "lucide-react";
+import { Mic, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 type SearchBarProps = {
   search: string;
@@ -15,14 +17,73 @@ type SearchBarProps = {
 };
 
 export const SearchBar = ({ search, onSearchChange, onSelect, suggestions, showSuggestions }: SearchBarProps) => {
+  const [isListening, setIsListening] = useState(false);
+  const { toast } = useToast();
+
+  const startListening = async () => {
+    try {
+      const recognition = new (window.webkitSpeechRecognition || window.SpeechRecognition)();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.onstart = () => {
+        setIsListening(true);
+      };
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        onSearchChange(transcript);
+      };
+
+      recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Failed to recognize speech. Please try again.",
+        });
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognition.start();
+    } catch (error) {
+      console.error('Speech recognition error:', error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Speech recognition is not supported in your browser.",
+      });
+    }
+  };
+
   return (
     <div className="relative flex-1">
       <Input
         placeholder="Search Items"
-        className="pl-3 pr-8 py-1 w-full bg-gray-50 h-9 text-sm"
+        className="pl-3 pr-16 py-1 w-full bg-gray-50 h-9 text-sm"
         value={search}
         onChange={(e) => onSearchChange(e.target.value)}
       />
+      <div className="absolute right-0 top-0 h-full flex items-center gap-1 pr-2">
+        <Button
+          variant="ghost"
+          size="icon"
+          className={`h-7 w-7 ${isListening ? 'text-primary-500' : 'text-gray-500'}`}
+          onClick={startListening}
+        >
+          <Mic className="h-3.5 w-3.5" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-7 w-7"
+        >
+          <Search className="h-3.5 w-3.5 text-gray-500" />
+        </Button>
+      </div>
       {showSuggestions && (
         <div className="absolute left-0 right-0 top-full mt-1 bg-white rounded-md shadow-lg border">
           <Command>
@@ -60,13 +121,6 @@ export const SearchBar = ({ search, onSearchChange, onSelect, suggestions, showS
           </Command>
         </div>
       )}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute right-0 top-0 h-full"
-      >
-        <Mic className="h-3.5 w-3.5 text-gray-500" />
-      </Button>
     </div>
   );
 };

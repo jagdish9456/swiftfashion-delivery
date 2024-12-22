@@ -28,17 +28,22 @@ export const ProductHeader = ({ name }: ProductHeaderProps) => {
         <Button variant="ghost" size="icon" className="h-8 w-8">
           <Search className="h-5 w-5" />
         </Button>
-        <Button variant="ghost" size="icon" className="h-8 w-8">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="h-8 w-8"
+          onClick={() => navigate("/wishlist")}
+        >
           <Heart className="h-5 w-5" />
         </Button>
-        <div className="relative">
-          <Button variant="ghost" size="icon" className="h-8 w-8">
-            <ShoppingBag className="h-5 w-5" />
-          </Button>
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-            3
-          </span>
-        </div>
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="h-8 w-8"
+          onClick={() => navigate("/cart")}
+        >
+          <ShoppingBag className="h-5 w-5" />
+        </Button>
       </div>
     </div>
   );

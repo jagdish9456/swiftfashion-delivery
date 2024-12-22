@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Cookies from "js-cookie";
 
 const formSchema = z.object({
   mobile: z
@@ -27,6 +28,13 @@ export const Login = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  useEffect(() => {
+    const isAuthenticated = Cookies.get("isAuthenticated") === "true";
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,7 +46,7 @@ export const Login = () => {
     setIsLoading(true);
     try {
       if (values.mobile === "7289993664") {
-        localStorage.setItem("isAuthenticated", "true");
+        Cookies.set("isAuthenticated", "true", { expires: 1/48 }); // 30 minutes
         navigate("/");
         toast({
           title: "Success",

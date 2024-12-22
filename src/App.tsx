@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { Index } from "@/pages/Index";
@@ -13,8 +13,10 @@ import { Cart } from "@/pages/Cart";
 import { NearYou } from "@/pages/NearYou";
 import { Notifications } from "@/pages/Notifications";
 import { AIChat } from "@/pages/AIChat";
-import { PromoPopup } from "@/components/popups/PromoPopup";
 import { FloatingAIButton } from "@/components/ai/FloatingAIButton";
+import { Login } from "@/pages/Login";
+import { Wishlist } from "@/pages/Wishlist";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -24,20 +26,21 @@ function App() {
       <CartProvider>
         <Router>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/category/:id" element={<Categories />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/gender-categories" element={<GenderCategories />} />
-            <Route path="/set-location" element={<SetLocation />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/near-you" element={<NearYou />} />
-            <Route path="/notifications" element={<Notifications />} />
-            <Route path="/ai-chat" element={<AIChat />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+            <Route path="/category/:id" element={<ProtectedRoute><Categories /></ProtectedRoute>} />
+            <Route path="/product/:id" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} />
+            <Route path="/gender-categories" element={<ProtectedRoute><GenderCategories /></ProtectedRoute>} />
+            <Route path="/set-location" element={<ProtectedRoute><SetLocation /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+            <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+            <Route path="/near-you" element={<ProtectedRoute><NearYou /></ProtectedRoute>} />
+            <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+            <Route path="/ai-chat" element={<ProtectedRoute><AIChat /></ProtectedRoute>} />
+            <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
           </Routes>
           <FloatingAIButton />
-          <PromoPopup />
           <Toaster />
         </Router>
       </CartProvider>

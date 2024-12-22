@@ -1,9 +1,11 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+  const location = useLocation();
+  const isAuthenticated = Cookies.get("isAuthenticated") === "true";
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated && location.pathname !== "/login") {
     return <Navigate to="/login" replace />;
   }
 

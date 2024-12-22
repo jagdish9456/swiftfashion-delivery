@@ -216,7 +216,7 @@ export const GridCategories = ({ gender = "all" }: { gender?: "all" | "men" | "w
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="text-[10px] font-medium text-center line-clamp-2">
+            <span className="text-[10px] font-medium text-center line-clamp-2 w-full px-0.5">
               {category.name}
             </span>
           </Button>
