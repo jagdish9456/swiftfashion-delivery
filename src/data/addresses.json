@@ -1,0 +1,14 @@
+{
+  "addresses": [
+    {
+      "id": "addr1",
+      "userId": "u1",
+      "type": "home",
+      "street": "123 Main St",
+      "city": "San Francisco",
+      "state": "CA",
+      "zipCode": "94105",
+      "isDefault": true
+    }
+  ]
+}

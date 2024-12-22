@@ -1,0 +1,14 @@
+{
+  "tickets": [
+    {
+      "id": "t1",
+      "userId": "u1",
+      "orderId": "o1",
+      "type": "delivery_issue",
+      "status": "resolved",
+      "description": "Package was damaged",
+      "createdAt": "2024-01-16T09:00:00Z",
+      "resolution": "Replacement sent"
+    }
+  ]
+}

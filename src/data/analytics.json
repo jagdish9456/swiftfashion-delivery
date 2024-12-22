@@ -1,0 +1,24 @@
+{
+  "analytics": {
+    "products": {
+      "p001": {
+        "views": 1500,
+        "purchases": 200,
+        "revenue": 5998,
+        "averageRating": 4.5
+      }
+    },
+    "categories": {
+      "mens-clothing": {
+        "totalSales": 50000,
+        "popularProducts": ["p001", "p002"],
+        "growth": 15
+      }
+    },
+    "delivery": {
+      "averageTime": 2.5,
+      "satisfactionRate": 92,
+      "onTimeDeliveryRate": 95
+    }
+  }
+}

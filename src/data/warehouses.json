@@ -1,0 +1,19 @@
+{
+  "warehouses": [
+    {
+      "id": "w1",
+      "name": "SF Warehouse",
+      "location": {
+        "address": "456 Warehouse St",
+        "city": "San Francisco",
+        "state": "CA",
+        "zipCode": "94107"
+      },
+      "inventory": {
+        "p001": 100,
+        "p002": 50
+      },
+      "activeOrders": ["o1"]
+    }
+  ]
+}

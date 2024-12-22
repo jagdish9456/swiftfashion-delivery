@@ -1,0 +1,15 @@
+{
+  "deliveryPartners": [
+    {
+      "id": "d1",
+      "name": "Fast Delivery Co",
+      "rating": 4.5,
+      "activeOrders": ["o1"],
+      "vehicle": {
+        "type": "bike",
+        "number": "DL-1234"
+      },
+      "zone": "z1"
+    }
+  ]
+}
