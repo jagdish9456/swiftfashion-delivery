@@ -18,12 +18,13 @@ import { Login } from "@/pages/Login";
 import { Wishlist } from "@/pages/Wishlist";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { useLocation } from "react-router-dom";
+import { SearchResults } from "@/pages/SearchResults";
 
 const queryClient = new QueryClient();
 
 function App() {
   const location = useLocation();
-  const showFloatingButton = location.pathname !== "/login";
+  const showFloatingButton = !['login', 'set-location'].includes(location.pathname.split('/')[1]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -42,6 +43,7 @@ function App() {
             <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
             <Route path="/ai-chat" element={<ProtectedRoute><AIChat /></ProtectedRoute>} />
             <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+            <Route path="/search" element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
           </Routes>
           {showFloatingButton && <FloatingAIButton />}
           <Toaster />
