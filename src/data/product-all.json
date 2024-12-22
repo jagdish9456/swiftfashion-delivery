@@ -1,0 +1,218 @@
+{
+  "products": [
+    {
+      "id": "p001",
+      "name": "Classic Cotton T-Shirt",
+      "description": "Comfortable cotton t-shirt for everyday wear",
+      "price": 29.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-tshirts",
+      "images": [
+        "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500",
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500"
+      ],
+      "colors": ["White", "Black", "Navy"],
+      "sizes": ["S", "M", "L", "XL"],
+      "brand": "EssentialWear",
+      "rating": 4.5,
+      "reviews": 128,
+      "stock": 50,
+      "tags": ["casual", "basic", "cotton"],
+      "featured": true,
+      "discount": 0,
+      "new": false
+    },
+    {
+      "id": "p002",
+      "name": "Floral Summer Dress",
+      "description": "Light and breezy floral print dress",
+      "price": 79.99,
+      "categoryId": "womens-clothing",
+      "subcategoryId": "womens-dresses",
+      "images": [
+        "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=500",
+        "https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=500"
+      ],
+      "colors": ["Blue", "Pink"],
+      "sizes": ["XS", "S", "M", "L"],
+      "brand": "StyleFusion",
+      "rating": 4.8,
+      "reviews": 95,
+      "stock": 30,
+      "tags": ["summer", "floral", "dress"],
+      "featured": true,
+      "discount": 15,
+      "new": true
+    },
+    {
+      "id": "p003",
+      "name": "Kids Dinosaur T-Shirt",
+      "description": "Fun dinosaur print t-shirt for kids",
+      "price": 24.99,
+      "categoryId": "kids-clothing",
+      "subcategoryId": "kids-casual",
+      "images": [
+        "https://images.unsplash.com/photo-1519278409-1f56fdda7fe5?w=500",
+        "https://images.unsplash.com/photo-1519278404-6f62d1a03c19?w=500"
+      ],
+      "colors": ["Green", "Blue"],
+      "sizes": ["3-4Y", "5-6Y", "7-8Y"],
+      "brand": "KidsJoy",
+      "rating": 4.7,
+      "reviews": 62,
+      "stock": 45,
+      "tags": ["kids", "casual", "fun"],
+      "featured": false,
+      "discount": 0,
+      "new": true
+    },
+    {
+      "id": "p004",
+      "name": "Silver Chain Necklace",
+      "description": "Elegant silver chain necklace",
+      "price": 49.99,
+      "categoryId": "accessories",
+      "subcategoryId": "jewelry",
+      "images": [
+        "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500"
+      ],
+      "colors": ["Silver"],
+      "sizes": ["One Size"],
+      "brand": "GlamourAcc",
+      "rating": 4.6,
+      "reviews": 83,
+      "stock": 25,
+      "tags": ["jewelry", "accessories", "silver"],
+      "featured": true,
+      "discount": 10,
+      "new": false
+    },
+    {
+      "id": "p005",
+      "name": "Running Shoes",
+      "description": "Comfortable running shoes with good support",
+      "price": 89.99,
+      "categoryId": "footwear",
+      "subcategoryId": "sneakers",
+      "images": [
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500",
+        "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500"
+      ],
+      "colors": ["Black/Red", "Blue/White"],
+      "sizes": ["7", "8", "9", "10", "11"],
+      "brand": "SportFlex",
+      "rating": 4.9,
+      "reviews": 156,
+      "stock": 40,
+      "tags": ["sports", "running", "shoes"],
+      "featured": true,
+      "discount": 0,
+      "new": true
+    },
+    {
+      "id": "p006",
+      "name": "Gym Leggings",
+      "description": "High-waisted gym leggings with pocket",
+      "price": 54.99,
+      "categoryId": "sportswear",
+      "subcategoryId": "gym-wear",
+      "images": [
+        "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=500"
+      ],
+      "colors": ["Black", "Navy", "Grey"],
+      "sizes": ["XS", "S", "M", "L"],
+      "brand": "ActiveLife",
+      "rating": 4.7,
+      "reviews": 112,
+      "stock": 35,
+      "tags": ["gym", "workout", "leggings"],
+      "featured": true,
+      "discount": 20,
+      "new": false
+    },
+    {
+      "id": "p007",
+      "name": "Designer Silk Saree",
+      "description": "Traditional silk saree with modern design",
+      "price": 199.99,
+      "categoryId": "ethnic-wear",
+      "subcategoryId": "sarees",
+      "images": [
+        "https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=500"
+      ],
+      "colors": ["Red", "Blue", "Green"],
+      "sizes": ["Free Size"],
+      "brand": "EthnicElegance",
+      "rating": 4.8,
+      "reviews": 75,
+      "stock": 20,
+      "tags": ["ethnic", "traditional", "silk"],
+      "featured": true,
+      "discount": 0,
+      "new": true
+    },
+    {
+      "id": "p008",
+      "name": "Winter Puffer Jacket",
+      "description": "Warm puffer jacket for cold weather",
+      "price": 129.99,
+      "categoryId": "winter-wear",
+      "subcategoryId": "jackets",
+      "images": [
+        "https://images.unsplash.com/photo-1544923246-77307dd654cb?w=500"
+      ],
+      "colors": ["Black", "Navy"],
+      "sizes": ["S", "M", "L", "XL"],
+      "brand": "WinterComfort",
+      "rating": 4.6,
+      "reviews": 89,
+      "stock": 30,
+      "tags": ["winter", "jacket", "warm"],
+      "featured": false,
+      "discount": 25,
+      "new": false
+    },
+    {
+      "id": "p009",
+      "name": "Formal Business Shirt",
+      "description": "Classic formal shirt for business wear",
+      "price": 69.99,
+      "categoryId": "formal-wear",
+      "subcategoryId": "mens-shirts",
+      "images": [
+        "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500"
+      ],
+      "colors": ["White", "Light Blue"],
+      "sizes": ["S", "M", "L", "XL"],
+      "brand": "BusinessElite",
+      "rating": 4.5,
+      "reviews": 67,
+      "stock": 40,
+      "tags": ["formal", "business", "shirt"],
+      "featured": true,
+      "discount": 0,
+      "new": false
+    },
+    {
+      "id": "p010",
+      "name": "Beach Cover Up",
+      "description": "Stylish beach cover up for summer",
+      "price": 39.99,
+      "categoryId": "beach-wear",
+      "subcategoryId": "womens-tops",
+      "images": [
+        "https://images.unsplash.com/photo-1571974599782-7c1fb2917a5b?w=500"
+      ],
+      "colors": ["White", "Blue"],
+      "sizes": ["S/M", "L/XL"],
+      "brand": "BeachStyle",
+      "rating": 4.4,
+      "reviews": 45,
+      "stock": 25,
+      "tags": ["beach", "summer", "coverup"],
+      "featured": false,
+      "discount": 15,
+      "new": true
+    }
+  ]
+}

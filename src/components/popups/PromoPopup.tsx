@@ -7,27 +7,29 @@ export const PromoPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Check if user is logged in
-    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-    const hasSeenPromo = Cookies.get("hasSeenPromo");
-    
-    if (isLoggedIn && !hasSeenPromo) {
-      // Small delay to ensure proper rendering after login
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-        // Set cookie to expire in 2 minutes
-        Cookies.set("hasSeenPromo", "true", { expires: 1/720 });
-      }, 500);
+    const checkPopupConditions = () => {
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+      const hasSeenPromo = Cookies.get("hasSeenPromo");
+      console.log("Login status:", isLoggedIn);
+      console.log("Has seen promo:", hasSeenPromo);
       
-      return () => clearTimeout(timer);
-    }
+      if (isLoggedIn && !hasSeenPromo) {
+        setIsOpen(true);
+        // Set cookie to expire in 2 minutes for testing
+        Cookies.set("hasSeenPromo", "true", { expires: 1/720 });
+      }
+    };
+
+    // Small delay to ensure proper rendering after login
+    const timer = setTimeout(checkPopupConditions, 1000);
+    return () => clearTimeout(timer);
   }, []);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-end justify-center bg-black/60 backdrop-blur-sm animate-in fade-in">
-      <div className="relative w-full max-w-lg mx-4 mb-4 overflow-hidden bg-gradient-to-br from-primary-50 to-primary-100/50 rounded-2xl animate-slideUp">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in p-4">
+      <div className="relative w-full max-w-lg mx-auto overflow-hidden bg-gradient-to-br from-primary-50 to-primary-100/50 rounded-2xl animate-slideUp">
         <Button 
           variant="ghost" 
           size="icon" 

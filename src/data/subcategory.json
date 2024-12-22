@@ -1,0 +1,84 @@
+{
+  "subcategories": [
+    {
+      "id": "mens-tshirts",
+      "name": "T-Shirts",
+      "categoryId": "mens-clothing",
+      "description": "Casual and comfortable t-shirts for men",
+      "featured": true,
+      "order": 1
+    },
+    {
+      "id": "mens-shirts",
+      "name": "Shirts",
+      "categoryId": "mens-clothing",
+      "description": "Formal and casual shirts for men",
+      "featured": true,
+      "order": 2
+    },
+    {
+      "id": "womens-dresses",
+      "name": "Dresses",
+      "categoryId": "womens-clothing",
+      "description": "Stylish dresses for women",
+      "featured": true,
+      "order": 1
+    },
+    {
+      "id": "womens-tops",
+      "name": "Tops",
+      "categoryId": "womens-clothing",
+      "description": "Trendy tops for women",
+      "featured": true,
+      "order": 2
+    },
+    {
+      "id": "kids-casual",
+      "name": "Casual Wear",
+      "categoryId": "kids-clothing",
+      "description": "Comfortable casual wear for kids",
+      "featured": true,
+      "order": 1
+    },
+    {
+      "id": "jewelry",
+      "name": "Jewelry",
+      "categoryId": "accessories",
+      "description": "Fashion jewelry and accessories",
+      "featured": true,
+      "order": 1
+    },
+    {
+      "id": "sneakers",
+      "name": "Sneakers",
+      "categoryId": "footwear",
+      "description": "Casual and sports sneakers",
+      "featured": true,
+      "order": 1
+    },
+    {
+      "id": "gym-wear",
+      "name": "Gym Wear",
+      "categoryId": "sportswear",
+      "description": "Comfortable gym and workout clothing",
+      "featured": true,
+      "order": 1
+    },
+    {
+      "id": "sarees",
+      "name": "Sarees",
+      "categoryId": "ethnic-wear",
+      "description": "Traditional sarees and ethnic wear",
+      "featured": true,
+      "order": 1
+    },
+    {
+      "id": "jackets",
+      "name": "Jackets",
+      "categoryId": "winter-wear",
+      "description": "Warm and stylish winter jackets",
+      "featured": true,
+      "order": 1
+    }
+  ]
+}

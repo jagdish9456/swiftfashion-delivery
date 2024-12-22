@@ -1,10 +1,8 @@
-import { Mic, Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
-import { useState, useEffect, useRef } from "react";
-import { useToast } from "@/hooks/use-toast";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { SearchInput } from "@/components/search/SearchInput";
+import { SearchSuggestions } from "@/components/search/SearchSuggestions";
+import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 
 type SearchBarProps = {
   search: string;
@@ -17,14 +15,23 @@ type SearchBarProps = {
   showSuggestions: boolean;
 };
 
-export const SearchBar = ({ search, onSearchChange, onSelect, suggestions, showSuggestions }: SearchBarProps) => {
-  const [isListening, setIsListening] = useState(false);
+export const SearchBar = ({ 
+  search, 
+  onSearchChange, 
+  onSelect, 
+  suggestions, 
+  showSuggestions 
+}: SearchBarProps) => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const { toast } = useToast();
   const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
-  const recognitionRef = useRef<any>(null);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+
+  const handleTranscript = (transcript: string) => {
+    onSearchChange(transcript);
+    setShowDropdown(true);
+  };
+
+  const { isListening, startListening } = useSpeechRecognition(handleTranscript);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -36,67 +43,8 @@ export const SearchBar = ({ search, onSearchChange, onSelect, suggestions, showS
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      if (recognitionRef.current) {
-        recognitionRef.current.stop();
-      }
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
     };
   }, []);
-
-  const startListening = async () => {
-    try {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognitionRef.current = new SpeechRecognition();
-      recognitionRef.current.continuous = false;
-      recognitionRef.current.interimResults = false;
-
-      recognitionRef.current.onstart = () => {
-        setIsListening(true);
-        timeoutRef.current = setTimeout(() => {
-          if (recognitionRef.current) {
-            recognitionRef.current.stop();
-          }
-        }, 30000);
-      };
-
-      recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
-        const transcript = event.results[0][0].transcript;
-        onSearchChange(transcript);
-        setShowDropdown(true);
-        if (recognitionRef.current) {
-          recognitionRef.current.stop();
-        }
-      };
-
-      recognitionRef.current.onerror = (event: any) => {
-        console.error('Speech recognition error:', event.error);
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: "Failed to recognize speech. Please try again.",
-        });
-        setIsListening(false);
-      };
-
-      recognitionRef.current.onend = () => {
-        setIsListening(false);
-        if (timeoutRef.current) {
-          clearTimeout(timeoutRef.current);
-        }
-      };
-
-      recognitionRef.current.start();
-    } catch (error) {
-      console.error('Speech recognition error:', error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Speech recognition is not supported in your browser.",
-      });
-    }
-  };
 
   const handleSearchClick = () => {
     if (search.trim()) {
@@ -105,82 +53,25 @@ export const SearchBar = ({ search, onSearchChange, onSelect, suggestions, showS
     }
   };
 
-  const handleInputFocus = () => {
-    setShowDropdown(true);
-  };
-
-  const filteredCategories = suggestions.categories.filter(cat => 
-    cat.name.toLowerCase().includes(search.toLowerCase())
-  );
-
-  const filteredProducts = suggestions.products.filter(prod => 
-    prod.name.toLowerCase().includes(search.toLowerCase())
-  );
-
-  const hasResults = filteredCategories.length > 0 || filteredProducts.length > 0;
-
   return (
     <div className="relative flex-1" ref={searchRef}>
-      <Input
-        placeholder="Search Items"
-        className="pl-3 pr-16 py-1 w-full bg-gray-50 h-9 text-sm"
-        value={search}
-        onChange={(e) => onSearchChange(e.target.value)}
-        onFocus={handleInputFocus}
+      <SearchInput
+        search={search}
+        onSearchChange={(value) => {
+          onSearchChange(value);
+          setShowDropdown(true);
+        }}
+        onMicClick={startListening}
+        onSearchClick={handleSearchClick}
+        isListening={isListening}
       />
-      <div className="absolute right-0 top-0 h-full flex items-center gap-1 pr-2">
-        <Button
-          variant="ghost"
-          size="icon"
-          className={`h-7 w-7 ${isListening ? 'text-primary-500' : 'text-gray-500'}`}
-          onClick={startListening}
-        >
-          <Mic className="h-3.5 w-3.5" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-7 w-7"
-          onClick={handleSearchClick}
-          disabled={!search.trim()}
-        >
-          <Search className="h-3.5 w-3.5 text-gray-500" />
-        </Button>
-      </div>
       {showDropdown && showSuggestions && (
-        <div className="absolute left-0 right-0 top-full mt-1 bg-white rounded-md shadow-lg border">
-          <Command>
-            <CommandList>
-              {!hasResults && (
-                <CommandEmpty>No results found.</CommandEmpty>
-              )}
-              {filteredCategories.length > 0 && (
-                <CommandGroup heading="Categories">
-                  {filteredCategories.map(category => (
-                    <CommandItem
-                      key={category.id}
-                      onSelect={() => onSelect('category', category.id)}
-                    >
-                      {category.name}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              )}
-              {filteredProducts.length > 0 && (
-                <CommandGroup heading="Products">
-                  {filteredProducts.map(product => (
-                    <CommandItem
-                      key={product.id}
-                      onSelect={() => onSelect('product', product.id)}
-                    >
-                      {product.name}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              )}
-            </CommandList>
-          </Command>
-        </div>
+        <SearchSuggestions
+          categories={suggestions.categories}
+          products={suggestions.products}
+          onSelect={onSelect}
+          search={search}
+        />
       )}
     </div>
   );
