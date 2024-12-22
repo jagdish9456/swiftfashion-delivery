@@ -18,16 +18,16 @@ export const PromoPopup = () => {
 
   return (
     <div className="fixed inset-0 z-[200] flex items-end justify-center bg-black/60 backdrop-blur-sm animate-in fade-in">
-      <div className="w-full max-w-lg mx-auto overflow-hidden bg-gradient-to-br from-primary-50 to-primary-100/50 rounded-t-2xl animate-slideUp">
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          className="absolute right-2 top-2 h-8 w-8 bg-white/20 hover:bg-white/30"
-          onClick={() => setIsOpen(false)}
-        >
-          <X className="h-4 w-4" />
-        </Button>
+      <div className="w-full max-w-lg mx-auto overflow-hidden bg-gradient-to-br from-primary-50 to-primary-100/50 rounded-t-2xl animate-slideUp relative">
         <div className="p-6 text-center">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="absolute right-2 top-2 h-8 w-8 bg-white/20 hover:bg-white/30"
+            onClick={() => setIsOpen(false)}
+          >
+            <X className="h-4 w-4" />
+          </Button>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Special Offer!</h2>
           <p className="text-lg mb-4 text-gray-600">Get 30% off on new arrivals</p>
           <div className="relative">

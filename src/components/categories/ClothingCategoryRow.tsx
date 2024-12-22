@@ -9,6 +9,8 @@ type Product = {
   name: string;
   price: number;
   image: string;
+  description: string;
+  brand: string;
 };
 
 type ClothingCategoryRowProps = {
