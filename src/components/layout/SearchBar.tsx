@@ -54,7 +54,6 @@ export const SearchBar = ({ search, onSearchChange, onSelect, suggestions, showS
 
       recognitionRef.current.onstart = () => {
         setIsListening(true);
-        // Set timeout to stop after 30 seconds
         timeoutRef.current = setTimeout(() => {
           if (recognitionRef.current) {
             recognitionRef.current.stop();
@@ -66,6 +65,9 @@ export const SearchBar = ({ search, onSearchChange, onSelect, suggestions, showS
         const transcript = event.results[0][0].transcript;
         onSearchChange(transcript);
         setShowDropdown(true);
+        if (recognitionRef.current) {
+          recognitionRef.current.stop();
+        }
       };
 
       recognitionRef.current.onerror = (event: any) => {
@@ -99,12 +101,23 @@ export const SearchBar = ({ search, onSearchChange, onSelect, suggestions, showS
   const handleSearchClick = () => {
     if (search.trim()) {
       navigate(`/search?q=${encodeURIComponent(search.trim())}`);
+      setShowDropdown(false);
     }
   };
 
   const handleInputFocus = () => {
     setShowDropdown(true);
   };
+
+  const filteredCategories = suggestions.categories.filter(cat => 
+    cat.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const filteredProducts = suggestions.products.filter(prod => 
+    prod.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const hasResults = filteredCategories.length > 0 || filteredProducts.length > 0;
 
   return (
     <div className="relative flex-1" ref={searchRef}>
@@ -129,6 +142,7 @@ export const SearchBar = ({ search, onSearchChange, onSelect, suggestions, showS
           size="icon"
           className="h-7 w-7"
           onClick={handleSearchClick}
+          disabled={!search.trim()}
         >
           <Search className="h-3.5 w-3.5 text-gray-500" />
         </Button>
@@ -137,37 +151,31 @@ export const SearchBar = ({ search, onSearchChange, onSelect, suggestions, showS
         <div className="absolute left-0 right-0 top-full mt-1 bg-white rounded-md shadow-lg border">
           <Command>
             <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
-              {suggestions.categories.length > 0 && (
+              {!hasResults && (
+                <CommandEmpty>No results found.</CommandEmpty>
+              )}
+              {filteredCategories.length > 0 && (
                 <CommandGroup heading="Categories">
-                  {suggestions.categories
-                    .filter(cat => 
-                      cat.name.toLowerCase().includes(search.toLowerCase())
-                    )
-                    .map(category => (
-                      <CommandItem
-                        key={category.id}
-                        onSelect={() => onSelect('category', category.id)}
-                      >
-                        {category.name}
-                      </CommandItem>
-                    ))}
+                  {filteredCategories.map(category => (
+                    <CommandItem
+                      key={category.id}
+                      onSelect={() => onSelect('category', category.id)}
+                    >
+                      {category.name}
+                    </CommandItem>
+                  ))}
                 </CommandGroup>
               )}
-              {suggestions.products.length > 0 && (
+              {filteredProducts.length > 0 && (
                 <CommandGroup heading="Products">
-                  {suggestions.products
-                    .filter(prod => 
-                      prod.name.toLowerCase().includes(search.toLowerCase())
-                    )
-                    .map(product => (
-                      <CommandItem
-                        key={product.id}
-                        onSelect={() => onSelect('product', product.id)}
-                      >
-                        {product.name}
-                      </CommandItem>
-                    ))}
+                  {filteredProducts.map(product => (
+                    <CommandItem
+                      key={product.id}
+                      onSelect={() => onSelect('product', product.id)}
+                    >
+                      {product.name}
+                    </CommandItem>
+                  ))}
                 </CommandGroup>
               )}
             </CommandList>

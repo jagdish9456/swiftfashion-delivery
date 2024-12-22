@@ -7,10 +7,19 @@ export const PromoPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    // Check if user is logged in
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
     const hasSeenPromo = Cookies.get("hasSeenPromo");
-    if (!hasSeenPromo) {
-      setIsOpen(true);
-      Cookies.set("hasSeenPromo", "true", { expires: 1/720 }); // 2 minutes
+    
+    if (isLoggedIn && !hasSeenPromo) {
+      // Small delay to ensure proper rendering after login
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+        // Set cookie to expire in 2 minutes
+        Cookies.set("hasSeenPromo", "true", { expires: 1/720 });
+      }, 500);
+      
+      return () => clearTimeout(timer);
     }
   }, []);
 
