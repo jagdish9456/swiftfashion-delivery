@@ -1,9 +1,29 @@
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import { Button } from "@/components/ui/button";
 
 export const PromoPopup = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const checkPopupConditions = () => {
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+      const hasSeenPromo = Cookies.get("hasSeenPromo");
+      console.log("Login status:", isLoggedIn);
+      console.log("Has seen promo:", hasSeenPromo);
+      
+      if (isLoggedIn && !hasSeenPromo) {
+        setIsOpen(true);
+        // Set cookie to expire in 2 minutes for testing
+        Cookies.set("hasSeenPromo", "true", { expires: 1/720 });
+      }
+    };
+
+    // Small delay to ensure proper rendering after login
+    const timer = setTimeout(checkPopupConditions, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   if (!isOpen) return null;
 
