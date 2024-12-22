@@ -27,145 +27,161 @@ const allProducts = [
     name: "Classic White T-Shirt",
     price: 29.99,
     image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500",
+    description: "Premium cotton t-shirt perfect for everyday wear",
+    brand: "EssentialWear"
   },
   {
     id: "2",
-    name: "Denim Jacket",
-    price: 89.99,
-    image: "https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=500",
+    name: "Slim Fit Dark Denim Jeans",
+    price: 79.99,
+    image: "/placeholder.svg",
+    description: "Classic dark wash slim fit jeans with stretch comfort",
+    brand: "EssentialWear"
   },
   {
     id: "3",
-    name: "Summer Dress",
-    price: 59.99,
-    image: "https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=500",
+    name: "Floral Summer Dress",
+    price: 89.99,
+    image: "/placeholder.svg",
+    description: "Light and breezy floral print dress perfect for summer days",
+    brand: "EssentialWear"
   },
   {
     id: "4",
-    name: "Slim Fit Jeans",
-    price: 69.99,
-    image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=500",
+    name: "Wool Blend Winter Coat",
+    price: 199.99,
+    image: "/placeholder.svg",
+    description: "Elegant wool blend coat for cold winter days",
+    brand: "EssentialWear"
   },
   {
     id: "5",
-    name: "Floral Blouse",
-    price: 45.99,
-    image: "https://images.unsplash.com/photo-1618932260643-eee4a2f652a6?w=500",
+    name: "Athletic Performance Shorts",
+    price: 34.99,
+    image: "/placeholder.svg",
+    description: "Moisture-wicking athletic shorts for high-performance activities",
+    brand: "EssentialWear"
   },
   {
     id: "6",
-    name: "Leather Boots",
-    price: 129.99,
-    image: "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=500",
+    name: "Silk Evening Gown",
+    price: 299.99,
+    image: "/placeholder.svg",
+    description: "Elegant silk evening gown for special occasions",
+    brand: "EssentialWear"
   },
   {
     id: "7",
-    name: "Elegant Blazer",
-    price: 149.99,
-    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500",
+    name: "Leather Biker Jacket",
+    price: 249.99,
+    image: "/placeholder.svg",
+    description: "Classic leather motorcycle jacket with quilted lining",
+    brand: "EssentialWear"
   },
   {
     id: "8",
-    name: "Formal Trousers",
-    price: 79.99,
-    image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500",
+    name: "Yoga Leggings",
+    price: 49.99,
+    image: "/placeholder.svg",
+    description: "High-waisted yoga leggings with moisture-wicking fabric",
+    brand: "EssentialWear"
   },
   {
     id: "9",
-    name: "Business Shirt",
+    name: "Striped Business Shirt",
     price: 69.99,
-    image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=500",
+    image: "/placeholder.svg",
+    description: "Professional striped shirt for business attire",
+    brand: "EssentialWear"
   },
   {
     id: "10",
-    name: "Silk Tie",
-    price: 39.99,
-    image: "https://images.unsplash.com/photo-1589756823695-278bc923f962?w=500",
+    name: "Cashmere Sweater",
+    price: 159.99,
+    image: "/placeholder.svg",
+    description: "Soft and warm cashmere sweater for cold weather",
+    brand: "EssentialWear"
   },
   {
     id: "11",
-    name: "Wool Suit",
-    price: 299.99,
-    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500",
+    name: "Cargo Pants",
+    price: 59.99,
+    image: "/placeholder.svg",
+    description: "Durable cargo pants with multiple pockets",
+    brand: "EssentialWear"
   },
   {
     id: "12",
-    name: "Dress Shoes",
-    price: 159.99,
-    image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=500",
+    name: "Summer Beach Shorts",
+    price: 39.99,
+    image: "/placeholder.svg",
+    description: "Quick-dry beach shorts with fun summer patterns",
+    brand: "EssentialWear"
   },
   {
     id: "13",
-    name: "Designer Watch",
-    price: 199.99,
-    image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=500",
+    name: "Puffer Jacket",
+    price: 129.99,
+    image: "/placeholder.svg",
+    description: "Warm puffer jacket with water-resistant finish",
+    brand: "EssentialWear"
   },
   {
     id: "14",
-    name: "Leather Briefcase",
-    price: 179.99,
-    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500",
+    name: "Linen Summer Shirt",
+    price: 54.99,
+    image: "/placeholder.svg",
+    description: "Breathable linen shirt perfect for summer days",
+    brand: "EssentialWear"
   },
   {
     id: "15",
-    name: "Silk Scarf",
-    price: 49.99,
-    image: "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=500",
+    name: "Pleated Midi Skirt",
+    price: 69.99,
+    image: "/placeholder.svg",
+    description: "Elegant pleated midi skirt for office wear",
+    brand: "EssentialWear"
   },
   {
     id: "16",
-    name: "Cufflinks Set",
-    price: 89.99,
-    image: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=500",
+    name: "Running Shoes",
+    price: 119.99,
+    image: "/placeholder.svg",
+    description: "Lightweight running shoes with cushioned sole",
+    brand: "EssentialWear"
   },
   {
     id: "17",
-    name: "Designer Sunglasses",
-    price: 159.99,
-    image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500",
+    name: "Denim Jacket",
+    price: 89.99,
+    image: "/placeholder.svg",
+    description: "Classic denim jacket with button closure",
+    brand: "EssentialWear"
   },
   {
     id: "18",
-    name: "Premium Belt",
-    price: 79.99,
-    image: "https://images.unsplash.com/photo-1553531384-cc64ac80f931?w=500",
+    name: "Formal Blazer",
+    price: 149.99,
+    image: "/placeholder.svg",
+    description: "Tailored blazer for professional settings",
+    brand: "EssentialWear"
   },
   {
     id: "19",
-    name: "Formal Hat",
-    price: 69.99,
-    image: "https://images.unsplash.com/photo-1514327605112-b887c0e61c0a?w=500",
+    name: "Printed Maxi Dress",
+    price: 99.99,
+    image: "/placeholder.svg",
+    description: "Flowing maxi dress with bohemian print",
+    brand: "EssentialWear"
   },
   {
     id: "20",
-    name: "Pocket Square Set",
-    price: 39.99,
-    image: "https://images.unsplash.com/photo-1598032895397-b9472444bf93?w=500",
+    name: "Thermal Base Layer",
+    price: 44.99,
+    image: "/placeholder.svg",
+    description: "Thermal base layer for cold weather activities",
+    brand: "EssentialWear"
   },
-  {
-    id: "21",
-    name: "Formal Socks Pack",
-    price: 29.99,
-    image: "https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?w=500",
-  },
-  {
-    id: "22",
-    name: "Business Card Holder",
-    price: 45.99,
-    image: "https://images.unsplash.com/photo-1607435097405-db48f377bff6?w=500",
-  },
-  {
-    id: "23",
-    name: "Dress Shirt Set",
-    price: 129.99,
-    image: "https://images.unsplash.com/photo-1602810316498-ab67cf68c8e1?w=500",
-  },
-  {
-    id: "24",
-    name: "Formal Umbrella",
-    price: 59.99,
-    image: "https://images.unsplash.com/photo-1517144447511-aebb25bbc5d2?w=500",
-  }
 ];
 
 export const Categories = () => {

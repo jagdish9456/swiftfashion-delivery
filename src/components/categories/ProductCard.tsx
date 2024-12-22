@@ -4,14 +4,16 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/contexts/CartContext";
 
-type ProductCardProps = {
+export type ProductCardProps = {
   id: string;
   name: string;
   price: number;
   image: string;
+  description: string;
+  brand: string;
 };
 
-export const ProductCard = ({ id, name, price, image }: ProductCardProps) => {
+export const ProductCard = ({ id, name, price, image, description, brand }: ProductCardProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { addItem } = useCart();
@@ -59,6 +61,7 @@ export const ProductCard = ({ id, name, price, image }: ProductCardProps) => {
       </div>
       <div className="p-2 space-y-1">
         <h3 className="font-medium text-xs truncate">{name}</h3>
+        <p className="text-xs text-gray-500 truncate">{brand}</p>
         <div className="flex items-center justify-between">
           <span className="text-primary-500 font-semibold text-sm">
             ${price.toFixed(2)}

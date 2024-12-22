@@ -19,7 +19,9 @@ export const SearchResults = () => {
     id: product.id,
     name: product.name,
     price: product.price,
-    image: `https://source.unsplash.com/400x400/?fashion,${product.category.toLowerCase()}`
+    image: `https://source.unsplash.com/400x400/?fashion,${product.category.toLowerCase()}`,
+    description: product.description,
+    brand: product.brand || "EssentialWear" // Providing a default brand if not available
   }));
 
   return (
