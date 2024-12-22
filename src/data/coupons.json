@@ -1,0 +1,22 @@
+{
+  "coupons": [
+    {
+      "id": "c1",
+      "code": "WELCOME20",
+      "type": "percentage",
+      "value": 20,
+      "minPurchase": 100,
+      "maxDiscount": 50,
+      "validFrom": "2024-03-01T00:00:00Z",
+      "validUntil": "2024-03-31T23:59:59Z",
+      "description": "20% off on your first purchase",
+      "termsAndConditions": [
+        "Valid for new users only",
+        "Cannot be combined with other offers"
+      ],
+      "applicableCategories": ["all"],
+      "usageLimit": 1,
+      "usageCount": 0
+    }
+  ]
+}

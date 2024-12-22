@@ -3,92 +3,14 @@
     {
       "id": "mens-clothing",
       "name": "Men's Clothing",
-      "gender": "male",
-      "icon": "shirt",
       "description": "Fashion for men",
+      "image": "https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=500",
+      "icon": "shirt",
+      "gender": "male",
       "featured": true,
-      "order": 1
-    },
-    {
-      "id": "womens-clothing",
-      "name": "Women's Clothing",
-      "gender": "female",
-      "icon": "dress",
-      "description": "Fashion for women",
-      "featured": true,
-      "order": 2
-    },
-    {
-      "id": "kids-clothing",
-      "name": "Kids' Clothing",
-      "gender": "unisex",
-      "icon": "baby",
-      "description": "Fashion for children",
-      "featured": false,
-      "order": 3
-    },
-    {
-      "id": "accessories",
-      "name": "Accessories",
-      "gender": "unisex",
-      "icon": "watch",
-      "description": "Fashion accessories",
-      "featured": true,
-      "order": 4
-    },
-    {
-      "id": "footwear",
-      "name": "Footwear",
-      "gender": "unisex",
-      "icon": "shoe",
-      "description": "Shoes and footwear",
-      "featured": true,
-      "order": 5
-    },
-    {
-      "id": "sportswear",
-      "name": "Sportswear",
-      "gender": "unisex",
-      "icon": "running",
-      "description": "Athletic and sports clothing",
-      "featured": true,
-      "order": 6
-    },
-    {
-      "id": "ethnic-wear",
-      "name": "Ethnic Wear",
-      "gender": "unisex",
-      "icon": "traditional",
-      "description": "Traditional and cultural clothing",
-      "featured": true,
-      "order": 7
-    },
-    {
-      "id": "winter-wear",
-      "name": "Winter Wear",
-      "gender": "unisex",
-      "icon": "jacket",
-      "description": "Cold weather clothing",
-      "featured": false,
-      "order": 8
-    },
-    {
-      "id": "formal-wear",
-      "name": "Formal Wear",
-      "gender": "unisex",
-      "icon": "suit",
-      "description": "Business and formal attire",
-      "featured": true,
-      "order": 9
-    },
-    {
-      "id": "beach-wear",
-      "name": "Beach Wear",
-      "gender": "unisex",
-      "icon": "sun",
-      "description": "Summer and beach clothing",
-      "featured": false,
-      "order": 10
+      "order": 1,
+      "metaTitle": "Men's Fashion & Clothing",
+      "metaDescription": "Shop the latest men's fashion"
     }
   ]
 }

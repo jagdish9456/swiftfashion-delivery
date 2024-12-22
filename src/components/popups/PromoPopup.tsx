@@ -1,29 +1,19 @@
 import { X } from "lucide-react";
-import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { useLocation } from "react-router-dom";
 
 export const PromoPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    const checkPopupConditions = () => {
-      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-      const hasSeenPromo = Cookies.get("hasSeenPromo");
-      console.log("Login status:", isLoggedIn);
-      console.log("Has seen promo:", hasSeenPromo);
-      
-      if (isLoggedIn && !hasSeenPromo) {
-        setIsOpen(true);
-        // Set cookie to expire in 2 minutes for testing
-        Cookies.set("hasSeenPromo", "true", { expires: 1/720 });
-      }
-    };
-
-    // Small delay to ensure proper rendering after login
-    const timer = setTimeout(checkPopupConditions, 1000);
-    return () => clearTimeout(timer);
-  }, []);
+    // Only show on home page
+    if (location.pathname === '/') {
+      setIsOpen(true);
+      console.log("PromoPopup: Showing popup on home page");
+    }
+  }, [location]);
 
   if (!isOpen) return null;
 

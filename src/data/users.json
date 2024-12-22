@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "email": "john.doe@example.com",
+      "name": "John Doe",
+      "phone": "+1234567890",
+      "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200",
+      "role": "customer",
+      "preferences": {
+        "size": "M",
+        "favoriteCategories": ["mens-clothing", "sportswear"],
+        "notifications": true
+      },
+      "createdAt": "2024-01-01T00:00:00Z",
+      "lastLogin": "2024-03-15T10:30:00Z"
+    }
+  ]
+}
