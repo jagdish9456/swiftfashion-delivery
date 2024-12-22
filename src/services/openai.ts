@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import products from "../data/products.json";
+import products from "../data/product-all.json";
 
 const openai = new OpenAI({
   apiKey: "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",
@@ -22,11 +22,11 @@ export const generateProductRecommendations = async (userInput: string) => {
           Available products: ${JSON.stringify(products.products.map(p => ({
             id: p.id,
             name: p.name,
-            category: p.category,
-            type: p.type,
-            colors: p.colors,
-            material: p.material,
-            season: p.season,
+            description: p.description,
+            categoryId: p.categoryId,
+            subcategoryId: p.subcategoryId,
+            brand: p.brand,
+            attributes: p.attributes,
             price: p.price
           })))}
           `

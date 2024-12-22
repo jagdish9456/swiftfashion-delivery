@@ -8,6 +8,7 @@ import ProductDetails from "@/pages/ProductDetails";
 import { GenderCategories } from "@/pages/GenderCategories";
 import { SetLocation } from "@/pages/SetLocation";
 import { Profile } from "@/pages/Profile";
+import { ProfileDetails } from "@/pages/ProfileDetails";
 import { Orders } from "@/pages/Orders";
 import { Cart } from "@/pages/Cart";
 import { NearYou } from "@/pages/NearYou";
@@ -19,6 +20,7 @@ import { Wishlist } from "@/pages/Wishlist";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { useLocation } from "react-router-dom";
 import { SearchResults } from "@/pages/SearchResults";
+import { PromoPopup } from "@/components/popups/PromoPopup";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +39,7 @@ function App() {
             <Route path="/gender-categories" element={<ProtectedRoute><GenderCategories /></ProtectedRoute>} />
             <Route path="/set-location" element={<ProtectedRoute><SetLocation /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/profile/details" element={<ProtectedRoute><ProfileDetails /></ProtectedRoute>} />
             <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
             <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
             <Route path="/near-you" element={<ProtectedRoute><NearYou /></ProtectedRoute>} />
@@ -46,7 +49,7 @@ function App() {
             <Route path="/search" element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
           </Routes>
           {showFloatingButton && <FloatingAIButton />}
-          <Toaster />
+          <PromoPopup />
       </CartProvider>
     </QueryClientProvider>
   );

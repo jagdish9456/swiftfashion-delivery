@@ -4,18 +4,17 @@ import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
 
 export const PromoPopup = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
-    // Only show on home page
     if (location.pathname === '/') {
       setIsOpen(true);
       console.log("PromoPopup: Showing popup on home page");
     }
   }, [location]);
 
-  if (!isOpen) return null;
+  if (!isOpen || location.pathname !== '/') return null;
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in p-4">
