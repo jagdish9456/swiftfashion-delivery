@@ -22,7 +22,8 @@ export const SearchBar = ({ search, onSearchChange, onSelect, suggestions, showS
 
   const startListening = async () => {
     try {
-      const recognition = new (window.webkitSpeechRecognition || window.SpeechRecognition)();
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = false;
 
@@ -30,12 +31,12 @@ export const SearchBar = ({ search, onSearchChange, onSelect, suggestions, showS
         setIsListening(true);
       };
 
-      recognition.onresult = (event) => {
+      recognition.onresult = (event: SpeechRecognitionEvent) => {
         const transcript = event.results[0][0].transcript;
         onSearchChange(transcript);
       };
 
-      recognition.onerror = (event) => {
+      recognition.onerror = (event: any) => {
         console.error('Speech recognition error:', event.error);
         toast({
           variant: "destructive",
