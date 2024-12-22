@@ -13,7 +13,6 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Cookies from "js-cookie";
 
 const formSchema = z.object({
   mobile: z
@@ -29,7 +28,7 @@ export const Login = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    const isAuthenticated = Cookies.get("isAuthenticated") === "true";
+    const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
     console.log("Authentication check:", isAuthenticated);
     if (isAuthenticated) {
       console.log("User is authenticated, redirecting to home");
@@ -49,9 +48,8 @@ export const Login = () => {
     try {
       console.log("Form submitted with mobile:", values.mobile);
       if (values.mobile === "7289993664") {
-        console.log("Valid mobile number, setting cookie and redirecting");
-        // Set cookie with 30 minutes expiry (1/48 of a day)
-        Cookies.set("isAuthenticated", "true", { expires: 1/48 });
+        console.log("Valid mobile number, setting localStorage and redirecting");
+        localStorage.setItem("isAuthenticated", "true");
         
         // First navigate
         navigate("/", { replace: true });

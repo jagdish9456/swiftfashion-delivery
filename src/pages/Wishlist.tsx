@@ -14,7 +14,7 @@ const wishlistItems = [
     discount: "66% OFF",
     rating: 4.1,
     reviews: 305,
-    image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04",
+    image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105",
   },
   {
     id: 2,
@@ -24,9 +24,8 @@ const wishlistItems = [
     discount: "56% OFF",
     rating: 4.1,
     reviews: 5900,
-    image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2",
+    image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f",
   },
-  // Add more items as needed
 ];
 
 export const Wishlist = () => {
@@ -50,7 +49,9 @@ export const Wishlist = () => {
             <Button
               key={category}
               variant={category === "All" ? "default" : "outline"}
-              className="whitespace-nowrap"
+              className={`whitespace-nowrap ${
+                category === "All" ? "bg-[#9b87f5] hover:bg-[#7E69AB]" : ""
+              }`}
             >
               {category}
             </Button>
@@ -65,6 +66,9 @@ export const Wishlist = () => {
                   src={item.image}
                   alt={item.name}
                   className="w-full aspect-[3/4] object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3";
+                  }}
                 />
                 <Button
                   variant="ghost"
@@ -94,7 +98,7 @@ export const Wishlist = () => {
                     {item.reviews.toLocaleString()} Reviews
                   </span>
                 </div>
-                <Button className="w-full mt-3 bg-pink-500 hover:bg-pink-600">
+                <Button className="w-full mt-3 bg-[#9b87f5] hover:bg-[#7E69AB] text-white">
                   MOVE TO BAG
                 </Button>
               </div>

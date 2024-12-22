@@ -17,7 +17,7 @@ export const ProfileButtons = () => {
         onClick={() => navigate('/wishlist')}
         className="flex flex-col items-center justify-center p-3 bg-white rounded-lg border gap-1.5"
       >
-        <Heart className="h-5 w-5 text-primary-500" />
+        <Heart className="h-5 w-5 text-[#9b87f5]" />
         <span className="text-sm">Wishlist</span>
       </button>
       <button className="flex flex-col items-center justify-center p-3 bg-white rounded-lg border gap-1.5">
