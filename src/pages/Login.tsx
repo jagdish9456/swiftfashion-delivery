@@ -48,11 +48,11 @@ export const Login = () => {
       if (values.mobile === "7289993664") {
         // Set cookie with 30 minutes expiry (1/48 of a day)
         Cookies.set("isAuthenticated", "true", { expires: 1/48 });
-        navigate("/");
         toast({
           title: "Success",
           description: "Logged in successfully",
         });
+        navigate("/");
       } else {
         toast({
           variant: "destructive",
