@@ -4,24 +4,30 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { ProductList } from "@/components/categories/ProductList";
 import { BottomNav } from "@/components/layout/BottomNav";
-import products from "@/data/products.json";
+import productData from "@/data/product-all.json";
 
 export const SearchResults = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const query = searchParams.get("q")?.toLowerCase() || "";
 
-  const filteredProducts = products.products.filter(product => 
+  const filteredProducts = productData.products.filter(product => 
     product.name.toLowerCase().includes(query) ||
     product.description.toLowerCase().includes(query) ||
-    product.category.toLowerCase().includes(query)
+    (product.categoryId && product.categoryId.toLowerCase().includes(query))
   ).map(product => ({
     id: product.id,
     name: product.name,
     price: product.price,
-    image: `https://source.unsplash.com/400x400/?fashion,${product.category.toLowerCase()}`,
+    image: product.images?.[0]?.url || "/placeholder.svg",
     description: product.description,
-    brand: product.brand || "EssentialWear" // Providing a default brand if not available
+    brand: product.brand || "EssentialWear",
+    images: product.images || [{
+      id: "default",
+      url: "/placeholder.svg",
+      alt: product.name,
+      isDefault: true
+    }]
   }));
 
   return (

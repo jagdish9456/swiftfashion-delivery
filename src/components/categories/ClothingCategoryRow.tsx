@@ -4,13 +4,19 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-type Product = {
+export type Product = {
   id: string;
   name: string;
   price: number;
   image: string;
   description: string;
   brand: string;
+  images?: Array<{
+    id: string;
+    url: string;
+    alt: string;
+    isDefault: boolean;
+  }>;
 };
 
 type ClothingCategoryRowProps = {
