@@ -17,14 +17,17 @@ import { FloatingAIButton } from "@/components/ai/FloatingAIButton";
 import { Login } from "@/pages/Login";
 import { Wishlist } from "@/pages/Wishlist";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { useLocation } from "react-router-dom";
 
 const queryClient = new QueryClient();
 
 function App() {
+  const location = useLocation();
+  const showFloatingButton = location.pathname !== "/login";
+
   return (
     <QueryClientProvider client={queryClient}>
       <CartProvider>
-        <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
@@ -40,9 +43,8 @@ function App() {
             <Route path="/ai-chat" element={<ProtectedRoute><AIChat /></ProtectedRoute>} />
             <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
           </Routes>
-          <FloatingAIButton />
+          {showFloatingButton && <FloatingAIButton />}
           <Toaster />
-        </Router>
       </CartProvider>
     </QueryClientProvider>
   );
