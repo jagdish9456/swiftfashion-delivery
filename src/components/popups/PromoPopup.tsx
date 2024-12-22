@@ -4,22 +4,13 @@ import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
 
 export const PromoPopup = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
     if (location.pathname === '/') {
-      // Check if this is a page refresh by looking at performance navigation type
-      const isPageRefresh = window.performance
-        ? window.performance.getEntriesByType('navigation')[0].type === 'reload'
-        : false;
-
-      if (isPageRefresh) {
-        setIsOpen(true);
-        console.log("PromoPopup: Showing popup on home page refresh");
-      } else {
-        console.log("PromoPopup: Not showing popup - route change");
-      }
+      setIsOpen(true);
+      console.log("PromoPopup: Showing popup on home page");
     }
   }, [location]);
 
