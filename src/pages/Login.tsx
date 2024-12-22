@@ -65,11 +65,11 @@ export const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center bg-gradient-to-br from-purple-900 via-purple-800 to-purple-900">
+    <div className="min-h-screen flex flex-col justify-center bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900">
       <div className="sm:mx-auto sm:w-full sm:max-w-md px-4">
         <div className="bg-transparent py-8 px-4 sm:rounded-lg sm:px-10">
           <div className="sm:mx-auto sm:w-full sm:max-w-md mb-8">
-            <h1 className="text-4xl font-bold text-pink-500 text-center mb-2">
+            <h1 className="text-4xl font-bold text-primary-200 text-center mb-2">
               quickyy
             </h1>
             <h2 className="text-3xl font-bold text-white text-center mb-1">
@@ -101,14 +101,14 @@ export const Login = () => {
                         />
                       </div>
                     </FormControl>
-                    <FormMessage className="text-pink-300" />
+                    <FormMessage className="text-primary-200" />
                   </FormItem>
                 )}
               />
 
               <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white font-semibold py-3 rounded-full"
+                className="w-full bg-gradient-to-r from-primary-400 to-primary-500 hover:from-primary-500 hover:to-primary-600 text-white font-semibold py-3 rounded-full"
                 disabled={isLoading}
               >
                 {isLoading ? "Loading..." : "Send OTP"}
@@ -118,11 +118,11 @@ export const Login = () => {
 
           <p className="mt-8 text-center text-sm text-gray-300">
             By continuing, you agree to our{" "}
-            <a href="#" className="text-pink-400 hover:text-pink-300">
+            <a href="#" className="text-primary-300 hover:text-primary-200">
               Terms of Service
             </a>{" "}
             &{" "}
-            <a href="#" className="text-pink-400 hover:text-pink-300">
+            <a href="#" className="text-primary-300 hover:text-primary-200">
               Privacy Policy
             </a>
             .
