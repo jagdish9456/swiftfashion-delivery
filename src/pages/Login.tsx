@@ -30,7 +30,9 @@ export const Login = () => {
 
   useEffect(() => {
     const isAuthenticated = Cookies.get("isAuthenticated") === "true";
+    console.log("Authentication check:", isAuthenticated);
     if (isAuthenticated) {
+      console.log("User is authenticated, redirecting to home");
       navigate("/");
     }
   }, [navigate]);
@@ -45,15 +47,26 @@ export const Login = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     try {
+      console.log("Form submitted with mobile:", values.mobile);
       if (values.mobile === "7289993664") {
+        console.log("Valid mobile number, setting cookie and redirecting");
         // Set cookie with 30 minutes expiry (1/48 of a day)
         Cookies.set("isAuthenticated", "true", { expires: 1/48 });
-        toast({
-          title: "Success",
-          description: "Logged in successfully",
-        });
-        navigate("/");
+        
+        // First navigate
+        navigate("/", { replace: true });
+        
+        // Then show toast
+        setTimeout(() => {
+          toast({
+            title: "Success",
+            description: "Logged in successfully",
+          });
+        }, 100);
+        
+        console.log("Navigation and toast triggered");
       } else {
+        console.log("Invalid mobile number");
         toast({
           variant: "destructive",
           title: "Error",
