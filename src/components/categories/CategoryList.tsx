@@ -1,25 +1,16 @@
-import { FC } from 'react';
-import { ProductCard } from '../categories/ProductCard';
+import { useQuery } from "@tanstack/react-query";
+import categoryData from "@/data/category.json";
+import subcategoryData from "@/data/subcategory.json";
 
-interface CategoryListProps {
-  category: {
-    id: string;
-    name: string;
-    description: string;
-    image: string;
-    icon: string;
-    gender: string;
-    featured: boolean;
-    order: number;
-    metaTitle: string;
-    metaDescription: string;
-  };
-}
-
-export const CategoryList: FC<CategoryListProps> = ({ category }) => {
-  return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {/* Add product cards here */}
-    </div>
-  );
+export const useCategoryData = (categoryId?: string) => {
+  return useQuery({
+    queryKey: ["category", categoryId],
+    queryFn: () => {
+      const category = categoryData.categories.find(cat => cat.id === categoryId);
+      const subcategories = subcategoryData.subcategories.filter(
+        subcat => subcat.categoryId === categoryId
+      );
+      return { category, subcategories };
+    },
+  });
 };
