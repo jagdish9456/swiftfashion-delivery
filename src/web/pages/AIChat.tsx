@@ -9,7 +9,7 @@ interface Message {
   sender: "user" | "ai";
 }
 
-const AIChat = () => {
+export const AIChat = () => {
   const { toast } = useToast();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -71,5 +71,3 @@ const AIChat = () => {
     </div>
   );
 };
-
-export default AIChat;
