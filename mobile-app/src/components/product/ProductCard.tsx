@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { FadeView } from '../animations/FadeView';
 
 type ProductCardProps = {
   id: string;
@@ -19,20 +20,22 @@ export const ProductCard = ({ id, name, price, image, description, brand }: Prod
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={handlePress}>
-      <View style={styles.imageContainer}>
-        <Image 
-          source={{ uri: image }} 
-          style={styles.image}
-          resizeMode="cover"
-        />
-      </View>
-      <View style={styles.content}>
-        <Text style={styles.brand} numberOfLines={1}>{brand}</Text>
-        <Text style={styles.name} numberOfLines={1}>{name}</Text>
-        <Text style={styles.price}>${price.toFixed(2)}</Text>
-      </View>
-    </TouchableOpacity>
+    <FadeView duration={400}>
+      <TouchableOpacity style={styles.container} onPress={handlePress}>
+        <View style={styles.imageContainer}>
+          <Image 
+            source={{ uri: image }} 
+            style={styles.image}
+            resizeMode="cover"
+          />
+        </View>
+        <View style={styles.content}>
+          <Text style={styles.brand} numberOfLines={1}>{brand}</Text>
+          <Text style={styles.name} numberOfLines={1}>{name}</Text>
+          <Text style={styles.price}>${price.toFixed(2)}</Text>
+        </View>
+      </TouchableOpacity>
+    </FadeView>
   );
 };
 
