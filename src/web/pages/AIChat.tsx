@@ -21,7 +21,8 @@ const AIChat = () => {
       text: input,
       sender: "user"
     };
-    setMessages((prev) => [...prev, userMessage]);
+    
+    setMessages(prev => [...prev, userMessage]);
     setInput("");
 
     // Simulate AI response
@@ -30,12 +31,13 @@ const AIChat = () => {
       text: aiResponse,
       sender: "ai"
     };
-    setMessages((prev) => [...prev, aiMessage]);
+    
+    setMessages(prev => [...prev, aiMessage]);
   };
 
-  const fetchAIResponse = async (userInput: string) => {
+  const fetchAIResponse = async (userInput: string): Promise<string> => {
     // Simulate an API call to get AI response
-    return new Promise<string>((resolve) => {
+    return new Promise((resolve) => {
       setTimeout(() => {
         resolve(`AI response to: ${userInput}`);
       }, 1000);
