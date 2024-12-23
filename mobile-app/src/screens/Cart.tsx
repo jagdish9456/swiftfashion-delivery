@@ -4,7 +4,6 @@ import { Header } from '../components/layout/Header';
 import { BottomNav } from '../components/layout/BottomNav';
 import { CartItem } from '../components/cart/CartItem';
 import { CartSummary } from '../components/cart/CartSummary';
-import { CartFooter } from '../components/cart/CartFooter';
 import { useCart } from '../contexts/CartContext';
 
 export const Cart = () => {
@@ -19,7 +18,6 @@ export const Cart = () => {
         ))}
         <CartSummary />
       </ScrollView>
-      <CartFooter />
       <BottomNav />
     </View>
   );
