@@ -4,7 +4,7 @@
       "id": "u1",
       "email": "john.doe@example.com",
       "name": "John Doe",
-      "phone": "+1234567890",
+      "phone": "7289993664",
       "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200",
       "role": "customer",
       "preferences": {
@@ -14,6 +14,36 @@
       },
       "createdAt": "2024-01-01T00:00:00Z",
       "lastLogin": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "u2",
+      "email": "jane.smith@example.com",
+      "name": "Jane Smith",
+      "phone": "9876543210",
+      "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200",
+      "role": "customer",
+      "preferences": {
+        "size": "S",
+        "favoriteCategories": ["womens-clothing", "ethnic-wear"],
+        "notifications": true
+      },
+      "createdAt": "2024-01-02T00:00:00Z",
+      "lastLogin": "2024-03-16T09:15:00Z"
+    },
+    {
+      "id": "u3",
+      "email": "mike.wilson@example.com",
+      "name": "Mike Wilson",
+      "phone": "8765432109",
+      "avatar": "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=200",
+      "role": "customer",
+      "preferences": {
+        "size": "L",
+        "favoriteCategories": ["formal-wear", "accessories"],
+        "notifications": false
+      },
+      "createdAt": "2024-01-03T00:00:00Z",
+      "lastLogin": "2024-03-16T14:45:00Z"
     }
   ]
 }
