@@ -1,10 +1,11 @@
-import { Filter } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { FooterText } from "@/components/layout/FooterText";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { FilterSheet } from "@/components/filters/FilterSheet";
 import { ProductList } from "@/components/categories/ProductList";
+import { CategoryHeader } from "@/components/categories/CategoryHeader";
+import { CategorySidebar } from "@/components/categories/CategorySidebar";
+import { NewArrivalsBanner } from "@/components/categories/NewArrivalsBanner";
 
 const categories = [
   { name: "All", icon: "🏷️" },
@@ -28,7 +29,13 @@ const allProducts = [
     price: 29.99,
     image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500",
     description: "Premium cotton t-shirt perfect for everyday wear",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img1",
+      url: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500",
+      alt: "Classic White T-Shirt",
+      isDefault: true
+    }]
   },
   {
     id: "2",
@@ -36,7 +43,13 @@ const allProducts = [
     price: 79.99,
     image: "/placeholder.svg",
     description: "Classic dark wash slim fit jeans with stretch comfort",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img2",
+      url: "/placeholder.svg",
+      alt: "Slim Fit Dark Denim Jeans",
+      isDefault: true
+    }]
   },
   {
     id: "3",
@@ -44,7 +57,13 @@ const allProducts = [
     price: 89.99,
     image: "/placeholder.svg",
     description: "Light and breezy floral print dress perfect for summer days",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img3",
+      url: "/placeholder.svg",
+      alt: "Floral Summer Dress",
+      isDefault: true
+    }]
   },
   {
     id: "4",
@@ -52,7 +71,13 @@ const allProducts = [
     price: 199.99,
     image: "/placeholder.svg",
     description: "Elegant wool blend coat for cold winter days",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img4",
+      url: "/placeholder.svg",
+      alt: "Wool Blend Winter Coat",
+      isDefault: true
+    }]
   },
   {
     id: "5",
@@ -60,7 +85,13 @@ const allProducts = [
     price: 34.99,
     image: "/placeholder.svg",
     description: "Moisture-wicking athletic shorts for high-performance activities",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img5",
+      url: "/placeholder.svg",
+      alt: "Athletic Performance Shorts",
+      isDefault: true
+    }]
   },
   {
     id: "6",
@@ -68,7 +99,13 @@ const allProducts = [
     price: 299.99,
     image: "/placeholder.svg",
     description: "Elegant silk evening gown for special occasions",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img6",
+      url: "/placeholder.svg",
+      alt: "Silk Evening Gown",
+      isDefault: true
+    }]
   },
   {
     id: "7",
@@ -76,7 +113,13 @@ const allProducts = [
     price: 249.99,
     image: "/placeholder.svg",
     description: "Classic leather motorcycle jacket with quilted lining",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img7",
+      url: "/placeholder.svg",
+      alt: "Leather Biker Jacket",
+      isDefault: true
+    }]
   },
   {
     id: "8",
@@ -84,7 +127,13 @@ const allProducts = [
     price: 49.99,
     image: "/placeholder.svg",
     description: "High-waisted yoga leggings with moisture-wicking fabric",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img8",
+      url: "/placeholder.svg",
+      alt: "Yoga Leggings",
+      isDefault: true
+    }]
   },
   {
     id: "9",
@@ -92,7 +141,13 @@ const allProducts = [
     price: 69.99,
     image: "/placeholder.svg",
     description: "Professional striped shirt for business attire",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img9",
+      url: "/placeholder.svg",
+      alt: "Striped Business Shirt",
+      isDefault: true
+    }]
   },
   {
     id: "10",
@@ -100,7 +155,13 @@ const allProducts = [
     price: 159.99,
     image: "/placeholder.svg",
     description: "Soft and warm cashmere sweater for cold weather",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img10",
+      url: "/placeholder.svg",
+      alt: "Cashmere Sweater",
+      isDefault: true
+    }]
   },
   {
     id: "11",
@@ -108,7 +169,13 @@ const allProducts = [
     price: 59.99,
     image: "/placeholder.svg",
     description: "Durable cargo pants with multiple pockets",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img11",
+      url: "/placeholder.svg",
+      alt: "Cargo Pants",
+      isDefault: true
+    }]
   },
   {
     id: "12",
@@ -116,7 +183,13 @@ const allProducts = [
     price: 39.99,
     image: "/placeholder.svg",
     description: "Quick-dry beach shorts with fun summer patterns",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img12",
+      url: "/placeholder.svg",
+      alt: "Summer Beach Shorts",
+      isDefault: true
+    }]
   },
   {
     id: "13",
@@ -124,7 +197,13 @@ const allProducts = [
     price: 129.99,
     image: "/placeholder.svg",
     description: "Warm puffer jacket with water-resistant finish",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img13",
+      url: "/placeholder.svg",
+      alt: "Puffer Jacket",
+      isDefault: true
+    }]
   },
   {
     id: "14",
@@ -132,7 +211,13 @@ const allProducts = [
     price: 54.99,
     image: "/placeholder.svg",
     description: "Breathable linen shirt perfect for summer days",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img14",
+      url: "/placeholder.svg",
+      alt: "Linen Summer Shirt",
+      isDefault: true
+    }]
   },
   {
     id: "15",
@@ -140,7 +225,13 @@ const allProducts = [
     price: 69.99,
     image: "/placeholder.svg",
     description: "Elegant pleated midi skirt for office wear",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img15",
+      url: "/placeholder.svg",
+      alt: "Pleated Midi Skirt",
+      isDefault: true
+    }]
   },
   {
     id: "16",
@@ -148,7 +239,13 @@ const allProducts = [
     price: 119.99,
     image: "/placeholder.svg",
     description: "Lightweight running shoes with cushioned sole",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img16",
+      url: "/placeholder.svg",
+      alt: "Running Shoes",
+      isDefault: true
+    }]
   },
   {
     id: "17",
@@ -156,7 +253,13 @@ const allProducts = [
     price: 89.99,
     image: "/placeholder.svg",
     description: "Classic denim jacket with button closure",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img17",
+      url: "/placeholder.svg",
+      alt: "Denim Jacket",
+      isDefault: true
+    }]
   },
   {
     id: "18",
@@ -164,7 +267,13 @@ const allProducts = [
     price: 149.99,
     image: "/placeholder.svg",
     description: "Tailored blazer for professional settings",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img18",
+      url: "/placeholder.svg",
+      alt: "Formal Blazer",
+      isDefault: true
+    }]
   },
   {
     id: "19",
@@ -172,7 +281,13 @@ const allProducts = [
     price: 99.99,
     image: "/placeholder.svg",
     description: "Flowing maxi dress with bohemian print",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img19",
+      url: "/placeholder.svg",
+      alt: "Printed Maxi Dress",
+      isDefault: true
+    }]
   },
   {
     id: "20",
@@ -180,14 +295,19 @@ const allProducts = [
     price: 44.99,
     image: "/placeholder.svg",
     description: "Thermal base layer for cold weather activities",
-    brand: "EssentialWear"
+    brand: "EssentialWear",
+    images: [{
+      id: "img20",
+      url: "/placeholder.svg",
+      alt: "Thermal Base Layer",
+      isDefault: true
+    }]
   },
 ];
 
 export const Categories = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const [displayedProducts, setDisplayedProducts] = useState<typeof allProducts>([]);
+  const [displayedProducts, setDisplayedProducts] = useState(allProducts.slice(0, 16));
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -225,7 +345,6 @@ export const Categories = () => {
 
   const handleApplyFilters = () => {
     setIsFilterOpen(false);
-    // Filter logic will be implemented here
   };
 
   const midPoint = Math.min(8, Math.floor(displayedProducts.length / 2));
@@ -234,75 +353,18 @@ export const Categories = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="fixed top-0 left-0 right-0 bg-white z-10 px-4 py-2 flex items-center justify-between border-b">
-        <div className="flex items-center">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="mr-2"
-            onClick={() => navigate('/')}
-          >
-            ←
-          </Button>
-          <h1 className="text-base font-semibold">
-            {id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-          </h1>
-        </div>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-8 w-8 hover:bg-primary-50 hover:text-primary-500"
-          onClick={() => setIsFilterOpen(true)}
-        >
-          <Filter className="h-4 w-4" />
-        </Button>
-      </div>
+      <CategoryHeader id={id} onOpenFilter={() => setIsFilterOpen(true)} />
+      <CategorySidebar categories={categories} />
 
-      {/* Sidebar */}
-      <aside className="w-16 bg-white shadow-sm fixed left-0 top-[41px] bottom-0">
-        <div className="p-2 overflow-y-auto max-h-full hide-scrollbar">
-          <nav className="space-y-1">
-            {categories.map((category) => (
-              <button
-                key={category.name}
-                className="w-full flex flex-col items-center p-2 rounded-lg text-sm hover:bg-primary-50 hover:text-primary-500 transition-colors"
-              >
-                <span className="text-lg mb-1">{category.icon}</span>
-                <span className="text-[10px]">{category.name}</span>
-              </button>
-            ))}
-          </nav>
-        </div>
-      </aside>
-
-      {/* Main Content */}
       <div className="flex-1 ml-16 mt-[41px]">
-        {/* New Arrivals Banner */}
-        <div className="p-2 bg-[#F2FCE2]">
-          <div className="rounded-lg p-3">
-            <h3 className="text-base font-semibold text-primary-800 mb-1">New Arrivals</h3>
-            <p className="text-sm text-primary-600 mb-2">
-              Check out our latest collection in {id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-            </p>
-            <Button 
-              variant="secondary" 
-              className="w-full sm:w-auto bg-white hover:bg-primary-50"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            >
-              Explore Now
-            </Button>
-          </div>
-        </div>
+        <NewArrivalsBanner categoryId={id} />
 
-        {/* Products Grid */}
         <main className="p-4">
           <ProductList
             products={firstHalfProducts}
             isLoading={false}
           />
 
-          {/* Special Offer Banner */}
           <div className="my-6 p-3 bg-white rounded-lg shadow-sm">
             <h3 className="text-base font-semibold mb-2">Special Offer</h3>
             <div className="p-3 bg-primary-50 rounded-lg">
