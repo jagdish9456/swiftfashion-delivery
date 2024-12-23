@@ -24,7 +24,7 @@ const searchSuggestions = {
 export const Header = () => {
   const navigate = useNavigate();
   const [location, setLocation] = useState({
-    address: "Set Location",
+    address: "Set Locations",
     area: "Choose delivery area"
   });
   const [search, setSearch] = useState("");
