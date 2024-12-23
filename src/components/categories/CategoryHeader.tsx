@@ -2,26 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Filter } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export interface CategoryHeaderProps {
+type CategoryHeaderProps = {
   id?: string;
   onOpenFilter: () => void;
-  category?: {
-    id: string;
-    name: string;
-    description: string;
-    image: string;
-    icon: string;
-    gender: string;
-    featured: boolean;
-    order: number;
-    metaTitle: string;
-    metaDescription: string;
-  };
-}
+};
 
-export const CategoryHeader = ({ id, onOpenFilter, category }: CategoryHeaderProps) => {
+export const CategoryHeader = ({ id, onOpenFilter }: CategoryHeaderProps) => {
   const navigate = useNavigate();
-  const displayName = category?.name || id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
   return (
     <div className="fixed top-0 left-0 right-0 bg-white z-10 px-4 py-2 flex items-center justify-between border-b">
@@ -34,7 +21,9 @@ export const CategoryHeader = ({ id, onOpenFilter, category }: CategoryHeaderPro
         >
           ←
         </Button>
-        <h1 className="text-base font-semibold">{displayName}</h1>
+        <h1 className="text-base font-semibold">
+          {id?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+        </h1>
       </div>
       <Button
         variant="outline"
