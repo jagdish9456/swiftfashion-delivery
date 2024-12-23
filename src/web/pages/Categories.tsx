@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
+import { Header } from "@/components/layout/Header";
+import { BottomNav } from "@/components/layout/BottomNav";
 import { FilterSheet } from "@/components/filters/FilterSheet";
 import { CategoryHeader } from "@/components/categories/CategoryHeader";
 import { CategoryList } from "@/components/categories/CategoryList";
@@ -11,6 +13,10 @@ export const Categories = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const category = categories.find(cat => cat.id === id);
 
+  if (!category) {
+    return <div>Category not found</div>;
+  }
+
   const handleOpenFilter = () => {
     setIsFilterOpen(true);
   };
@@ -19,33 +25,24 @@ export const Categories = () => {
     setIsFilterOpen(false);
   };
 
-  const sidebarCategories = [
-    { name: "All", icon: "🏷️" },
-    { name: "T-Shirts", icon: "👕" },
-    { name: "Shirts", icon: "👔" },
-    { name: "Pants", icon: "👖" },
-    { name: "Dresses", icon: "👗" },
-    { name: "Skirts", icon: "👘" },
-    { name: "Jackets", icon: "🧥" },
-    { name: "Sweaters", icon: "🧶" },
-    { name: "Activewear", icon: "🎽" },
-    { name: "Accessories", icon: "👜" },
-    { name: "Shoes", icon: "👞" },
-    { name: "Bags", icon: "🎒" },
-  ];
+  const sidebarCategories = categories.map(cat => ({
+    id: cat.id,
+    name: cat.name,
+    icon: cat.icon
+  }));
 
   return (
     <div className="min-h-screen pb-16">
+      <Header />
       <CategoryHeader 
-        id={id} 
-        category={category} 
+        category={category}
         onOpenFilter={handleOpenFilter}
       />
       <div className="container mx-auto px-4 flex gap-4 pt-4">
         <aside className="hidden md:block w-64">
           <CategorySidebar 
             categories={sidebarCategories}
-            currentCategory={category} 
+            currentCategory={category}
           />
         </aside>
         <main className="flex-1">
@@ -57,6 +54,7 @@ export const Categories = () => {
         onOpenChange={setIsFilterOpen}
         onApplyFilters={handleApplyFilters}
       />
+      <BottomNav />
     </div>
   );
 };
