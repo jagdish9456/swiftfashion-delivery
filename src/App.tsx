@@ -7,21 +7,21 @@ import { FloatingAIButton } from "@/components/ai/FloatingAIButton";
 import { PromoPopup } from "@/components/popups/PromoPopup";
 
 // Page imports
-import Index from "@/web/pages/Index";
-import Categories from "@/web/pages/Categories";
-import ProductDetails from "@/web/pages/ProductDetails";
-import GenderCategories from "@/web/pages/GenderCategories";
-import SetLocation from "@/web/pages/SetLocation";
-import Profile from "@/web/pages/Profile";
-import ProfileDetails from "@/web/pages/ProfileDetails";
-import Orders from "@/web/pages/Orders";
-import Cart from "@/web/pages/Cart";
-import NearYou from "@/web/pages/NearYou";
-import Notifications from "@/web/pages/Notifications";
-import AIChat from "@/web/pages/AIChat";
-import Login from "@/web/pages/Login";
-import Wishlist from "@/web/pages/Wishlist";
-import SearchResults from "@/web/pages/SearchResults";
+import { Index } from "@/web/pages/Index";
+import { Categories } from "@/web/pages/Categories";
+import { ProductDetails } from "@/web/pages/ProductDetails";
+import { GenderCategories } from "@/web/pages/GenderCategories";
+import { SetLocation } from "@/web/pages/SetLocation";
+import { Profile } from "@/web/pages/Profile";
+import { ProfileDetails } from "@/web/pages/ProfileDetails";
+import { Orders } from "@/web/pages/Orders";
+import { Cart } from "@/web/pages/Cart";
+import { NearYou } from "@/web/pages/NearYou";
+import { Notifications } from "@/web/pages/Notifications";
+import { AIChat } from "@/web/pages/AIChat";
+import { Login } from "@/web/pages/Login";
+import { Wishlist } from "@/web/pages/Wishlist";
+import { SearchResults } from "@/web/pages/SearchResults";
 
 const queryClient = new QueryClient();
 
