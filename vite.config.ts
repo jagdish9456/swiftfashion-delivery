@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
@@ -16,13 +15,15 @@ export default defineConfig(({ mode }) => ({
   ].filter(Boolean),
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./web-application/src"),
+      "@": path.resolve(__dirname, "./src"),
+      "@web": path.resolve(__dirname, "./src/web"),
+      "@mobile": path.resolve(__dirname, "./src/mobile"),
     },
   },
-  root: './web-application',
-  publicDir: './web-application/public',
   build: {
-    outDir: './web-application/dist',
-    emptyOutDir: true,
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: true,
+    minify: 'terser',
   }
 }));
