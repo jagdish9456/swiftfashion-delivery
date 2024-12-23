@@ -4,14 +4,12 @@ import react from "@vitejs/plugin-react-swc"
 import { componentTagger } from "lovable-tagger"
 
 export default defineConfig(({ mode }) => ({
-  root: path.resolve(__dirname, 'web-application'),
-  publicDir: path.resolve(__dirname, 'web-application/public'),
   plugins: [
     react(),
     mode === 'development' && componentTagger(),
   ].filter(Boolean),
   build: {
-    outDir: path.resolve(__dirname, 'web-application/dist'),
+    outDir: 'dist',
     emptyOutDir: true,
   },
   server: {
@@ -20,7 +18,7 @@ export default defineConfig(({ mode }) => ({
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "web-application/src"),
+      "@": path.resolve(__dirname, "src"),
     },
   },
 }));
