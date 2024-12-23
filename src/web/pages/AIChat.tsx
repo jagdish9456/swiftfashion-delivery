@@ -4,21 +4,32 @@ import { Button } from "@/components/ui/button";
 import { MessageList } from "@/components/ai/MessageList";
 import { Input } from "@/components/ui/input";
 
+interface Message {
+  text: string;
+  sender: "user" | "ai";
+}
+
 const AIChat = () => {
   const { toast } = useToast();
-  const [messages, setMessages] = useState<{ text: string; sender: "user" | "ai" }[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
 
-    const userMessage = { text: input, sender: "user" };
+    const userMessage: Message = {
+      text: input,
+      sender: "user"
+    };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
     // Simulate AI response
     const aiResponse = await fetchAIResponse(input);
-    const aiMessage = { text: aiResponse, sender: "ai" };
+    const aiMessage: Message = {
+      text: aiResponse,
+      sender: "ai"
+    };
     setMessages((prev) => [...prev, aiMessage]);
   };
 
@@ -35,7 +46,7 @@ const AIChat = () => {
     if (messages.length > 0 && messages[messages.length - 1].sender === "ai") {
       toast({
         title: "AI Response",
-        description: messages[messages.length - 1].text,
+        description: messages[messages.length - 1].text
       });
     }
   }, [messages, toast]);
