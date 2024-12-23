@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react-swc"
 import { componentTagger } from "lovable-tagger"
 
 export default defineConfig(({ mode }) => ({
-  root: 'web-application',
+  root: path.resolve(__dirname, 'web-application'),
   publicDir: path.resolve(__dirname, 'web-application/public'),
   plugins: [
     react(),
