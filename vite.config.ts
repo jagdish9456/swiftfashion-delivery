@@ -16,7 +16,13 @@ export default defineConfig(({ mode }) => ({
   ].filter(Boolean),
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(__dirname, "./web-application/src"),
     },
   },
+  root: './web-application',
+  publicDir: './web-application/public',
+  build: {
+    outDir: './web-application/dist',
+    emptyOutDir: true,
+  }
 }));
