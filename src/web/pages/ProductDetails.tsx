@@ -9,7 +9,7 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/
 import { Check } from "lucide-react";
 import { useState } from "react";
 
-const ProductDetails = () => {
+export const ProductDetails = () => {
   const { toast } = useToast();
   const { addItem } = useCart();
   const [selectedSize, setSelectedSize] = useState("S");
@@ -295,5 +295,3 @@ const ProductDetails = () => {
     </div>
   );
 };
-
-export default ProductDetails;
