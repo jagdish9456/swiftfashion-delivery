@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ArrowLeft } from 'lucide-react-native';
 
@@ -12,21 +12,26 @@ export const Header = ({ showBack, title }: HeaderProps) => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.header}>
-      {showBack && (
-        <TouchableOpacity 
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <ArrowLeft size={24} />
-        </TouchableOpacity>
-      )}
-      {title && <Text style={styles.title}>{title}</Text>}
-    </View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.header}>
+        {showBack && (
+          <TouchableOpacity 
+            onPress={() => navigation.goBack()}
+            style={styles.backButton}
+          >
+            <ArrowLeft size={24} />
+          </TouchableOpacity>
+        )}
+        {title && <Text style={styles.title}>{title}</Text>}
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    backgroundColor: '#fff',
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',

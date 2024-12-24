@@ -17,7 +17,26 @@ const categories = [
     name: 'Formal Shirts',
     image: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=500',
   },
-  // ... Add more categories
+  {
+    id: '3',
+    name: 'Casual Shirts',
+    image: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=500',
+  },
+  {
+    id: '4',
+    name: 'T-Shirts',
+    image: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=500',
+  },
+  {
+    id: '5',
+    name: 'Jeans',
+    image: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=500',
+  },
+  {
+    id: '6',
+    name: 'Trousers',
+    image: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=500',
+  },
 ];
 
 export const Categories = ({ navigation }) => {
@@ -35,7 +54,7 @@ export const Categories = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header showBack title="Categories" />
+      <Header title="Categories" />
       <View style={styles.tabs}>
         <TouchableOpacity 
           style={[styles.tab, activeTab === 'men' && styles.activeTab]}
@@ -55,8 +74,8 @@ export const Categories = ({ navigation }) => {
       <FlashList
         data={categories}
         renderItem={renderCategory}
-        numColumns={2}
-        estimatedItemSize={200}
+        numColumns={3}
+        estimatedItemSize={150}
         contentContainerStyle={styles.list}
       />
       <BottomNav />
@@ -92,11 +111,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   list: {
-    padding: 16,
+    padding: 8,
   },
   categoryCard: {
     flex: 1,
-    margin: 8,
+    margin: 4,
     borderRadius: 8,
     overflow: 'hidden',
     backgroundColor: '#fff',
@@ -108,7 +127,7 @@ const styles = StyleSheet.create({
   },
   categoryName: {
     padding: 8,
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '500',
     textAlign: 'center',
   },
