@@ -1,4 +1,4 @@
-package com.anonymous.mobileapp
+package com.swiftfashion.app
 
 import android.app.Application
 import android.content.res.Configuration
@@ -25,8 +25,6 @@ class MainApplication : Application(), ReactApplication {
         this,
         object : DefaultReactNativeHost(this) {
           override fun getPackages(): List<ReactPackage> {
-            // Packages that cannot be autolinked yet can be added manually here, for example:
-            // packages.add(new MyReactNativePackage());
             return PackageList(this).packages
           }
 
@@ -49,7 +47,6 @@ class MainApplication : Application(), ReactApplication {
       ReactFeatureFlags.unstable_useRuntimeSchedulerAlways = false
     }
     if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
-      // If you opted-in for the New Architecture, we load the native entry point for this app.
       load()
     }
     if (BuildConfig.DEBUG) {
