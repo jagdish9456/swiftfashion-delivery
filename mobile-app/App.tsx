@@ -5,6 +5,12 @@ import { NetworkProvider } from './src/contexts/NetworkContext';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import { Platform } from 'react-native';
+import { AppRegistry } from 'react-native';
+
+// Register the app for non-web platforms
+if (Platform.OS !== 'web') {
+  AppRegistry.registerComponent('main', () => App);
+}
 
 const App = () => {
   const navigationRef = useNavigationContainerRef();
