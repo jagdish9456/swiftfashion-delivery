@@ -17,6 +17,7 @@ export const AppNavigator = () => {
       screenOptions={{
         headerShown: false,
       }}
+      initialRouteName="Home"
     >
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Categories" component={Categories} />
