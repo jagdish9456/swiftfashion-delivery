@@ -4,8 +4,9 @@ import { CartProvider } from './src/contexts/CartContext';
 import { NetworkProvider } from './src/contexts/NetworkContext';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
+import { AppRegistry } from 'react-native';
 
-export default function App() {
+const App = () => {
   const navigationRef = useNavigationContainerRef();
 
   useEffect(() => {
@@ -31,4 +32,9 @@ export default function App() {
       </NetworkProvider>
     </SafeAreaProvider>
   );
-}
+};
+
+// Register the main component
+AppRegistry.registerComponent('main', () => App);
+
+export default App;
