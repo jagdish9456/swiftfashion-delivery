@@ -1,26 +1,45 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
-import { Header } from '../components/layout/Header';
-import { BottomNav } from '../components/layout/BottomNav';
+import { View, StyleSheet, ScrollView, Text } from 'react-native';
 import { CartItem } from '../components/cart/CartItem';
-import { CartSummary } from '../components/cart/CartSummary';
 import { CartFooter } from '../components/cart/CartFooter';
-import { useCart } from '../contexts/CartContext';
+import { CartSummary } from '../components/cart/CartSummary';
+import { Header } from '../components/layout/Header';
+
+const dummyCartItems = [
+  {
+    id: '1',
+    name: 'Summer T-Shirt',
+    price: 29.99,
+    originalPrice: 39.99,
+    quantity: 1,
+    size: 'M',
+    color: 'White',
+    image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=500'
+  },
+  {
+    id: '2',
+    name: 'Denim Jeans',
+    price: 59.99,
+    originalPrice: 79.99,
+    quantity: 1,
+    size: '32',
+    color: 'Blue',
+    image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=500'
+  }
+];
 
 export const Cart = () => {
-  const { items } = useCart();
-
   return (
     <View style={styles.container}>
       <Header />
       <ScrollView style={styles.content}>
-        {items.map((item) => (
+        <Text style={styles.title}>Shopping Cart ({dummyCartItems.length})</Text>
+        {dummyCartItems.map(item => (
           <CartItem key={item.id} {...item} />
         ))}
-        <CartSummary />
+        <CartSummary items={dummyCartItems} />
       </ScrollView>
-      <CartFooter />
-      <BottomNav />
+      <CartFooter items={dummyCartItems} />
     </View>
   );
 };
@@ -32,6 +51,12 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingTop: 116,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: '600',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
   },
 });

@@ -7,7 +7,7 @@ const { width } = Dimensions.get('window');
 const ITEM_WIDTH = (width - 48) / NUM_COLUMNS;
 
 export const CategorySection = () => {
-  const categories = categoryData.categories.slice(0, 12); // Show first 12 categories
+  const categories = categoryData.categories.slice(0, 12);
 
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.categoryItem}>
@@ -19,7 +19,7 @@ export const CategorySection = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="category-section">
       <Text style={styles.title}>Shop by Category</Text>
       <FlatList
         data={categories}

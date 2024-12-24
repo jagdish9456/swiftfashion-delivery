@@ -1,82 +1,75 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { ArrowRight } from 'lucide-react-native';
 
 const deals = [
   {
-    id: '1',
-    title: 'Summer Sale',
-    discount: '50% OFF',
-    image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=500'
+    id: 1,
+    title: "Deals of the Day",
+    subtitle: "60% OFF",
+    bgColor: "#FF7043",
   },
   {
-    id: '2',
-    title: 'New Arrivals',
-    discount: '30% OFF',
-    image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500'
-  }
+    id: 2,
+    title: "Unlimited Flat Deal",
+    subtitle: "Big orders",
+    bgColor: "#FFB74D",
+  },
+  {
+    id: 3,
+    title: "Fastest Deliveries",
+    subtitle: "See offers",
+    bgColor: "#4CAF50",
+  },
 ];
 
 export const DealsSection = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Today's Deals</Text>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
-      >
+      <View style={styles.grid}>
         {deals.map((deal) => (
-          <View key={deal.id} style={styles.dealContainer}>
-            <Image
-              source={{ uri: deal.image }}
-              style={styles.dealImage}
-            />
-            <View style={styles.dealInfo}>
-              <Text style={styles.dealTitle}>{deal.title}</Text>
-              <Text style={styles.dealDiscount}>{deal.discount}</Text>
+          <TouchableOpacity
+            key={deal.id}
+            style={[styles.card, { backgroundColor: deal.bgColor }]}
+          >
+            <Text style={styles.title}>{deal.title}</Text>
+            <View style={styles.subtitleContainer}>
+              <Text style={styles.subtitle}>{deal.subtitle}</Text>
+              <ArrowRight size={16} color="white" />
             </View>
-          </View>
+          </TouchableOpacity>
         ))}
-      </ScrollView>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 16,
+    padding: 16,
+  },
+  grid: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  card: {
+    flex: 1,
+    padding: 12,
+    borderRadius: 8,
   },
   title: {
-    fontSize: 18,
+    color: 'white',
+    fontSize: 14,
     fontWeight: '600',
-    marginBottom: 12,
-    paddingHorizontal: 16,
-  },
-  scrollContent: {
-    paddingHorizontal: 16,
-  },
-  dealContainer: {
-    width: 280,
-    marginRight: 12,
-    borderRadius: 8,
-    overflow: 'hidden',
-  },
-  dealImage: {
-    width: '100%',
-    height: 160,
-  },
-  dealInfo: {
-    padding: 12,
-    backgroundColor: '#fff',
-  },
-  dealTitle: {
-    fontSize: 16,
-    fontWeight: '500',
     marginBottom: 4,
   },
-  dealDiscount: {
-    fontSize: 14,
-    color: '#E53935',
-    fontWeight: '600',
+  subtitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  subtitle: {
+    color: 'white',
+    fontSize: 12,
   },
 });
