@@ -1,0 +1,28 @@
+{
+  "categories": [
+    {
+      "id": "cat1",
+      "name": "Men's Fashion",
+      "icon": "👔",
+      "image": "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=500"
+    },
+    {
+      "id": "cat2",
+      "name": "Women's Fashion",
+      "icon": "👗",
+      "image": "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=500"
+    },
+    {
+      "id": "cat3",
+      "name": "Kids' Fashion",
+      "icon": "👶",
+      "image": "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=500"
+    },
+    {
+      "id": "cat4",
+      "name": "Accessories",
+      "icon": "👜",
+      "image": "https://images.unsplash.com/photo-1523779917675-b6ed3a42a561?w=500"
+    }
+  ]
+}
