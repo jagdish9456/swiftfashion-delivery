@@ -1,38 +1,34 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Dimensions } from 'react-native';
+import categoryData from '../../data/category.json';
 
-const categories = [
-  { id: '1', name: 'Fashion', image: '/placeholder.svg' },
-  { id: '2', name: 'Electronics', image: '/placeholder.svg' },
-  { id: '3', name: 'Home', image: '/placeholder.svg' },
-  // Add more categories as needed
-];
+const NUM_COLUMNS = 4;
+const { width } = Dimensions.get('window');
+const ITEM_WIDTH = (width - 48) / NUM_COLUMNS;
 
 export const CategorySection = () => {
-  const navigation = useNavigation();
+  const categories = categoryData.categories.slice(0, 12); // Show first 12 categories
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity style={styles.categoryItem}>
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: item.image }} style={styles.image} resizeMode="cover" />
+      </View>
+      <Text style={styles.categoryName} numberOfLines={2}>{item.name}</Text>
+    </TouchableOpacity>
+  );
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Shop by Category</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {categories.map((category) => (
-          <TouchableOpacity
-            key={category.id}
-            style={styles.category}
-            onPress={() => navigation.navigate('Categories', { id: category.id })}
-          >
-            <View style={styles.imageContainer}>
-              <Image
-                source={{ uri: category.image }}
-                style={styles.image}
-                resizeMode="cover"
-              />
-            </View>
-            <Text style={styles.name}>{category.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      <FlatList
+        data={categories}
+        renderItem={renderItem}
+        numColumns={NUM_COLUMNS}
+        keyExtractor={(item) => item.id}
+        scrollEnabled={false}
+        contentContainerStyle={styles.gridContainer}
+      />
     </View>
   );
 };
@@ -44,26 +40,31 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '600',
-    marginBottom: 12,
+    marginBottom: 16,
   },
-  category: {
-    marginRight: 12,
+  gridContainer: {
+    gap: 8,
+  },
+  categoryItem: {
+    width: ITEM_WIDTH,
     alignItems: 'center',
+    marginBottom: 16,
   },
   imageContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: ITEM_WIDTH - 8,
+    height: ITEM_WIDTH - 8,
+    borderRadius: 8,
     overflow: 'hidden',
-    backgroundColor: '#f3f4f6',
+    backgroundColor: '#f5f5f5',
+    marginBottom: 4,
   },
   image: {
     width: '100%',
     height: '100%',
   },
-  name: {
-    marginTop: 8,
+  categoryName: {
     fontSize: 12,
     textAlign: 'center',
+    paddingHorizontal: 4,
   },
 });
