@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Header } from '../components/layout/Header';
 import { CategorySection } from '../components/categories/CategorySection';
@@ -22,6 +22,8 @@ const sections = [
   { key: 'topChoices', component: TopChoices },
 ];
 
+const { height } = Dimensions.get('window');
+
 export const Home = () => {
   return (
     <SafeAreaView style={styles.container}>
@@ -34,6 +36,7 @@ export const Home = () => {
             return <Component />;
           }}
           estimatedItemSize={300}
+          contentContainerStyle={styles.listContent}
         />
       </View>
       <BottomNav />
@@ -48,5 +51,9 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    height: height - 120, // Adjust for header and bottom nav
+  },
+  listContent: {
+    paddingBottom: 20,
   },
 });
