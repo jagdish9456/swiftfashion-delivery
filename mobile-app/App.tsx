@@ -4,7 +4,7 @@ import { CartProvider } from './src/contexts/CartContext';
 import { NetworkProvider } from './src/contexts/NetworkContext';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
-import { AppRegistry } from 'react-native';
+import { AppRegistry, Platform } from 'react-native';
 
 const App = () => {
   const navigationRef = useNavigationContainerRef();
@@ -14,7 +14,9 @@ const App = () => {
       // Reset scroll position on route change
       if (navigationRef.current?.getCurrentRoute()?.name) {
         // Scroll to top logic
-        window.scrollTo(0, 0);
+        if (Platform.OS === 'web') {
+          window.scrollTo(0, 0);
+        }
       }
     });
 
@@ -34,7 +36,9 @@ const App = () => {
   );
 };
 
-// Register the main component
-AppRegistry.registerComponent('main', () => App);
+// Register the main component with the correct app name
+if (Platform.OS !== 'web') {
+  AppRegistry.registerComponent('SwiftFashion', () => App);
+}
 
 export default App;
