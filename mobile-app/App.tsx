@@ -36,7 +36,7 @@ const App = () => {
   );
 };
 
-// Register the main component with the correct app name
+// Register the main component
 if (Platform.OS !== 'web') {
   AppRegistry.registerComponent('SwiftFashion', () => App);
 }
