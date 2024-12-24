@@ -1,53 +1,47 @@
 import React from 'react';
-import { View, Image, ScrollView, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Image, StyleSheet, Dimensions } from 'react-native';
 
 const banners = [
-  { id: '1', image: '/placeholder.svg' },
-  { id: '2', image: '/placeholder.svg' },
-  // Add more banners as needed
+  {
+    id: '1',
+    image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=500'
+  },
+  {
+    id: '2',
+    image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500'
+  }
 ];
 
 export const OfferBanners = () => {
   return (
     <View style={styles.container}>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
-      >
-        {banners.map((banner) => (
-          <TouchableOpacity key={banner.id} style={styles.banner}>
-            <Image
-              source={{ uri: banner.image }}
-              style={styles.image}
-              resizeMode="cover"
-            />
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      {banners.map((banner) => (
+        <View key={banner.id} style={styles.bannerContainer}>
+          <Image
+            source={{ uri: banner.image }}
+            style={styles.bannerImage}
+            resizeMode="cover"
+          />
+        </View>
+      ))}
     </View>
   );
 };
 
 const { width } = Dimensions.get('window');
-const bannerWidth = width * 0.8;
 
 const styles = StyleSheet.create({
   container: {
+    paddingHorizontal: 16,
     marginVertical: 16,
   },
-  scrollContent: {
-    paddingHorizontal: 16,
-  },
-  banner: {
-    width: bannerWidth,
-    height: 150,
-    marginRight: 12,
+  bannerContainer: {
+    marginBottom: 12,
     borderRadius: 8,
     overflow: 'hidden',
   },
-  image: {
-    width: '100%',
-    height: '100%',
+  bannerImage: {
+    width: width - 32,
+    height: 160,
   },
 });
