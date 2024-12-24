@@ -9,6 +9,10 @@ export const BottomNav = () => {
 
   const isActive = (routeName: string) => route.name === routeName;
 
+  const handleCategoryPress = () => {
+    navigation.navigate('Categories');
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity 
@@ -23,7 +27,7 @@ export const BottomNav = () => {
 
       <TouchableOpacity 
         style={styles.tab} 
-        onPress={() => navigation.navigate('Categories')}
+        onPress={handleCategoryPress}
       >
         <Search size={24} color={isActive('Categories') ? '#000' : '#666'} />
         <Text style={[styles.label, isActive('Categories') && styles.activeLabel]}>
