@@ -1,55 +1,62 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Header } from '../components/layout/Header';
-import { Package2 } from 'lucide-react-native';
+
+const dummyOrders = [
+  {
+    id: '1',
+    orderNumber: 'ORD001',
+    date: '2024-03-15',
+    status: 'Delivered',
+    total: 89.99,
+    items: [
+      {
+        id: 'item1',
+        name: 'White T-Shirt',
+        quantity: 2,
+        price: 29.99
+      }
+    ]
+  },
+  {
+    id: '2',
+    orderNumber: 'ORD002',
+    date: '2024-03-10',
+    status: 'Processing',
+    total: 159.99,
+    items: [
+      {
+        id: 'item2',
+        name: 'Denim Jeans',
+        quantity: 1,
+        price: 59.99
+      }
+    ]
+  }
+];
 
 export const Orders = () => {
-  const orders = [
-    {
-      id: '1',
-      status: 'Delivered',
-      date: 'Dec 20, 2023',
-      items: [
-        {
-          id: '1',
-          name: 'Classic White T-Shirt',
-          size: 'L',
-          price: 29.99,
-          image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500'
-        }
-      ]
-    }
-  ];
-
   return (
     <SafeAreaView style={styles.container}>
       <Header showBack title="My Orders" />
-      <ScrollView style={styles.content}>
-        {orders.map(order => (
-          <View key={order.id} style={styles.orderCard}>
+      <FlatList
+        data={dummyOrders}
+        renderItem={({ item }) => (
+          <View style={styles.orderCard}>
             <View style={styles.orderHeader}>
-              <Package2 size={20} color="#9b87f5" />
-              <View style={styles.orderInfo}>
-                <Text style={styles.orderStatus}>{order.status}</Text>
-                <Text style={styles.orderDate}>{order.date}</Text>
-              </View>
+              <Text style={styles.orderNumber}>Order #{item.orderNumber}</Text>
+              <Text style={styles.orderStatus}>{item.status}</Text>
             </View>
-            {order.items.map(item => (
-              <View key={item.id} style={styles.orderItem}>
-                <View style={styles.itemImage}>
-                  <Image source={{ uri: item.image }} style={styles.image} />
-                </View>
-                <View style={styles.itemDetails}>
-                  <Text style={styles.itemName}>{item.name}</Text>
-                  <Text style={styles.itemSize}>Size: {item.size}</Text>
-                  <Text style={styles.itemPrice}>${item.price}</Text>
-                </View>
-              </View>
-            ))}
+            <View style={styles.orderDetails}>
+              <Text style={styles.orderDate}>Ordered on {item.date}</Text>
+              <Text style={styles.orderTotal}>${item.total.toFixed(2)}</Text>
+            </View>
           </View>
-        ))}
-      </ScrollView>
+        )}
+        keyExtractor={item => item.id}
+        contentContainerStyle={styles.list}
+      />
     </SafeAreaView>
   );
 };
@@ -59,13 +66,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  content: {
-    flex: 1,
+  list: {
     padding: 16,
   },
   orderCard: {
-    borderRadius: 8,
     backgroundColor: '#fff',
+    borderRadius: 8,
     padding: 16,
     marginBottom: 16,
     borderWidth: 1,
@@ -73,51 +79,25 @@ const styles = StyleSheet.create({
   },
   orderHeader: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
+    justifyContent: 'space-between',
+    marginBottom: 8,
   },
-  orderInfo: {
-    marginLeft: 12,
+  orderNumber: {
+    fontWeight: '600',
+    fontSize: 16,
   },
   orderStatus: {
-    fontSize: 16,
+    color: '#22c55e',
     fontWeight: '500',
-    color: '#9b87f5',
+  },
+  orderDetails: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   orderDate: {
-    fontSize: 14,
     color: '#666',
   },
-  orderItem: {
-    flexDirection: 'row',
-    marginTop: 12,
-  },
-  itemImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 4,
-    overflow: 'hidden',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-  },
-  itemDetails: {
-    flex: 1,
-    marginLeft: 12,
-  },
-  itemName: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  itemSize: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 4,
-  },
-  itemPrice: {
-    fontSize: 16,
-    fontWeight: '500',
-    marginTop: 4,
+  orderTotal: {
+    fontWeight: '600',
   },
 });

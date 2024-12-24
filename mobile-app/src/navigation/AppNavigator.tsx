@@ -9,6 +9,7 @@ import { Wishlist } from '../screens/Wishlist';
 import { Notifications } from '../screens/Notifications';
 import { Search } from '../screens/Search';
 import { Orders } from '../screens/Orders';
+import { ProductList } from '../screens/ProductList';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ export const AppNavigator = () => {
     >
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Categories" component={Categories} />
+      <Stack.Screen name="ProductList" component={ProductList} />
       <Stack.Screen name="ProductDetails" component={ProductDetails} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="Profile" component={Profile} />
