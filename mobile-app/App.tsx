@@ -4,16 +4,14 @@ import { CartProvider } from './src/contexts/CartContext';
 import { NetworkProvider } from './src/contexts/NetworkContext';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
-import { AppRegistry, Platform } from 'react-native';
+import { Platform } from 'react-native';
 
 const App = () => {
   const navigationRef = useNavigationContainerRef();
 
   useEffect(() => {
     const unsubscribe = navigationRef.addListener('state', () => {
-      // Reset scroll position on route change
       if (navigationRef.current?.getCurrentRoute()?.name) {
-        // Scroll to top logic
         if (Platform.OS === 'web') {
           window.scrollTo(0, 0);
         }
@@ -35,10 +33,5 @@ const App = () => {
     </SafeAreaProvider>
   );
 };
-
-// Register the main component
-if (Platform.OS !== 'web') {
-  AppRegistry.registerComponent('SwiftFashion', () => App);
-}
 
 export default App;
