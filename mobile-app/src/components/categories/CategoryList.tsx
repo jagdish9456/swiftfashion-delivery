@@ -1,17 +1,18 @@
 import React from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { ProductCard } from './ProductCard';
 import { products } from '../../data/products.json';
+import { FlashList } from '@shopify/flash-list';
 
 export const CategoryList = () => {
   return (
     <View style={styles.container}>
-      <FlatList
+      <FlashList
         data={products}
         renderItem={({ item }) => <ProductCard {...item} />}
         keyExtractor={(item) => item.id}
         numColumns={2}
-        columnWrapperStyle={styles.row}
+        estimatedItemSize={200}
       />
     </View>
   );
@@ -19,10 +20,7 @@ export const CategoryList = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 16,
-  },
-  row: {
-    justifyContent: 'space-between',
-    marginBottom: 16,
   },
 });

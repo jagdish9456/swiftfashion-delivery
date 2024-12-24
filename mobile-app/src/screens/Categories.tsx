@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Header } from '../components/layout/Header';
 import { BottomNav } from '../components/layout/BottomNav';
 import { CategoryList } from '../components/categories/CategoryList';
@@ -10,11 +10,9 @@ export const Categories = () => {
   return (
     <View style={styles.container}>
       <Header />
-      <ScrollView style={styles.content}>
-        <CategoryHeader />
-        <CategoryList />
-        <FilterSheet />
-      </ScrollView>
+      <CategoryHeader />
+      <CategoryList />
+      <FilterSheet />
       <BottomNav />
     </View>
   );
@@ -24,9 +22,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  content: {
-    flex: 1,
-    paddingTop: 116,
   },
 });
