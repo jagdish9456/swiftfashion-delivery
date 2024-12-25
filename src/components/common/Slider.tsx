@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, PanResponder, Animated } from 'react-native';
+import { View, StyleSheet, PanResponder, Animated } from 'react-native-web';
 
 interface SliderProps {
   value: number;

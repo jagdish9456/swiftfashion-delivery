@@ -3,5 +3,6 @@ declare module 'react-native' {
 }
 
 declare module 'react-native-web' {
-  export * from 'react-native';
+  import * as ReactNativeWeb from 'react-native-web';
+  export = ReactNativeWeb;
 }
