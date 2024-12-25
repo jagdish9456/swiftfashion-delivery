@@ -13,7 +13,7 @@ export const Profile = () => {
           <Text style={styles.email}>john.doe@example.com</Text>
         </View>
         <ProfileButtons />
-      </View>
+      </ScrollView>
     </View>
   );
 };
