@@ -1,4 +1,4 @@
-import { Home, Grid, ShoppingBag, MapPin } from "lucide-react";
+import { Home, Grid, ShoppingBag, MapPin, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const navItems = [
@@ -6,6 +6,7 @@ const navItems = [
   { icon: Grid, label: "Categories", path: "/gender-categories" },
   { icon: ShoppingBag, label: "Cart", path: "/cart" },
   { icon: MapPin, label: "Near You", path: "/near-you" },
+  { icon: MessageSquare, label: "Q-AI", path: "/ai-chat" },
 ];
 
 export const BottomNav = () => {
