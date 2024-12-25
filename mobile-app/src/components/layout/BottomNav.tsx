@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Home, Search, ShoppingBag, Heart, User, MessageSquareMore } from 'lucide-react-native';
+import { Home, Search, ShoppingBag, Heart, User } from 'lucide-react-native';
 
 export const BottomNav = () => {
   const navigation = useNavigation();
@@ -19,7 +19,7 @@ export const BottomNav = () => {
         style={styles.tab} 
         onPress={() => navigation.navigate('Home')}
       >
-        <Home size={20} color={isActive('Home') ? '#000' : '#666'} />
+        <Home size={24} color={isActive('Home') ? '#000' : '#666'} />
         <Text style={[styles.label, isActive('Home') && styles.activeLabel]}>
           Home
         </Text>
@@ -29,7 +29,7 @@ export const BottomNav = () => {
         style={styles.tab} 
         onPress={handleCategoryPress}
       >
-        <Search size={20} color={isActive('Categories') ? '#000' : '#666'} />
+        <Search size={24} color={isActive('Categories') ? '#000' : '#666'} />
         <Text style={[styles.label, isActive('Categories') && styles.activeLabel]}>
           Categories
         </Text>
@@ -39,7 +39,7 @@ export const BottomNav = () => {
         style={styles.tab} 
         onPress={() => navigation.navigate('Cart')}
       >
-        <ShoppingBag size={20} color={isActive('Cart') ? '#000' : '#666'} />
+        <ShoppingBag size={24} color={isActive('Cart') ? '#000' : '#666'} />
         <Text style={[styles.label, isActive('Cart') && styles.activeLabel]}>
           Cart
         </Text>
@@ -47,11 +47,11 @@ export const BottomNav = () => {
 
       <TouchableOpacity 
         style={styles.tab} 
-        onPress={() => navigation.navigate('AIChat')}
+        onPress={() => navigation.navigate('Wishlist')}
       >
-        <MessageSquareMore size={20} color={isActive('AIChat') ? '#000' : '#666'} />
-        <Text style={[styles.label, isActive('AIChat') && styles.activeLabel]}>
-          Q-AI
+        <Heart size={24} color={isActive('Wishlist') ? '#000' : '#666'} />
+        <Text style={[styles.label, isActive('Wishlist') && styles.activeLabel]}>
+          Wishlist
         </Text>
       </TouchableOpacity>
 
@@ -59,7 +59,7 @@ export const BottomNav = () => {
         style={styles.tab} 
         onPress={() => navigation.navigate('Profile')}
       >
-        <User size={20} color={isActive('Profile') ? '#000' : '#666'} />
+        <User size={24} color={isActive('Profile') ? '#000' : '#666'} />
         <Text style={[styles.label, isActive('Profile') && styles.activeLabel]}>
           Profile
         </Text>
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     backgroundColor: '#fff',
-    paddingVertical: 6,
+    paddingVertical: 8,
     borderTopWidth: 1,
     borderTopColor: '#eee',
   },
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   label: {
-    fontSize: 10,
-    marginTop: 2,
+    fontSize: 12,
+    marginTop: 4,
     color: '#666',
   },
   activeLabel: {
