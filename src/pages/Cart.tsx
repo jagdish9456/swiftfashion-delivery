@@ -13,38 +13,38 @@ export const Cart = () => {
   const cartItems = [
     {
       id: "1",
-      name: "Dettol Antiseptic Liquid - For First Aid, Floor & Other Surface",
+      name: "Classic Cotton Blend Navy Blue Polo T-shirt",
       quantity: 1,
       price: 80,
       originalPrice: 95,
-      size: "125 ml",
+      size: "L",
       image: "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=500",
     },
     {
       id: "2",
-      name: "VEGA Organic Cotton Balls (Pack of 50)",
+      name: "Premium Slim Fit Denim Jeans",
       quantity: 1,
       price: 60,
       originalPrice: 79,
-      size: "1 pack",
+      size: "32",
       image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500",
     },
     {
       id: "3",
-      name: "Betadine 10% Ointment",
+      name: "Casual Striped Oxford Shirt",
       quantity: 1,
       price: 128,
       originalPrice: 145,
-      size: "20 g",
+      size: "M",
       image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500",
     },
     {
       id: "4",
-      name: "Eveready 1012 AAA Carbon Zinc Batteries - Red",
+      name: "Comfort Fit Cotton Chinos",
       quantity: 1,
       price: 54,
       originalPrice: 65,
-      size: "4 units",
+      size: "34",
       image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500",
     },
   ];
@@ -52,11 +52,11 @@ export const Cart = () => {
   const delivery2Items = [
     {
       id: "5",
-      name: "Parachute Refresh Body Lotion 100% Natural Moisturisers",
+      name: "Lightweight Summer Linen Shirt",
       quantity: 1,
       price: 104,
       originalPrice: 229,
-      size: "250 ml",
+      size: "XL",
       image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500",
     },
   ];
@@ -64,7 +64,7 @@ export const Cart = () => {
   const recommendedProducts = [
     {
       id: "6",
-      name: "Mad Over Print's Santa Dress Kids",
+      name: "Classic Fit White Cotton Shirt",
       price: 150,
       originalPrice: 499,
       delivery: "5 mins",
@@ -73,7 +73,7 @@ export const Cart = () => {
     },
     {
       id: "7",
-      name: "Mad Over Print's Santa Dress",
+      name: "Slim Fit Black Formal Trousers",
       price: 155,
       originalPrice: 499,
       delivery: "5 mins",
@@ -82,7 +82,7 @@ export const Cart = () => {
     },
     {
       id: "8",
-      name: "Happy Tyohaar Walk in the Park",
+      name: "Casual Denim Jacket",
       price: 109,
       originalPrice: 899,
       delivery: "5 mins",
@@ -91,7 +91,7 @@ export const Cart = () => {
     },
     {
       id: "9",
-      name: "Party Props Christmas",
+      name: "Cotton Blend Casual Sweater",
       price: 127,
       originalPrice: 249,
       delivery: "5 mins",
@@ -101,7 +101,7 @@ export const Cart = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-32">
+    <div className="min-h-screen bg-gray-50 pb-48">
       <div className="bg-white p-3 flex items-center justify-between border-b sticky top-0 z-10">
         <div className="flex items-center gap-2">
           <button onClick={() => navigate(-1)} className="p-1">
@@ -112,7 +112,7 @@ export const Cart = () => {
         <button className="text-sm text-red-500 font-medium">Clear</button>
       </div>
 
-      <div className="bg-white p-3 flex items-center justify-between">
+      <div className="bg-white p-3 flex items-center justify-between mt-2">
         <div className="flex items-center gap-2">
           <Home className="h-4 w-4 text-orange-500" />
           <div>
@@ -123,13 +123,13 @@ export const Cart = () => {
         <ChevronDown className="h-4 w-4 text-gray-400" />
       </div>
 
-      <div className="bg-emerald-50 p-3 mt-1">
+      <div className="bg-emerald-50 p-3 mt-3">
         <p className="text-sm text-green-700">
-          ₹238 saved! on this order, including ₹26 with Swiggy One!
+          ₹238 saved! on this order
         </p>
       </div>
 
-      <div className="bg-white p-3 mt-1">
+      <div className="bg-white p-3 mt-3">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium">SAVE50</p>
@@ -271,7 +271,7 @@ export const Cart = () => {
         </div>
       </div>
 
-      <div className="bg-white p-3 mt-1">
+      <div className="bg-white p-3 mt-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Leaf className="h-4 w-4 text-green-500" />
@@ -281,27 +281,6 @@ export const Cart = () => {
             </div>
           </div>
           <Switch />
-        </div>
-      </div>
-
-      <div className="bg-white p-3 mt-1">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-medium">Say thanks with a tip</h3>
-          <button className="text-gray-400">
-            <ChevronRight className="h-4 w-4" />
-          </button>
-        </div>
-        <p className="text-xs text-gray-500 mb-3">
-          While you're celebrating with your loved ones, our delivery partners are working hard. Tip them and make their festive season special too!
-        </p>
-        <div className="flex gap-2">
-          <button className="flex-1 border rounded-lg py-2 text-sm">₹10</button>
-          <button className="flex-1 bg-orange-500 text-white rounded-lg py-2 text-sm">
-            ₹20
-            <span className="block text-xs">Most Tipped</span>
-          </button>
-          <button className="flex-1 border rounded-lg py-2 text-sm">₹30</button>
-          <button className="flex-1 border rounded-lg py-2 text-sm">Other</button>
         </div>
       </div>
 
