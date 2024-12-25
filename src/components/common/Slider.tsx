@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet, PanResponder, Animated } from 'react-native';
-import { ChevronRight } from 'lucide-react-native';
 
 interface SliderProps {
   value: number;
@@ -10,6 +9,11 @@ interface SliderProps {
   step?: number;
 }
 
+type AnimatedValueWithExtras = Animated.Value & {
+  _value: number;
+  _offset: number;
+};
+
 export const Slider: React.FC<SliderProps> = ({
   value,
   onValueChange,
@@ -17,7 +21,7 @@ export const Slider: React.FC<SliderProps> = ({
   max = 100,
   step = 1,
 }) => {
-  const pan = React.useRef(new Animated.Value(0)).current;
+  const pan = React.useRef(new Animated.Value(0) as AnimatedValueWithExtras).current;
   const width = React.useRef(0);
 
   const panResponder = React.useRef(
@@ -83,9 +87,7 @@ export const Slider: React.FC<SliderProps> = ({
           },
         ]}
         {...panResponder.panHandlers}
-      >
-        <ChevronRight color="#fff" size={24} />
-      </Animated.View>
+      />
     </View>
   );
 };
@@ -97,23 +99,29 @@ const styles = StyleSheet.create({
   },
   track: {
     height: 4,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    backgroundColor: '#E5E7EB',
     borderRadius: 2,
   },
   fill: {
     position: 'absolute',
     height: 4,
-    backgroundColor: '#fff',
+    backgroundColor: '#9b87f5',
     borderRadius: 2,
   },
   thumb: {
     position: 'absolute',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'center',
-    transform: [{ translateX: -20 }],
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: '#9b87f5',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    transform: [{ translateX: -10 }],
   },
 });

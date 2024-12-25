@@ -1,7 +1,11 @@
 import { ArrowRight, Package } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export const ActiveOrderBar = () => {
+interface ActiveOrderBarProps {
+  className?: string;
+}
+
+export const ActiveOrderBar = ({ className }: ActiveOrderBarProps) => {
   const hasActiveOrder = true;
   const orderDetails = {
     id: "194119238297300",
@@ -15,7 +19,7 @@ export const ActiveOrderBar = () => {
   return (
     <Link
       to={`/track-order/${orderDetails.id}`}
-      className="fixed bottom-14 left-0 right-0 bg-white border-t border-gray-100 px-3 py-2 flex items-center justify-between shadow-sm"
+      className={`fixed bottom-14 left-0 right-0 bg-white border-t border-gray-100 px-3 py-2 flex items-center justify-between shadow-sm ${className}`}
     >
       <div className="flex items-center gap-2">
         <div className="bg-primary-500 text-white rounded-lg p-2">
