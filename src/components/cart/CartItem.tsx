@@ -35,8 +35,8 @@ export const CartItem = ({ item }: CartItemProps) => {
         <div className="flex-1">
           <div className="flex items-start justify-between">
             <div>
-              <h3 className="font-medium">{item.brand}</h3>
-              <p className="text-sm text-gray-500 mt-1">{item.name}</p>
+              <h3 className="font-medium text-sm">{item.brand}</h3>
+              <p className="text-xs text-gray-500 mt-1 line-clamp-2">{item.name}</p>
               <p className="text-xs text-gray-500 mt-1">Sold by: {item.seller}</p>
             </div>
             <button className="p-1">
@@ -46,22 +46,22 @@ export const CartItem = ({ item }: CartItemProps) => {
           
           <div className="flex items-center gap-4 mt-3">
             <div className="flex items-center gap-2">
-              <span className="text-sm">Size: {item.size}</span>
-              <span className="text-sm">Qty: {item.quantity}</span>
+              <span className="text-xs">Size: {item.size}</span>
+              <span className="text-xs">Qty: {item.quantity}</span>
             </div>
           </div>
 
           <div className="flex items-center gap-2 mt-3">
-            <span className="font-semibold">₹{item.price}</span>
-            <span className="text-gray-500 line-through text-sm">₹{item.originalPrice}</span>
-            <Badge variant="secondary" className="bg-primary-50 text-primary-700">
+            <span className="font-semibold text-sm">${item.price}</span>
+            <span className="text-gray-500 line-through text-xs">${item.originalPrice}</span>
+            <Badge variant="secondary" className="bg-primary-50 text-primary-700 text-xs">
               {item.discount}
             </Badge>
           </div>
 
-          <div className="flex items-center gap-1 mt-3 text-sm">
-            <span className="text-gray-500">{item.returnDays} days</span>
-            <span className="text-gray-500">return available</span>
+          <div className="flex items-center gap-1 mt-3">
+            <span className="text-xs text-gray-500">{item.returnDays} days</span>
+            <span className="text-xs text-gray-500">return available</span>
           </div>
         </div>
       </div>
