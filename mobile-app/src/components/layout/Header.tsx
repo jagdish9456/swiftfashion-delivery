@@ -15,8 +15,7 @@ type HeaderProps = {
 
 export const Header = ({ showBack, title, testID = 'header', isMainHeader = false }: HeaderProps) => {
   const navigation = useNavigation();
-  console.log('Rendering Header with title:', title); // Debug log
-
+  
   const handleNotificationPress = () => {
     navigation.navigate('Notifications');
   };

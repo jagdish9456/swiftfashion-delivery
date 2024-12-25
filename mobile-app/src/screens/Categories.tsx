@@ -23,7 +23,7 @@ export const Categories = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container} testID="categories-screen">
-      <Header title="Categories" testID="categories-header" />
+      <Header isMainHeader testID="categories-header" />
       <View style={styles.tabs}>
         <TouchableOpacity 
           style={[styles.tab, activeTab === 'men' && styles.activeTab]}
