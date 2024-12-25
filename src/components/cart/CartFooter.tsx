@@ -21,13 +21,13 @@ export const CartFooter = ({ items }: CartFooterProps) => {
         disabled={items.length === 0}
       >
         {items.length === 0 ? (
-          "No items selected, select at least one item to place order"
+          "No Item selected, select at least one item to place order."
         ) : (
           `PLACE ORDER • ₹${totalAmount}`
         )}
       </button>
       <p className="text-xs text-center mt-3 text-gray-500">
-        By placing the order, you agree to our{" "}
+        By placing the order, you agree to Quickky's{" "}
         <a href="#" className="text-primary-500">Terms of Use</a> and{" "}
         <a href="#" className="text-primary-500">Privacy Policy</a>
       </p>

@@ -36,7 +36,7 @@ export const CartItem = ({ item }: CartItemProps) => {
           <div className="flex items-start justify-between">
             <div>
               <h3 className="font-medium">{item.brand}</h3>
-              <p className="text-sm text-gray-500 mt-1 line-clamp-2">{item.name}</p>
+              <p className="text-sm text-gray-500 mt-1">{item.name}</p>
               <p className="text-xs text-gray-500 mt-1">Sold by: {item.seller}</p>
             </div>
             <button className="p-1">
