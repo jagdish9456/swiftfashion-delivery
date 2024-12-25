@@ -1,7 +1,5 @@
 import { ArrowLeft, Home, ChevronDown, ChevronRight, Plus, Minus, Leaf } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Slider } from "@/components/common/Slider";
-import { ActiveOrderBar } from "@/components/orders/ActiveOrderBar";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 
@@ -104,9 +102,7 @@ export const Cart = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-32">
-      <ActiveOrderBar className="sticky top-0 z-20" />
-      
-      <div className="bg-white p-3 flex items-center justify-between border-b sticky top-12 z-10">
+      <div className="bg-white p-3 flex items-center justify-between border-b sticky top-0 z-10">
         <div className="flex items-center gap-2">
           <button onClick={() => navigate(-1)} className="p-1">
             <ArrowLeft className="h-4 w-4" />
@@ -322,18 +318,12 @@ export const Cart = () => {
         </div>
         
         <div className="p-3">
-          <div className="bg-emerald-500 rounded-full p-1">
-            <Slider
-              value={0}
-              onValueChange={() => {}}
-              min={0}
-              max={100}
-              step={1}
-            />
-            <div className="text-center text-white text-sm font-medium mt-1">
-              Slide to Pay | ₹386
-            </div>
-          </div>
+          <Button 
+            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white rounded-full py-3"
+            onClick={() => {}}
+          >
+            Pay | ₹386
+          </Button>
         </div>
       </div>
     </div>
