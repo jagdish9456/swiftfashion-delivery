@@ -25,8 +25,12 @@ import { PromoPopup } from "@/components/popups/PromoPopup";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 1,
+      retry: 3,
       staleTime: 5 * 60 * 1000,
+      refetchOnWindowFocus: false,
+      onError: (error) => {
+        console.error('Query Error:', error);
+      }
     },
   },
 });
@@ -39,8 +43,8 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <CartProvider>
         <Routes>
+          <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
           <Route path="/category/:id" element={<ProtectedRoute><Categories /></ProtectedRoute>} />
           <Route path="/product/:id" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} />
           <Route path="/gender-categories" element={<ProtectedRoute><GenderCategories /></ProtectedRoute>} />
