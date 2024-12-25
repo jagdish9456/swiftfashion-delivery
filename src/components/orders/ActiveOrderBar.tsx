@@ -2,7 +2,6 @@ import { ArrowRight, Package } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const ActiveOrderBar = () => {
-  // This would typically come from a context or state management
   const hasActiveOrder = true;
   const orderDetails = {
     id: "194119238297300",
@@ -16,18 +15,18 @@ export const ActiveOrderBar = () => {
   return (
     <Link
       to={`/track-order/${orderDetails.id}`}
-      className="fixed bottom-16 left-0 right-0 bg-white border-t border-gray-200 p-4 flex items-center justify-between"
+      className="fixed bottom-14 left-0 right-0 bg-white border-t border-gray-100 px-3 py-2 flex items-center justify-between shadow-sm"
     >
-      <div className="flex items-center gap-3">
-        <div className="bg-primary-500 text-white rounded-lg p-3">
-          <Package className="h-6 w-6" />
+      <div className="flex items-center gap-2">
+        <div className="bg-primary-500 text-white rounded-lg p-2">
+          <Package className="h-4 w-4" />
         </div>
         <div>
-          <h3 className="font-semibold text-gray-900">{orderDetails.status}</h3>
-          <p className="text-sm text-gray-500">Arriving in {orderDetails.eta}</p>
+          <h3 className="text-sm font-medium text-gray-900">{orderDetails.status}</h3>
+          <p className="text-xs text-gray-500">Arriving in {orderDetails.eta}</p>
         </div>
       </div>
-      <ArrowRight className="h-5 w-5 text-gray-400" />
+      <ArrowRight className="h-4 w-4 text-gray-400" />
     </Link>
   );
 };
