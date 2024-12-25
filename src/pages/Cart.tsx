@@ -142,7 +142,7 @@ export const Cart = () => {
         </button>
       </div>
 
-      <div className="mt-1 p-3 bg-white">
+      <div className="mt-6 p-3 bg-white">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-sm font-medium">Review your Order</h2>
           <button className="text-xs text-orange-500">Why?</button>
