@@ -4,7 +4,7 @@ import { ArrowLeft, Package2, MoreVertical, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ProductsCarousel } from "@/components/product/ProductsCarousel";
-import { GoogleMap, Marker } from "@react-google-maps/api";
+import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 
 const mapContainerStyle = {
   width: "100%",
@@ -20,6 +20,10 @@ export const TrackOrder = () => {
   const { orderId } = useParams();
   const [activeDelivery, setActiveDelivery] = useState("DELIVERY1");
 
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "AIzaSyAU3N2Sk9jEEgaxJ7EpixGmI3N1Sh4j7Ss",
+  });
+
   const mustHaveItems = [
     {
       id: "1",
@@ -32,6 +36,14 @@ export const TrackOrder = () => {
     // ... Add more items
   ];
 
+  if (loadError) {
+    return <div>Error loading maps</div>;
+  }
+
+  if (!isLoaded) {
+    return <div>Loading maps...</div>;
+  }
+
   const deliveryContent = (
     <>
       <div className="h-[30vh] bg-gray-100">
@@ -39,6 +51,12 @@ export const TrackOrder = () => {
           mapContainerStyle={mapContainerStyle}
           zoom={15}
           center={center}
+          options={{
+            zoomControl: true,
+            streetViewControl: false,
+            mapTypeControl: false,
+            fullscreenControl: false,
+          }}
         >
           <Marker position={center} />
         </GoogleMap>
@@ -48,28 +66,28 @@ export const TrackOrder = () => {
         <div className="bg-white rounded-lg p-3 shadow-sm">
           <div className="space-y-3">
             <div>
-              <h2 className="text-base font-bold">Arriving in 8 mins</h2>
+              <h2 className="text-sm font-bold">Arriving in 8 mins</h2>
               <p className="text-xs text-gray-500">to Home - d-2001 d block, mantri celestia...</p>
             </div>
 
             <div className="flex items-center gap-2 py-2 border-t border-dashed">
-              <Package2 className="h-5 w-5 text-primary-500" />
+              <Package2 className="h-4 w-4 text-primary-500" />
               <div>
-                <h3 className="text-sm font-semibold">Order is getting packed</h3>
+                <h3 className="text-xs font-semibold">Order is getting packed</h3>
                 <button className="text-xs text-primary-500">See all items &gt;</button>
               </div>
             </div>
 
             <div className="flex items-center gap-2 py-2 border-t border-dashed">
-              <div className="w-8 h-8 bg-gray-200 rounded-full" />
+              <div className="w-6 h-6 bg-gray-200 rounded-full" />
               <div className="flex-1">
-                <p className="text-sm font-semibold">We'll assign a delivery partner soon</p>
+                <p className="text-xs font-semibold">We'll assign a delivery partner soon</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-3 bg-primary-50 rounded-lg p-3">
+        <div className="mt-3 bg-primary-50 rounded-lg p-2">
           <div className="flex items-center justify-between">
             <p className="text-xs font-medium">Special Offers for You!</p>
             <ChevronRight className="h-4 w-4 text-primary-500" />
@@ -77,7 +95,7 @@ export const TrackOrder = () => {
         </div>
 
         <div className="mt-4">
-          <h3 className="text-sm font-semibold mb-2">Must Have Items</h3>
+          <h3 className="text-xs font-semibold mb-2">Must Have Items</h3>
           <ProductsCarousel products={mustHaveItems} title="" />
         </div>
       </div>
