@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import categoryData from '../../data/category.json';
 
 const NUM_COLUMNS = 4;
@@ -7,10 +8,22 @@ const { width } = Dimensions.get('window');
 const ITEM_WIDTH = (width - 48) / NUM_COLUMNS;
 
 export const CategorySection = () => {
+  const navigation = useNavigation();
   const categories = categoryData.categories.slice(0, 12);
 
+  const handleCategoryPress = (categoryId: string) => {
+    navigation.navigate('ProductList', { categoryId });
+  };
+
+  const handleViewAll = () => {
+    navigation.navigate('ProductList');
+  };
+
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.categoryItem}>
+    <TouchableOpacity 
+      style={styles.categoryItem}
+      onPress={() => handleCategoryPress(item.id)}
+    >
       <View style={styles.imageContainer}>
         <Image source={{ uri: item.image }} style={styles.image} resizeMode="cover" />
       </View>
@@ -20,7 +33,12 @@ export const CategorySection = () => {
 
   return (
     <View style={styles.container} testID="category-section">
-      <Text style={styles.title}>Shop by Category</Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>Shop by Category</Text>
+        <TouchableOpacity onPress={handleViewAll}>
+          <Text style={styles.viewAll}>View All</Text>
+        </TouchableOpacity>
+      </View>
       <FlatList
         data={categories}
         renderItem={renderItem}
@@ -37,10 +55,20 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
   },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
   title: {
     fontSize: 18,
     fontWeight: '600',
-    marginBottom: 16,
+  },
+  viewAll: {
+    fontSize: 14,
+    color: '#9b87f5',
+    fontWeight: '500',
   },
   gridContainer: {
     gap: 8,
