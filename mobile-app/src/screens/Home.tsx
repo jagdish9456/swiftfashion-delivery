@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Header } from '../components/layout/Header';
 import { CategorySection } from '../components/categories/CategorySection';
 import { OfferBanners } from '../components/banners/OfferBanners';
@@ -16,7 +15,7 @@ export const Home = () => {
 
   return (
     <View style={styles.container} testID="home-screen">
-      <Header title="Swift Fashion" testID="home-header" />
+      <Header isMainHeader testID="home-header" />
       <ScrollView 
         style={styles.content} 
         showsVerticalScrollIndicator={false}

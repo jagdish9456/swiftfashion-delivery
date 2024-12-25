@@ -45,6 +45,24 @@ describe('Header Component', () => {
     expect(mockGoBack).toHaveBeenCalled();
   });
 
+  it('renders main header layout when isMainHeader is true', () => {
+    const { getByTestId } = render(<Header isMainHeader={true} />);
+    expect(getByTestId('notification-button')).toBeTruthy();
+    expect(getByTestId('profile-button')).toBeTruthy();
+  });
+
+  it('navigates to notifications when notification icon is pressed', () => {
+    const { getByTestId } = render(<Header isMainHeader={true} />);
+    fireEvent.press(getByTestId('notification-button'));
+    expect(mockNavigate).toHaveBeenCalledWith('Notifications');
+  });
+
+  it('navigates to profile when profile icon is pressed', () => {
+    const { getByTestId } = render(<Header isMainHeader={true} />);
+    fireEvent.press(getByTestId('profile-button'));
+    expect(mockNavigate).toHaveBeenCalledWith('Profile');
+  });
+
   it('renders with correct height', () => {
     const { getByTestId } = render(<Header title="Test" />);
     const header = getByTestId('header');
