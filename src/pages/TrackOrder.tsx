@@ -44,7 +44,7 @@ const mustHaveItems = [
   }
 ];
 
-const TrackOrder = () => {
+export const TrackOrder = () => {
   return (
     <div>
       <h1>Track Your Order</h1>
