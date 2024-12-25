@@ -13,9 +13,13 @@ type HeaderProps = {
   isMainHeader?: boolean;
 };
 
-export const Header = ({ showBack = true, title, testID = 'header', isMainHeader = false }: HeaderProps) => {
+export const Header = ({ 
+  showBack = true, 
+  title = '', 
+  testID = 'header', 
+  isMainHeader = false 
+}: HeaderProps) => {
   const navigation = useNavigation();
-  console.log('Header rendering with title:', title); // Debug log
   
   const handleNotificationPress = () => {
     navigation.navigate('Notifications');

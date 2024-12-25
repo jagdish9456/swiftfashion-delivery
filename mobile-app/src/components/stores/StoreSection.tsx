@@ -3,11 +3,34 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { StoreCard } from './StoreCard';
 
 const mockStores = [
-  { id: '1', name: 'Store 1', distance: '1.2km', rating: 4.5 },
-  { id: '2', name: 'Store 2', distance: '2.1km', rating: 4.2 },
-  { id: '3', name: 'Store 3', distance: '0.8km', rating: 4.8 },
-  { id: '4', name: 'Store 4', distance: '1.5km', rating: 4.6 },
-  { id: '5', name: 'Store 5', distance: '3.0km', rating: 4.3 },
+  {
+    name: "Fashion Store",
+    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8",
+    discount: 40,
+    deliveryTime: "30-40 mins",
+    type: "Clothing & Accessories"
+  },
+  {
+    name: "Trendy Boutique",
+    image: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5",
+    discount: 30,
+    deliveryTime: "25-35 mins",
+    type: "Fashion & Style"
+  },
+  {
+    name: "Urban Wear",
+    image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27",
+    discount: 25,
+    deliveryTime: "35-45 mins",
+    type: "Street Fashion"
+  },
+  {
+    name: "Elite Fashion",
+    image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8",
+    discount: 35,
+    deliveryTime: "20-30 mins",
+    type: "Luxury Wear"
+  }
 ];
 
 export const StoreSection = () => {
@@ -19,13 +42,10 @@ export const StoreSection = () => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {mockStores.map((store) => (
-          <StoreCard
-            key={store.id}
-            name={store.name}
-            distance={store.distance}
-            rating={store.rating}
-          />
+        {mockStores.map((store, index) => (
+          <View key={index} style={styles.cardContainer}>
+            <StoreCard {...store} />
+          </View>
         ))}
       </ScrollView>
     </View>
@@ -46,4 +66,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     gap: 12,
   },
+  cardContainer: {
+    width: 200,
+  }
 });
