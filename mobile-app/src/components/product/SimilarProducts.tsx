@@ -11,7 +11,22 @@ const mockProducts = [
     discount: '25% OFF',
     image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab'
   },
-  // ... Add more mock products
+  {
+    id: '2',
+    name: 'Denim Jacket',
+    price: 89.99,
+    originalPrice: 129.99,
+    discount: '30% OFF',
+    image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27'
+  },
+  {
+    id: '3',
+    name: 'Summer Dress',
+    price: 59.99,
+    originalPrice: 79.99,
+    discount: '25% OFF',
+    image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8'
+  },
 ];
 
 type SimilarProductsProps = {

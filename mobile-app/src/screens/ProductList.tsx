@@ -5,10 +5,19 @@ import { Header } from '../components/layout/Header';
 import { ProductCard } from '../components/product/ProductCard';
 import { SlidersHorizontal } from 'lucide-react-native';
 import { FilterSheet } from '../components/filters/FilterSheet';
+import { NewArrivalsBanner } from '../components/categories/NewArrivalsBanner';
 
 const categories = [
-  "All", "T-Shirts", "Shirts", "Pants", "Dresses", "Skirts", 
-  "Jackets", "Sweaters", "Activewear", "Accessories"
+  { id: 'all', name: 'All', emoji: '📱' },
+  { id: 't-shirts', name: 'T-Shirts', emoji: '👕' },
+  { id: 'shirts', name: 'Shirts', emoji: '👔' },
+  { id: 'pants', name: 'Pants', emoji: '👖' },
+  { id: 'dresses', name: 'Dresses', emoji: '👗' },
+  { id: 'skirts', name: 'Skirts', emoji: '👗' },
+  { id: 'jackets', name: 'Jackets', emoji: '🧥' },
+  { id: 'sweaters', name: 'Sweaters', emoji: '🧶' },
+  { id: 'activewear', name: 'Activewear', emoji: '🏃' },
+  { id: 'accessories', name: 'Accessories', emoji: '👜' },
 ];
 
 const mockProducts = [
@@ -20,11 +29,34 @@ const mockProducts = [
     discount: '25% OFF',
     image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab'
   },
-  // ... Add more mock products
+  {
+    id: '2',
+    name: 'Denim Jacket',
+    price: 89.99,
+    originalPrice: 129.99,
+    discount: '30% OFF',
+    image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27'
+  },
+  {
+    id: '3',
+    name: 'Summer Dress',
+    price: 59.99,
+    originalPrice: 79.99,
+    discount: '25% OFF',
+    image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8'
+  },
+  {
+    id: '4',
+    name: 'Slim Fit Jeans',
+    price: 69.99,
+    originalPrice: 89.99,
+    discount: '22% OFF',
+    image: 'https://images.unsplash.com/photo-1542272604-787c3835535d'
+  },
 ];
 
 export const ProductList = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [showFilter, setShowFilter] = useState(false);
 
   return (
@@ -42,45 +74,45 @@ export const ProductList = () => {
         }
       />
       <View style={styles.content}>
-        <ScrollView 
-          horizontal 
-          showsHorizontalScrollIndicator={false}
-          style={styles.categoryList}
-          contentContainerStyle={styles.categoryContent}
-        >
-          {categories.map((category) => (
-            <TouchableOpacity
-              key={category}
-              style={[
-                styles.categoryButton,
-                selectedCategory === category && styles.selectedCategory
-              ]}
-              onPress={() => setSelectedCategory(category)}
-            >
-              <Text style={[
-                styles.categoryText,
-                selectedCategory === category && styles.selectedCategoryText
-              ]}>
-                {category}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+        <View style={styles.sidebar}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {categories.map((category) => (
+              <TouchableOpacity
+                key={category.id}
+                style={[
+                  styles.categoryButton,
+                  selectedCategory === category.id && styles.selectedCategory
+                ]}
+                onPress={() => setSelectedCategory(category.id)}
+              >
+                <Text style={styles.categoryEmoji}>{category.emoji}</Text>
+                <Text style={[
+                  styles.categoryText,
+                  selectedCategory === category.id && styles.selectedCategoryText
+                ]}>
+                  {category.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
         
-        <ScrollView 
-          style={styles.productList}
-          contentContainerStyle={styles.productGrid}
-        >
-          {mockProducts.map((product) => (
-            <View key={product.id} style={styles.productCard}>
-              <ProductCard {...product} />
+        <View style={styles.mainContent}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <NewArrivalsBanner categoryId={selectedCategory} />
+            <View style={styles.productGrid}>
+              {mockProducts.map((product) => (
+                <View key={product.id} style={styles.productCard}>
+                  <ProductCard {...product} />
+                </View>
+              ))}
             </View>
-          ))}
-        </ScrollView>
+          </ScrollView>
+        </View>
       </View>
       
       <FilterSheet 
-        isVisible={showFilter} 
+        visible={showFilter} 
         onClose={() => setShowFilter(false)} 
       />
     </SafeAreaView>
@@ -94,37 +126,41 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    flexDirection: 'row',
+  },
+  sidebar: {
+    width: 80,
+    borderRightWidth: 1,
+    borderRightColor: '#eee',
+  },
+  mainContent: {
+    flex: 1,
   },
   filterButton: {
     padding: 8,
   },
-  categoryList: {
-    maxHeight: 50,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  categoryContent: {
-    paddingHorizontal: 16,
-    gap: 12,
-  },
   categoryButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 20,
-    backgroundColor: '#f5f5f5',
+    padding: 12,
+    alignItems: 'center',
+    borderLeftWidth: 2,
+    borderLeftColor: 'transparent',
   },
   selectedCategory: {
-    backgroundColor: '#9b87f5',
+    borderLeftColor: '#22c55e',
+    backgroundColor: '#f0fdf4',
+  },
+  categoryEmoji: {
+    fontSize: 24,
+    marginBottom: 4,
   },
   categoryText: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#666',
+    textAlign: 'center',
   },
   selectedCategoryText: {
-    color: '#fff',
-  },
-  productList: {
-    flex: 1,
+    color: '#22c55e',
+    fontWeight: '500',
   },
   productGrid: {
     padding: 8,
