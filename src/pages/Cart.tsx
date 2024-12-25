@@ -61,6 +61,45 @@ export const Cart = () => {
     },
   ];
 
+  const recommendedProducts = [
+    {
+      id: "6",
+      name: "Classic Fit White Cotton Shirt",
+      price: 150,
+      originalPrice: 499,
+      delivery: "5 mins",
+      quantity: "1 Piece",
+      image: "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=500",
+    },
+    {
+      id: "7",
+      name: "Slim Fit Black Formal Trousers",
+      price: 155,
+      originalPrice: 499,
+      delivery: "5 mins",
+      quantity: "1 Piece",
+      image: "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=500",
+    },
+    {
+      id: "8",
+      name: "Casual Denim Jacket",
+      price: 109,
+      originalPrice: 899,
+      delivery: "5 mins",
+      quantity: "1 pack",
+      image: "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=500",
+    },
+    {
+      id: "9",
+      name: "Cotton Blend Casual Sweater",
+      price: 127,
+      originalPrice: 249,
+      delivery: "5 mins",
+      quantity: "1 pack",
+      image: "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=500",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50 pb-48">
       <div className="bg-white p-3 flex items-center justify-between border-b sticky top-0 z-10">
@@ -103,7 +142,7 @@ export const Cart = () => {
         </button>
       </div>
 
-      <div className="mt-6 p-3 bg-white"> {/* Added more space here */}
+      <div className="mt-1 p-3 bg-white">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-sm font-medium">Review your Order</h2>
           <button className="text-xs text-orange-500">Why?</button>
@@ -120,33 +159,35 @@ export const Cart = () => {
               <span className="text-xs text-gray-500 ml-auto">{cartItems.length} items</span>
             </div>
 
-            {cartItems.map((item) => (
-              <div key={item.id} className="flex gap-3">
-                <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
-                <div className="flex-1">
-                  <h3 className="text-sm">{item.name}</h3>
-                  <p className="text-xs text-gray-500 mt-0.5">{item.size}</p>
-                  <div className="flex items-center justify-between mt-2">
-                    <div className="flex items-center gap-2 border rounded-lg">
-                      <button className="p-1">
-                        <Minus className="h-4 w-4" />
-                      </button>
-                      <span className="text-sm px-2">{item.quantity}</span>
-                      <button className="p-1">
-                        <Plus className="h-4 w-4" />
-                      </button>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm font-medium">₹{item.price}</p>
-                      <p className="text-xs text-gray-500 line-through">₹{item.originalPrice}</p>
+            <div className="space-y-3">
+              {cartItems.map((item) => (
+                <div key={item.id} className="flex gap-3">
+                  <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
+                  <div className="flex-1">
+                    <h3 className="text-sm">{item.name}</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">{item.size}</p>
+                    <div className="flex items-center justify-between mt-2">
+                      <div className="flex items-center gap-2 border rounded-lg">
+                        <button className="p-1">
+                          <Minus className="h-4 w-4" />
+                        </button>
+                        <span className="text-sm px-2">{item.quantity}</span>
+                        <button className="p-1">
+                          <Plus className="h-4 w-4" />
+                        </button>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-medium">₹{item.price}</p>
+                        <p className="text-xs text-gray-500 line-through">₹{item.originalPrice}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          <div className="mt-6"> {/* Added more space before Delivery 2 */}
+          <div>
             <div className="flex items-center gap-2 mb-2">
               <p className="text-sm font-medium">Delivery 2</p>
               <div className="text-xs bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded flex items-center gap-1">
@@ -156,31 +197,112 @@ export const Cart = () => {
               <span className="text-xs text-gray-500 ml-auto">{delivery2Items.length} item</span>
             </div>
 
-            {delivery2Items.map((item) => (
-              <div key={item.id} className="flex gap-3">
-                <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
-                <div className="flex-1">
-                  <h3 className="text-sm">{item.name}</h3>
-                  <p className="text-xs text-gray-500 mt-0.5">{item.size}</p>
-                  <div className="flex items-center justify-between mt-2">
-                    <div className="flex items-center gap-2 border rounded-lg">
-                      <button className="p-1">
-                        <Minus className="h-4 w-4" />
-                      </button>
-                      <span className="text-sm px-2">{item.quantity}</span>
-                      <button className="p-1">
-                        <Plus className="h-4 w-4" />
-                      </button>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm font-medium">₹{item.price}</p>
-                      <p className="text-xs text-gray-500 line-through">₹{item.originalPrice}</p>
+            <div className="space-y-3">
+              {delivery2Items.map((item) => (
+                <div key={item.id} className="flex gap-3">
+                  <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
+                  <div className="flex-1">
+                    <h3 className="text-sm">{item.name}</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">{item.size}</p>
+                    <div className="flex items-center justify-between mt-2">
+                      <div className="flex items-center gap-2 border rounded-lg">
+                        <button className="p-1">
+                          <Minus className="h-4 w-4" />
+                        </button>
+                        <span className="text-sm px-2">{item.quantity}</span>
+                        <button className="p-1">
+                          <Plus className="h-4 w-4" />
+                        </button>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-medium">₹{item.price}</p>
+                        <p className="text-xs text-gray-500 line-through">₹{item.originalPrice}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+        </div>
+
+        <button className="w-full text-orange-500 text-sm font-medium mt-4 flex items-center justify-center gap-1">
+          Add more items
+        </button>
+      </div>
+
+      <div className="bg-white p-3 mt-1">
+        <h3 className="text-sm mb-3">Your last minute add-ons</h3>
+        <div className="flex gap-2 overflow-x-auto hide-scrollbar">
+          <div className="flex-none w-32">
+            <p className="text-sm font-medium text-pink-600">Did you forget?</p>
+          </div>
+          <div className="flex-none w-32">
+            <p className="text-sm font-medium">Fresh fruits</p>
+          </div>
+        </div>
+        <div className="flex gap-3 overflow-x-auto hide-scrollbar mt-3">
+          {recommendedProducts.map((product) => (
+            <div key={product.id} className="flex-none w-40 relative">
+              <span className="absolute top-1 left-1 bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded">
+                10% OFF
+              </span>
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-32 object-cover rounded-lg"
+              />
+              <div className="mt-2">
+                <h4 className="text-sm line-clamp-2">{product.name}</h4>
+                <div className="flex items-center gap-1 mt-1">
+                  <p className="text-xs">{product.quantity}</p>
+                  <p className="text-xs text-gray-500 line-through">₹{product.originalPrice}</p>
+                  <p className="text-sm font-medium">₹{product.price}</p>
+                </div>
+                <div className="flex items-center gap-1 mt-1 text-xs text-gray-500">
+                  <span>{product.delivery}</span>
+                </div>
+                <button className="absolute bottom-0 right-0 w-8 h-8 bg-white border rounded-full flex items-center justify-center shadow-sm">
+                  <Plus className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="bg-white p-3 mt-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Leaf className="h-4 w-4 text-green-500" />
+            <div>
+              <p className="text-sm font-medium">I don't need a bag!</p>
+              <p className="text-xs text-gray-500">Take the pledge for a greener future - opt for a no bag delivery!</p>
+            </div>
+          </div>
+          <Switch />
+        </div>
+      </div>
+
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t">
+        <div className="p-3 flex items-center justify-between border-b">
+          <div className="flex items-center gap-2">
+            <img src="/placeholder.svg" alt="PhonePe" className="h-8 w-8" />
+            <div>
+              <p className="text-sm font-medium">Pay using</p>
+              <p className="text-xs">PhonePe UPI</p>
+            </div>
+          </div>
+          <button className="text-orange-500 text-sm font-medium">Change</button>
+        </div>
+        
+        <div className="p-3">
+          <Button 
+            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white rounded-full py-3"
+            onClick={() => {}}
+          >
+            Pay | ₹386
+          </Button>
         </div>
       </div>
     </div>

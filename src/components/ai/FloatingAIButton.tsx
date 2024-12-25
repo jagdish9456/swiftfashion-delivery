@@ -22,8 +22,8 @@ export const FloatingAIButton = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Hide button if we're on the AI chat page, login page, or cart page
-  if (location.pathname === "/ai-chat" || location.pathname === "/login" || location.pathname === "/cart") {
+  // Hide button if we're on the AI chat page or login page
+  if (location.pathname === "/ai-chat" || location.pathname === "/login") {
     return null;
   }
 
