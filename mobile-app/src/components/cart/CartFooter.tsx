@@ -31,21 +31,21 @@ export const CartFooter = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    padding: 16,
+    padding: 12,
     borderTopWidth: 1,
     borderTopColor: '#eee',
   },
   paymentMethods: {
     flexDirection: 'row',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   methodsText: {
-    fontSize: 12,
+    fontSize: 11,
     color: '#666',
   },
   button: {
     backgroundColor: '#9b87f5',
-    padding: 16,
+    padding: 12,
     borderRadius: 8,
     alignItems: 'center',
   },
@@ -55,12 +55,12 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontWeight: '600',
-    fontSize: 14,
+    fontSize: 13,
   },
   terms: {
-    fontSize: 10,
+    fontSize: 9,
     color: '#666',
     textAlign: 'center',
-    marginTop: 8,
+    marginTop: 6,
   },
 });
