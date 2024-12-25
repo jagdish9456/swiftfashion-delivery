@@ -17,7 +17,7 @@ export const Profile = () => {
         </View>
         <ProfileButtons />
         
-        <View style={styles.section}>
+        <View style={[styles.section, styles.creditSection]}>
           <Text style={styles.sectionTitle}>Credit Options</Text>
           <View style={styles.creditOptions}>
             <View style={styles.creditOption}>
@@ -87,6 +87,9 @@ const styles = StyleSheet.create({
   section: {
     marginTop: 16,
     paddingHorizontal: 16,
+  },
+  creditSection: {
+    marginTop: 24, // Increased margin for better spacing
   },
   sectionTitle: {
     fontSize: 20,

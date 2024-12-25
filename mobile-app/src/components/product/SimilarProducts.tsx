@@ -1,72 +1,90 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { ProductCard } from './ProductCard';
+import { View, ScrollView, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const mockProducts = [
-  {
-    id: '1',
-    name: 'Classic White T-Shirt',
-    price: 29.99,
-    originalPrice: 39.99,
-    discount: '25% OFF',
-    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab'
-  },
-  {
-    id: '2',
-    name: 'Denim Jacket',
-    price: 89.99,
-    originalPrice: 129.99,
-    discount: '30% OFF',
-    image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27'
-  },
-  {
-    id: '3',
-    name: 'Summer Dress',
-    price: 59.99,
-    originalPrice: 79.99,
-    discount: '25% OFF',
-    image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8'
-  },
-];
-
-type SimilarProductsProps = {
-  title: string;
+type Product = {
+  id: string;
+  name: string;
+  price: number;
+  originalPrice: number;
+  discount: string;
+  image: string;
 };
 
-export const SimilarProducts = ({ title }: SimilarProductsProps) => {
+type SimilarProductsProps = {
+  products: Product[];
+};
+
+export const SimilarProducts = ({ products }: SimilarProductsProps) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
-      >
-        {mockProducts.map((product) => (
-          <View key={product.id} style={styles.productCard}>
-            <ProductCard {...product} />
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={styles.container}
+    >
+      {products.map((product) => (
+        <TouchableOpacity key={product.id} style={styles.card}>
+          <Image
+            source={{ uri: product.image }}
+            style={styles.image}
+            resizeMode="cover"
+          />
+          <View style={styles.info}>
+            <Text style={styles.name} numberOfLines={2}>
+              {product.name}
+            </Text>
+            <View style={styles.priceContainer}>
+              <Text style={styles.price}>${product.price}</Text>
+              <Text style={styles.originalPrice}>${product.originalPrice}</Text>
+              <Text style={styles.discount}>{product.discount}</Text>
+            </View>
           </View>
-        ))}
-      </ScrollView>
-    </View>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 16,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 12,
-    paddingHorizontal: 16,
-  },
-  scrollContent: {
-    paddingHorizontal: 16,
+    paddingVertical: 8,
     gap: 12,
   },
-  productCard: {
-    width: 160,
+  card: {
+    width: 200,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#f1f1f1',
+  },
+  image: {
+    width: '100%',
+    height: 200,
+  },
+  info: {
+    padding: 8,
+  },
+  name: {
+    fontSize: 14,
+    fontWeight: '500',
+    marginBottom: 4,
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  price: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  originalPrice: {
+    fontSize: 14,
+    color: '#666',
+    textDecorationLine: 'line-through',
+  },
+  discount: {
+    fontSize: 14,
+    color: '#10B981',
   },
 });
