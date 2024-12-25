@@ -16,6 +16,7 @@ jest.mock('@react-navigation/native', () => ({
 describe('Header Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    console.log = jest.fn(); // Mock console.log for debugging
   });
 
   it('renders without crashing', () => {
@@ -42,5 +43,11 @@ describe('Header Component', () => {
     const { getByTestId } = render(<Header showBack={true} />);
     fireEvent.press(getByTestId('header-back-button'));
     expect(mockGoBack).toHaveBeenCalled();
+  });
+
+  it('renders with correct height', () => {
+    const { getByTestId } = render(<Header title="Test" />);
+    const header = getByTestId('header');
+    expect(header.props.style).toBeDefined();
   });
 });

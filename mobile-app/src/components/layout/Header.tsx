@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ArrowLeft } from 'lucide-react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type HeaderProps = {
   showBack?: boolean;
@@ -11,9 +12,14 @@ type HeaderProps = {
 
 export const Header = ({ showBack, title, testID = 'header' }: HeaderProps) => {
   const navigation = useNavigation();
+  console.log('Rendering Header with title:', title); // Debug log
 
   return (
-    <SafeAreaView style={styles.safeArea} testID={testID}>
+    <SafeAreaView 
+      style={styles.safeArea} 
+      testID={testID}
+      edges={['top']}
+    >
       <View style={styles.header}>
         {showBack && (
           <TouchableOpacity 
@@ -46,7 +52,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
     backgroundColor: '#fff',
-    height: 60,
+    height: Platform.OS === 'ios' ? 44 : 56,
+    width: '100%',
   },
   backButton: {
     marginRight: 16,

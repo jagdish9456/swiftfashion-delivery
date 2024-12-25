@@ -12,10 +12,16 @@ import { StoreSection } from '../components/stores/StoreSection';
 import { BottomNav } from '../components/layout/BottomNav';
 
 export const Home = () => {
+  console.log('Rendering Home screen'); // Debug log
+
   return (
-    <SafeAreaView style={styles.container} testID="home-screen">
-      <Header />
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+    <View style={styles.container} testID="home-screen">
+      <Header title="Swift Fashion" testID="home-header" />
+      <ScrollView 
+        style={styles.content} 
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
         <OfferBanners />
         <DealsSection />
         <CategorySection />
@@ -28,7 +34,7 @@ export const Home = () => {
         <ClothingCategories title="Designer Collection" />
       </ScrollView>
       <BottomNav />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -39,5 +45,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  scrollContent: {
+    paddingTop: 8,
   },
 });
