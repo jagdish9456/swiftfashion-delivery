@@ -10,6 +10,7 @@ import { Notifications } from '../screens/Notifications';
 import { Search } from '../screens/Search';
 import { Orders } from '../screens/Orders';
 import { ProductList } from '../screens/ProductList';
+import { SetLocation } from '../screens/SetLocation';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ export const AppNavigator = () => {
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="Orders" component={Orders} />
+      <Stack.Screen name="SetLocation" component={SetLocation} />
     </Stack.Navigator>
   );
 };

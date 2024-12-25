@@ -111,10 +111,12 @@ export const ProductList = () => {
         </View>
       </View>
       
-      <FilterSheet 
-        visible={showFilter} 
-        onClose={() => setShowFilter(false)} 
-      />
+      {showFilter && (
+        <FilterSheet 
+          visible={showFilter} 
+          onClose={() => setShowFilter(false)} 
+        />
+      )}
     </SafeAreaView>
   );
 };
