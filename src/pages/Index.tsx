@@ -9,10 +9,11 @@ import { DealsSection } from "@/components/sections/DealsSection";
 import { ChristmasBanner } from "@/components/banners/ChristmasBanner";
 import { TopProducts } from "@/components/sections/TopProducts";
 import { FooterText } from "@/components/layout/FooterText";
+import { ActiveOrderBar } from "@/components/orders/ActiveOrderBar";
 
 export const Index = () => {
   return (
-    <div className="min-h-screen pb-16">
+    <div className="min-h-screen pb-32">
       <Header />
       <main className="pt-[116px]">
         <DealsSection />
@@ -25,6 +26,7 @@ export const Index = () => {
         <TopChoices />
         <FooterText />
       </main>
+      <ActiveOrderBar />
       <BottomNav />
     </div>
   );
