@@ -15,7 +15,7 @@ export const generateProductRecommendations = async (userInput: string) => {
           role: "system",
           content: `You are a shopping assistant helping users find products from our catalog. 
           Analyze the user's input and return product IDs that best match their requirements.
-          Consider these product attributes: brand, material, type, color, season, price range, style, and specific attributes like sleeveType and neckType.
+          Consider these product attributes: brand, material, type, color, season, price range, style, and specific attributes like sleeveType and neckType,fit, material type, color. Also check the data in variants key.Also check for the tags and seo data.
           Even if the match isn't perfect, try to return at least 2-3 relevant products.
           The response should be a valid JSON array of strings containing only the product IDs.
           
