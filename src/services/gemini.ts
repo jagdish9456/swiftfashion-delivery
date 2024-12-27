@@ -20,7 +20,10 @@ export const generateProductRecommendations = async (userInput: string, conversa
     - Be specific about why each product matches their needs
     - If asked about product details, provide accurate information about materials, care instructions, and styling tips
     
-    Available products: ${JSON.stringify(products.products.map(p => ({
+    IMPORTANT: Your response MUST be a valid JSON array containing ONLY product IDs, for example: ["1", "2", "3"]
+    Do not include any explanations or additional text in your response.
+    
+    Here are the available products: ${JSON.stringify(products.products.map(p => ({
       id: p.id,
       name: p.name,
       description: p.description,
@@ -31,9 +34,7 @@ export const generateProductRecommendations = async (userInput: string, conversa
       attributes: p.attributes,
       price: p.price,
       tags: p.tags
-    })))}
-    
-    Response format: Return a valid JSON array containing only the product IDs of recommended items.`;
+    })))}`;
 
     // Combine conversation history with current input
     const conversationContext = conversationHistory
@@ -44,21 +45,53 @@ export const generateProductRecommendations = async (userInput: string, conversa
     const result = await model.generateContent([
       systemPrompt,
       conversationContext,
-      `User: ${userInput}\nAssistant: Please provide product recommendations as a JSON array of product IDs.`
+      `User: ${userInput}\nAssistant: Provide product recommendations as a JSON array of product IDs only.`
     ]);
 
     const response = result.response;
     const text = response.text();
+    
+    console.log("Gemini raw response:", text); // Debug log
 
     // Extract JSON array from response
     try {
+      // First attempt: direct JSON parse
+      try {
+        const parsed = JSON.parse(text.trim());
+        if (Array.isArray(parsed)) {
+          const recommendedProducts = products.products.filter(product => 
+            parsed.includes(product.id)
+          );
+          if (recommendedProducts.length > 0) {
+            return recommendedProducts;
+          }
+        }
+      } catch (e) {
+        console.log("Direct JSON parse failed, trying regex", e);
+      }
+
+      // Second attempt: regex extraction
       const match = text.match(/\[.*?\]/);
-      if (!match) return [];
-      
-      const recommendedIds = JSON.parse(match[0]);
-      return products.products.filter(product => 
-        recommendedIds.includes(product.id)
-      );
+      if (match) {
+        const extracted = JSON.parse(match[0]);
+        if (Array.isArray(extracted)) {
+          const recommendedProducts = products.products.filter(product => 
+            extracted.includes(product.id)
+          );
+          if (recommendedProducts.length > 0) {
+            return recommendedProducts;
+          }
+        }
+      }
+
+      // If no products found, search by keywords in product names and descriptions
+      const searchTerms = userInput.toLowerCase().split(' ');
+      const fallbackProducts = products.products.filter(product => {
+        const searchableText = `${product.name} ${product.description} ${product.tags?.join(' ')}`.toLowerCase();
+        return searchTerms.some(term => searchableText.includes(term));
+      });
+
+      return fallbackProducts.slice(0, 5);
     } catch (e) {
       console.error("Failed to parse Gemini response:", e);
       return [];
