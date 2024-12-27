@@ -9,7 +9,7 @@ export const TranscriptDisplay = ({ transcript, isListening }: TranscriptDisplay
   if (!isListening && !transcript) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg animate-in slide-in-from-bottom">
+    <div className="fixed bottom-20 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg animate-in slide-in-from-bottom">
       <div className="max-w-2xl mx-auto">
         {isListening && (
           <div className="flex items-center gap-2 mb-2">
