@@ -44,6 +44,7 @@ export const AIVoiceAgent = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [aiResponse, setAiResponse] = useState("");
+  const [conversations, setConversations] = useState<Array<{ role: 'user' | 'assistant', content: string }>>([]);
   const conversationRef = useRef<Array<{ role: string, content: string }>>([]);
 
   const handleTranscript = async (text: string) => {
@@ -68,7 +69,10 @@ export const AIVoiceAgent = () => {
 
     setIsLoading(true);
     try {
-      conversationRef.current.push({ role: "user", content: text });
+      // Add user message to conversations
+      const userMessage = { role: 'user' as const, content: text };
+      setConversations(prev => [...prev, userMessage]);
+      conversationRef.current.push(userMessage);
 
       const recommendations = await generateProductRecommendations(text, conversationRef.current);
       
@@ -81,7 +85,10 @@ export const AIVoiceAgent = () => {
       const response = generateContextualResponse(text, finalProducts);
       setAiResponse(response);
       
-      conversationRef.current.push({ role: "assistant", content: response });
+      // Add AI response to conversations
+      const aiMessage = { role: 'assistant' as const, content: response };
+      setConversations(prev => [...prev, aiMessage]);
+      conversationRef.current.push(aiMessage);
       
       const speech = new SpeechSynthesisUtterance(response);
       window.speechSynthesis.speak(speech);
@@ -111,10 +118,10 @@ export const AIVoiceAgent = () => {
 
   const generateContextualResponse = (userInput: string, foundProducts: Product[]): string => {
     if (foundProducts.length === 0) {
-      return `I couldn't find exact matches for "${userInput}", but here are some similar items you might like. Would you like me to search for something specific?`;
+      return `I couldn't find exact matches for "${userInput}". Could you tell me more about what you're looking for? For example, any specific color, style, or occasion in mind?`;
     }
     
-    return `I found ${foundProducts.length} items that match your request for "${userInput}". Would you like me to describe them in detail or help you refine your search?`;
+    return `I found ${foundProducts.length} items that match your request. Would you like me to describe their features, or would you prefer to know more about a specific aspect like prices or materials?`;
   };
 
   const handleToggleListening = () => {
@@ -126,10 +133,13 @@ export const AIVoiceAgent = () => {
   };
 
   useEffect(() => {
-    const greeting = "Hi! I'm Quickkyy, your AI shopping assistant. How can I help you today? Looking for something specific, or would you like me to guide you through our collection?";
+    const greeting = "Hi! I'm Quickkyy. How can I help you find the perfect item today?";
     setAiResponse(greeting);
+    setConversations([{ role: 'assistant', content: greeting }]);
     
-    // Cleanup function to stop listening and speech synthesis when component unmounts
+    const speech = new SpeechSynthesisUtterance(greeting);
+    window.speechSynthesis.speak(speech);
+    
     return () => {
       window.speechSynthesis.cancel();
       stopListening();
@@ -148,7 +158,7 @@ export const AIVoiceAgent = () => {
       <main className="p-4">
         <div className="max-w-2xl mx-auto space-y-6">
           <ConversationUI
-            aiResponse={aiResponse}
+            conversations={conversations}
             transcript={transcript}
             isListening={isListening}
             onToggleListening={handleToggleListening}

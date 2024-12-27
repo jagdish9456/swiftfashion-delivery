@@ -1,24 +1,43 @@
 import { Button } from "@/components/ui/button";
 import { Mic, MicOff } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface ConversationUIProps {
-  aiResponse: string;
+  conversations: Array<{ role: 'user' | 'assistant', content: string }>;
   transcript: string;
   isListening: boolean;
   onToggleListening: () => void;
 }
 
 export const ConversationUI = ({
-  aiResponse,
+  conversations,
   transcript,
   isListening,
   onToggleListening,
 }: ConversationUIProps) => {
   return (
     <div className="bg-white p-4 rounded-lg shadow-sm">
-      <p className="text-gray-700 mb-4">{aiResponse}</p>
+      <ScrollArea className="h-[300px] pr-4">
+        <div className="space-y-4">
+          {conversations.map((message, index) => (
+            <div
+              key={index}
+              className={`p-3 rounded-lg ${
+                message.role === 'assistant'
+                  ? 'bg-blue-50 text-blue-800'
+                  : 'bg-gray-50 text-gray-800 ml-4'
+              }`}
+            >
+              <p className="text-sm">
+                {message.role === 'assistant' ? '🤖 Quickkyy: ' : '👤 You: '}
+                {message.content}
+              </p>
+            </div>
+          ))}
+        </div>
+      </ScrollArea>
       
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 mt-4">
         <Button
           onClick={onToggleListening}
           className="w-full flex items-center justify-center gap-2"
@@ -37,9 +56,9 @@ export const ConversationUI = ({
         </Button>
       </div>
 
-      {transcript && (
+      {transcript && isListening && (
         <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-          <p className="text-sm text-gray-600">You said: {transcript}</p>
+          <p className="text-sm text-gray-600">Listening: {transcript}</p>
         </div>
       )}
     </div>
