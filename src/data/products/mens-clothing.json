@@ -1,0 +1,947 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Classic White Cotton T-Shirt",
+      "description": "Breathable cotton t-shirt perfect for everyday wear",
+      "shortDescription": "Comfortable cotton t-shirt",
+      "price": 29.99,
+      "compareAtPrice": 39.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-tshirts",
+      "brand": "EssentialWear",
+      "sku": "TS001-WHT-M",
+      "barcode": "123456789",
+      "images": [
+        {
+          "id": "img1",
+          "url": "/placeholder.svg",
+          "alt": "Classic White Cotton T-Shirt",
+          "isDefault": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "v1",
+          "color": "White",
+          "size": "M",
+          "price": 29.99,
+          "stock": 100,
+          "sku": "TS001-WHT-M"
+        }
+      ],
+      "attributes": {
+        "material": "100% Cotton",
+        "sleeveType": "Short Sleeve",
+        "neckType": "Crew Neck",
+        "fit": "Regular",
+        "care": ["Machine wash cold", "Tumble dry low"]
+      },
+      "tags": ["casual", "basic", "essential"],
+      "rating": {
+        "average": 4.5,
+        "count": 128
+      },
+      "stock": {
+        "total": 500,
+        "reserved": 10,
+        "available": 490
+      },
+      "dimensions": {
+        "weight": 0.2,
+        "unit": "kg"
+      },
+      "seo": {
+        "title": "Classic White Cotton T-Shirt - EssentialWear",
+        "description": "Breathable cotton t-shirt perfect for everyday wear",
+        "keywords": ["t-shirt", "cotton", "casual", "men"]
+      },
+      "status": "active",
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "2",
+      "name": "Slim Fit Dark Denim Jeans",
+      "description": "Classic dark wash slim fit jeans with stretch comfort",
+      "shortDescription": "Comfortable dark denim jeans",
+      "price": 79.99,
+      "compareAtPrice": 99.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-jeans",
+      "brand": "EssentialWear",
+      "sku": "JEANS001-DENIM-M",
+      "barcode": "123456790",
+      "images": [
+        {
+          "id": "img2",
+          "url": "/placeholder.svg",
+          "alt": "Slim Fit Dark Denim Jeans",
+          "isDefault": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "v2",
+          "color": "Dark Blue",
+          "size": "32",
+          "price": 79.99,
+          "stock": 50,
+          "sku": "JEANS001-DENIM-M"
+        }
+      ],
+      "attributes": {
+        "material": "98% Cotton, 2% Elastane",
+        "sleeveType": "N/A",
+        "neckType": "N/A",
+        "fit": "Slim",
+        "care": ["Machine wash cold", "Tumble dry low"]
+      },
+      "tags": ["casual", "denim", "essential"],
+      "rating": {
+        "average": 4.7,
+        "count": 200
+      },
+      "stock": {
+        "total": 300,
+        "reserved": 20,
+        "available": 280
+      },
+      "dimensions": {
+        "weight": 0.5,
+        "unit": "kg"
+      },
+      "seo": {
+        "title": "Slim Fit Dark Denim Jeans - EssentialWear",
+        "description": "Classic dark wash slim fit jeans with stretch comfort",
+        "keywords": ["jeans", "denim", "casual", "men"]
+      },
+      "status": "active",
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "3",
+      "name": "Casual Chino Pants",
+      "description": "Versatile chino pants for casual and semi-formal occasions",
+      "shortDescription": "Stylish chino pants",
+      "price": 49.99,
+      "compareAtPrice": 59.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-pants",
+      "brand": "EssentialWear",
+      "sku": "PANTS001-CHINO-M",
+      "barcode": "123456791",
+      "images": [
+        {
+          "id": "img3",
+          "url": "/placeholder.svg",
+          "alt": "Casual Chino Pants",
+          "isDefault": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "v3",
+          "color": "Beige",
+          "size": "32",
+          "price": 49.99,
+          "stock": 100,
+          "sku": "PANTS001-CHINO-M"
+        }
+      ],
+      "attributes": {
+        "material": "100% Cotton",
+        "sleeveType": "N/A",
+        "neckType": "N/A",
+        "fit": "Regular",
+        "care": ["Machine wash cold", "Tumble dry low"]
+      },
+      "tags": ["casual", "chino", "essential"],
+      "rating": {
+        "average": 4.5,
+        "count": 75
+      },
+      "stock": {
+        "total": 200,
+        "reserved": 10,
+        "available": 190
+      },
+      "dimensions": {
+        "weight": 0.4,
+        "unit": "kg"
+      },
+      "seo": {
+        "title": "Casual Chino Pants - EssentialWear",
+        "description": "Versatile chino pants for casual and semi-formal occasions",
+        "keywords": ["chino", "pants", "casual", "men"]
+      },
+      "status": "active",
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "4",
+      "name": "Lightweight Hoodie",
+      "description": "Comfortable lightweight hoodie for layering",
+      "shortDescription": "Casual lightweight hoodie",
+      "price": 39.99,
+      "compareAtPrice": 49.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-hoodies",
+      "brand": "EssentialWear",
+      "sku": "HOODIE001-LIGHT-M",
+      "barcode": "123456792",
+      "images": [
+        {
+          "id": "img4",
+          "url": "/placeholder.svg",
+          "alt": "Lightweight Hoodie",
+          "isDefault": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "v4",
+          "color": "Gray",
+          "size": "M",
+          "price": 39.99,
+          "stock": 150,
+          "sku": "HOODIE001-LIGHT-M"
+        }
+      ],
+      "attributes": {
+        "material": "80% Cotton, 20% Polyester",
+        "sleeveType": "Long Sleeve",
+        "neckType": "Hooded",
+        "fit": "Regular",
+        "care": ["Machine wash cold", "Tumble dry low"]
+      },
+      "tags": ["hoodie", "casual", "lightweight"],
+      "rating": {
+        "average": 4.6,
+        "count": 90
+      },
+      "stock": {
+        "total": 250,
+        "reserved": 15,
+        "available": 235
+      },
+      "dimensions": {
+        "weight": 0.5,
+        "unit": "kg"
+      },
+      "seo": {
+        "title": "Lightweight Hoodie - EssentialWear",
+        "description": "Comfortable lightweight hoodie for layering",
+        "keywords": ["hoodie", "lightweight", "casual", "men"]
+      },
+      "status": "active",
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "5",
+      "name": "Classic Leather Jacket",
+      "description": "Stylish leather jacket for a rugged look",
+      "shortDescription": "Classic leather jacket",
+      "price": 199.99,
+      "compareAtPrice": 249.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-outerwear",
+      "brand": "EssentialWear",
+      "sku": "JACKET001-LEATHER-M",
+      "barcode": "123456793",
+      "images": [
+        {
+          "id": "img5",
+          "url": "/placeholder.svg",
+          "alt": "Classic Leather Jacket",
+          "isDefault": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "v5",
+          "color": "Black",
+          "size": "M",
+          "price": 199.99,
+          "stock": 30,
+          "sku": "JACKET001-LEATHER-M"
+        }
+      ],
+      "attributes": {
+        "material": "Genuine Leather",
+        "sleeveType": "Long Sleeve",
+        "neckType": "Collar",
+        "fit": "Regular",
+        "care": ["Wipe clean with a damp cloth"]
+      },
+      "tags": ["leather", "jacket", "classic"],
+      "rating": {
+        "average": 4.8,
+        "count": 100
+      },
+      "stock": {
+        "total": 50,
+        "reserved": 5,
+        "available": 45
+      },
+      "dimensions": {
+        "weight": 1.2,
+        "unit": "kg"
+      },
+      "seo": {
+        "title": "Classic Leather Jacket - EssentialWear",
+        "description": "Stylish leather jacket for a rugged look",
+        "keywords": ["jacket", "leather", "classic", "men"]
+      },
+      "status": "active",
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "6",
+      "name": "Casual Button-Up Shirt",
+      "description": "Versatile button-up shirt for casual outings",
+      "shortDescription": "Stylish button-up shirt",
+      "price": 49.99,
+      "compareAtPrice": 59.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-shirts",
+      "brand": "EssentialWear",
+      "sku": "SHIRT001-CASUAL-M",
+      "barcode": "123456794",
+      "images": [
+        {
+          "id": "img6",
+          "url": "/placeholder.svg",
+          "alt": "Casual Button-Up Shirt",
+          "isDefault": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "v6",
+          "color": "Navy",
+          "size": "M",
+          "price": 49.99,
+          "stock": 80,
+          "sku": "SHIRT001-CASUAL-M"
+        }
+      ],
+      "attributes": {
+        "material": "100% Cotton",
+        "sleeveType": "Long Sleeve",
+        "neckType": "Collar",
+        "fit": "Regular",
+        "care": ["Machine wash cold", "Tumble dry low"]
+      },
+      "tags": ["button-up", "casual", "essential"],
+      "rating": {
+        "average": 4.5,
+        "count": 60
+      },
+      "stock": {
+        "total": 150,
+        "reserved": 5,
+        "available": 145
+      },
+      "dimensions": {
+        "weight": 0.4,
+        "unit": "kg"
+      },
+      "seo": {
+        "title": "Casual Button-Up Shirt - EssentialWear",
+        "description": "Versatile button-up shirt for casual outings",
+        "keywords": ["shirt", "button-up", "casual", "men"]
+      },
+      "status": "active",
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "7",
+      "name": "Athletic Performance Shorts",
+      "description": "Moisture-wicking athletic shorts for high-performance activities",
+      "shortDescription": "Comfortable athletic shorts",
+      "price": 34.99,
+      "compareAtPrice": 44.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-shorts",
+      "brand": "EssentialWear",
+      "sku": "SHORTS001-ATHLETIC-M",
+      "barcode": "123456795",
+      "images": [
+        {
+          "id": "img7",
+          "url": "/placeholder.svg",
+          "alt": "Athletic Performance Shorts",
+          "isDefault": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "v7",
+          "color": "Black",
+          "size": "M",
+          "price": 34.99,
+          "stock": 150,
+          "sku": "SHORTS001-ATHLETIC-M"
+        }
+      ],
+      "attributes": {
+        "material": "88% Polyester, 12% Spandex",
+        "sleeveType": "N/A",
+        "neckType": "N/A",
+        "fit": "Regular",
+        "care": ["Machine wash cold", "Tumble dry low"]
+      },
+      "tags": ["athletic", "shorts", "performance"],
+      "rating": {
+        "average": 4.4,
+        "count": 80
+      },
+      "stock": {
+        "total": 200,
+        "reserved": 10,
+        "available": 190
+      },
+      "dimensions": {
+        "weight": 0.25,
+        "unit": "kg"
+      },
+      "seo": {
+        "title": "Athletic Performance Shorts - EssentialWear",
+        "description": "Moisture-wicking athletic shorts for high-performance activities",
+        "keywords": ["shorts", "athletic", "performance", "men"]
+      },
+      "status": "active",
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "8",
+      "name": "Flannel Shirt",
+      "description": "Cozy flannel shirt for chilly days",
+      "shortDescription": "Warm flannel shirt",
+      "price": 49.99,
+      "compareAtPrice": 59.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-shirts",
+      "brand": "EssentialWear",
+      "sku": "SHIRT002-FLANNEL-M",
+      "barcode": "123456796",
+      "images": [
+        {
+          "id": "img8",
+          "url": "/placeholder.svg",
+          "alt": "Flannel Shirt",
+          "isDefault": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "v8",
+          "color": "Red/Black",
+          "size": "M",
+          "price": 49.99,
+          "stock": 60,
+          "sku": "SHIRT002-FLANNEL-M"
+        }
+      ],
+      "attributes": {
+        "material": "100% Cotton",
+        "sleeveType": "Long Sleeve",
+        "neckType": "Collar",
+        "fit": "Regular",
+        "care": ["Machine wash cold", "Tumble dry low"]
+      },
+      "tags": ["flannel", "shirt", "casual"],
+      "rating": {
+        "average": 4.6,
+        "count": 70
+      },
+      "stock": {
+        "total": 120,
+        "reserved": 5,
+        "available": 115
+      },
+      "dimensions": {
+        "weight": 0.4,
+        "unit": "kg"
+      },
+      "seo": {
+        "title": "Flannel Shirt - EssentialWear",
+        "description": "Cozy flannel shirt for chilly days",
+        "keywords": ["flannel", "shirt", "casual", "men"]
+      },
+      "status": "active",
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "9",
+      "name": "Graphic Tee",
+      "description": "Trendy graphic t-shirt for casual wear",
+      "shortDescription": "Stylish graphic tee",
+      "price": 24.99,
+      "compareAtPrice": 29.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-tshirts",
+      "brand": "EssentialWear",
+      "sku": "Tee001-GRAPHIC-M",
+      "barcode": "123456797",
+      "images": [
+        {
+          "id": "img9",
+          "url": "/placeholder.svg",
+          "alt": "Graphic Tee",
+          "isDefault": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "v9",
+          "color": "White",
+          "size": "M",
+          "price": 24.99,
+          "stock": 200,
+          "sku": "Tee001-GRAPHIC-M"
+        }
+      ],
+      "attributes": {
+        "material": "100% Cotton",
+        "sleeveType": "Short Sleeve",
+        "neckType": "Crew Neck",
+        "fit": "Regular",
+        "care": ["Machine wash cold", "Tumble dry low"]
+      },
+      "tags": ["graphic", "t-shirt", "casual"],
+      "rating": {
+        "average": 4.5,
+        "count": 50
+      },
+      "stock": {
+        "total": 300,
+        "reserved": 10,
+        "available": 290
+      },
+      "dimensions": {
+        "weight": 0.2,
+        "unit": "kg"
+      },
+      "seo": {
+        "title": "Graphic Tee - EssentialWear",
+        "description": "Trendy graphic t-shirt for casual wear",
+        "keywords": ["graphic", "t-shirt", "casual", "men"]
+      },
+      "status": "active",
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "10",
+      "name": "Cargo Shorts",
+      "description": "Durable cargo shorts with multiple pockets",
+      "shortDescription": "Functional cargo shorts",
+      "price": 39.99,
+      "compareAtPrice": 49.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-shorts",
+      "brand": "EssentialWear",
+      "sku": "SHORTS002-CARGO-M",
+      "barcode": "123456798",
+      "images": [
+        {
+          "id": "img10",
+          "url": "/placeholder.svg",
+          "alt": "Cargo Shorts",
+          "isDefault": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "v10",
+          "color": "Khaki",
+          "size": "M",
+          "price": 39.99,
+          "stock": 80,
+          "sku": "SHORTS002-CARGO-M"
+        }
+      ],
+      "attributes": {
+        "material": "100% Cotton",
+        "sleeveType": "N/A",
+        "neckType": "N/A",
+        "fit": "Regular",
+        "care": ["Machine wash cold", "Tumble dry low"]
+      },
+      "tags": ["cargo", "shorts", "casual"],
+      "rating": {
+        "average": 4.4,
+        "count": 60
+      },
+      "stock": {
+        "total": 150,
+        "reserved": 5,
+        "available": 145
+      },
+      "dimensions": {
+        "weight": 0.3,
+        "unit": "kg"
+      },
+      "seo": {
+        "title": "Cargo Shorts - EssentialWear",
+        "description": "Durable cargo shorts with multiple pockets",
+        "keywords": ["shorts", "cargo", "casual", "men"]
+      },
+      "status": "active",
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "11",
+      "name": "Polo Shirt",
+      "description": "Classic polo shirt for a smart casual look",
+      "shortDescription": "Stylish polo shirt",
+      "price": 34.99,
+      "compareAtPrice": 44.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-shirts",
+      "brand": "EssentialWear",
+      "sku": "SHIRT003-POLO-M",
+      "barcode": "123456799",
+      "images": [
+        {
+          "id": "img11",
+          "url": "/placeholder.svg",
+          "alt": "Polo Shirt",
+          "isDefault": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "v11",
+          "color": "Navy",
+          "size": "M",
+          "price": 34.99,
+          "stock": 100,
+          "sku": "SHIRT003-POLO-M"
+        }
+      ],
+      "attributes": {
+        "material": "100% Cotton",
+        "sleeveType": "Short Sleeve",
+        "neckType": "Collar",
+        "fit": "Regular",
+        "care": ["Machine wash cold", "Tumble dry low"]
+      },
+      "tags": ["polo", "shirt", "casual"],
+      "rating": {
+        "average": 4.5,
+        "count": 40
+      },
+      "stock": {
+        "total": 120,
+        "reserved": 5,
+        "available": 115
+      },
+      "dimensions": {
+        "weight": 0.3,
+        "unit": "kg"
+      },
+      "seo": {
+        "title": "Polo Shirt - EssentialWear",
+        "description": "Classic polo shirt for a smart casual look",
+        "keywords": ["polo", "shirt", "casual", "men"]
+      },
+      "status": "active",
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "12",
+      "name": "Windbreaker Jacket",
+      "description": "Lightweight windbreaker jacket for breezy days",
+      "shortDescription": "Stylish windbreaker jacket",
+      "price": 59.99,
+      "compareAtPrice": 69.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-outerwear",
+      "brand": "EssentialWear",
+      "sku": "JACKET002-WIND-M",
+      "barcode": "123456800",
+      "images": [
+        {
+          "id": "img12",
+          "url": "/placeholder.svg",
+          "alt": "Windbreaker Jacket",
+          "isDefault": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "v12",
+          "color": "Blue",
+          "size": "M",
+          "price": 59.99,
+          "stock": 50,
+          "sku": "JACKET002-WIND-M"
+        }
+      ],
+      "attributes": {
+        "material": "100% Polyester",
+        "sleeveType": "Long Sleeve",
+        "neckType": "Hooded",
+        "fit": "Regular",
+        "care": ["Machine wash cold", "Tumble dry low"]
+      },
+      "tags": ["windbreaker", "jacket", "casual"],
+      "rating": {
+        "average": 4.6,
+        "count": 30
+      },
+      "stock": {
+        "total": 80,
+        "reserved": 5,
+        "available": 75
+      },
+      "dimensions": {
+        "weight": 0.4,
+        "unit": "kg"
+      },
+      "seo": {
+        "title": "Windbreaker Jacket - EssentialWear",
+        "description": "Lightweight windbreaker jacket for breezy days",
+        "keywords": ["windbreaker", "jacket", "casual", "men"]
+      },
+      "status": "active",
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "13",
+      "name": "Sweatpants",
+      "description": "Comfortable sweatpants for lounging and casual wear",
+      "shortDescription": "Cozy sweatpants",
+      "price": 39.99,
+      "compareAtPrice": 49.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-pants",
+      "brand": "EssentialWear",
+      "sku": "PANTS003-SWEAT-M",
+      "barcode": "123456801",
+      "images": [
+        {
+          "id": "img13",
+          "url": "/placeholder.svg",
+          "alt": "Sweatpants",
+          "isDefault": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "v13",
+          "color": "Black",
+          "size": "M",
+          "price": 39.99,
+          "stock": 100,
+          "sku": "PANTS003-SWEAT-M"
+        }
+      ],
+      "attributes": {
+        "material": "80% Cotton, 20% Polyester",
+        "sleeveType": "N/A",
+        "neckType": "N/A",
+        "fit": "Regular",
+        "care": ["Machine wash cold", "Tumble dry low"]
+      },
+      "tags": ["sweatpants", "casual", "comfortable"],
+      "rating": {
+        "average": 4.5,
+        "count": 50
+      },
+      "stock": {
+        "total": 150,
+        "reserved": 10,
+        "available": 140
+      },
+      "dimensions": {
+        "weight": 0.5,
+        "unit": "kg"
+      },
+      "seo": {
+        "title": "Sweatpants - EssentialWear",
+        "description": "Comfortable sweatpants for lounging and casual wear",
+        "keywords": ["sweatpants", "casual", "comfortable", "men"]
+      },
+      "status": "active",
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "14",
+      "name": "Denim Shorts",
+      "description": "Classic denim shorts for summer days",
+      "shortDescription": "Stylish denim shorts",
+      "price": 34.99,
+      "compareAtPrice": 39.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-shorts",
+      "brand": "EssentialWear",
+      "sku": "SHORTS003-DENIM-M",
+      "barcode": "123456802",
+      "images": [
+        {
+          "id": "img14",
+          "url": "/placeholder.svg",
+          "alt": "Denim Shorts",
+          "isDefault": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "v14",
+          "color": "Light Blue",
+          "size": "M",
+          "price": 34.99,
+          "stock": 80,
+          "sku": "SHORTS003-DENIM-M"
+        }
+      ],
+      "attributes": {
+        "material": "100% Cotton",
+        "sleeveType": "N/A",
+        "neckType": "N/A",
+        "fit": "Regular",
+        "care": ["Machine wash cold", "Tumble dry low"]
+      },
+      "tags": ["denim", "shorts", "summer"],
+      "rating": {
+        "average": 4.4,
+        "count": 40
+      },
+      "stock": {
+        "total": 120,
+        "reserved": 5,
+        "available": 115
+      },
+      "dimensions": {
+        "weight": 0.3,
+        "unit": "kg"
+      },
+      "seo": {
+        "title": "Denim Shorts - EssentialWear",
+        "description": "Classic denim shorts for summer days",
+        "keywords": ["shorts", "denim", "summer", "men"]
+      },
+      "status": "active",
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "15",
+      "name": "Thermal Base Layer",
+      "description": "Thermal base layer for cold weather activities",
+      "shortDescription": "Warm base layer",
+      "price": 44.99,
+      "compareAtPrice": 54.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-activewear",
+      "brand": "EssentialWear",
+      "sku": "BASELAYER001-THERMAL-M",
+      "barcode": "123456803",
+      "images": [
+        {
+          "id": "img15",
+          "url": "/placeholder.svg",
+          "alt": "Thermal Base Layer",
+          "isDefault": true
+        }
+      ],
+      "variants": [
+        {
+          "id": "v15",
+          "color": "Black",
+          "size": "M",
+          "price": 44.99,
+          "stock": 100,
+          "sku": "BASELAYER001-THERMAL-M"
+        }
+      ],
+      "attributes": {
+        "material": "90% Polyester, 10% Spandex",
+        "sleeveType": "Long Sleeve",
+        "neckType": "Crew Neck",
+        "fit": "Regular",
+        "care": ["Machine wash cold", "Tumble dry low"]
+      },
+      "tags": ["base layer", "thermal", "activewear"],
+      "rating": {
+        "average": 4.5,
+        "count": 40
+      },
+      "stock": {
+        "total": 150,
+        "reserved": 10,
+        "available": 140
+      },
+      "dimensions": {
+        "weight": 0.3,
+        "unit": "kg"
+      },
+      "seo": {
+        "title": "Thermal Base Layer - EssentialWear",
+        "description": "Thermal base layer for cold weather activities",
+        "keywords": ["base layer", "thermal", "activewear", "men"]
+      },
+      "status": "active",
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "16",
+      "name": "Premium Merino Wool Sweater",
+      "description": "Luxurious merino wool sweater perfect for cold weather",
+      "shortDescription": "Warm merino wool sweater",
+      "price": 129.99,
+      "compareAtPrice": 159.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-knitwear",
+      "brand": "EssentialWear",
+      "images": [
+        {
+          "id": "img21",
+          "url": "/placeholder.svg",
+          "alt": "Premium Merino Wool Sweater",
+          "isDefault": true
+        }
+      ],
+      "attributes": {
+        "material": "100% Merino Wool",
+        "sleeveType": "Long Sleeve",
+        "neckType": "Crew Neck",
+        "fit": "Regular",
+        "care": ["Hand wash cold", "Lay flat to dry"]
+      },
+      "tags": ["winter", "wool", "premium"],
+      "status": "active"
+    }
+  ]
+}

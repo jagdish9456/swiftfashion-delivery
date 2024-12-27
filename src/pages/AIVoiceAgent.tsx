@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Mic, Send } from "lucide-react";
+import { ArrowLeft, Mic, MicOff, Send } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { generateProductRecommendations } from "@/services/openai";
 import { ProductList } from "@/components/categories/ProductList";
 import { toast } from "@/hooks/use-toast";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
+import products from "@/data/product-all.json";
 
 export const AIVoiceAgent = () => {
   const navigate = useNavigate();
@@ -15,36 +16,52 @@ export const AIVoiceAgent = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [aiResponse, setAiResponse] = useState("");
+  const [isContinuousMode, setIsContinuousMode] = useState(true);
+  const conversationRef = useRef([]);
 
   const handleTranscript = async (text: string) => {
     setTranscript(text);
     await handleSubmit(text);
   };
 
-  const { startListening } = useSpeechRecognition(handleTranscript);
+  const { startListening, stopListening } = useSpeechRecognition(handleTranscript);
 
   const handleSubmit = async (text: string) => {
     if (!text.trim()) return;
 
     setIsLoading(true);
     try {
-      const recommendations = await generateProductRecommendations(text);
-      setProducts(recommendations);
+      // Add user message to conversation history
+      conversationRef.current.push({ role: "user", content: text });
+
+      const recommendations = await generateProductRecommendations(text, conversationRef.current);
       
-      // Generate AI response
-      const response = `Based on your request for "${text}", I've found ${recommendations.length} items that might interest you. Would you like me to describe them in detail or help you refine your search?`;
+      // If no exact matches, find similar products
+      let finalProducts = recommendations;
+      if (recommendations.length === 0) {
+        finalProducts = findSimilarProducts(text, 5);
+      }
+      
+      setProducts(finalProducts);
+      
+      // Generate AI response based on context
+      const response = generateContextualResponse(text, finalProducts);
       setAiResponse(response);
+      
+      // Add AI response to conversation history
+      conversationRef.current.push({ role: "assistant", content: response });
       
       // Use Web Speech API for voice response
       const speech = new SpeechSynthesisUtterance(response);
       window.speechSynthesis.speak(speech);
 
-      if (recommendations.length === 0) {
-        toast({
-          title: "No products found",
-          description: "Try different search terms or be more specific",
-        });
+      // If in continuous mode, restart listening after response
+      if (isContinuousMode) {
+        speech.onend = () => {
+          startListening();
+        };
       }
+
     } catch (error) {
       toast({
         title: "Error",
@@ -56,17 +73,56 @@ export const AIVoiceAgent = () => {
     }
   };
 
+  const findSimilarProducts = (query: string, limit: number) => {
+    // Implement fuzzy search logic here to find similar products
+    // This is a simplified version - you might want to use a proper search library
+    const searchTerms = query.toLowerCase().split(' ');
+    
+    return products.products
+      .filter(product => {
+        const searchableText = `${product.name} ${product.description} ${product.tags.join(' ')}`.toLowerCase();
+        return searchTerms.some(term => searchableText.includes(term));
+      })
+      .slice(0, limit);
+  };
+
+  const generateContextualResponse = (userInput: string, foundProducts: any[]) => {
+    if (foundProducts.length === 0) {
+      return `I couldn't find exact matches for "${userInput}", but here are some similar items you might like. Would you like me to search for something specific?`;
+    }
+    
+    return `I found ${foundProducts.length} items that match your request for "${userInput}". Would you like me to describe them in detail or help you refine your search?`;
+  };
+
   useEffect(() => {
     // Initial greeting
     const greeting = "Hi! I'm Quickkyy, your AI shopping assistant. How can I help you today? Looking for something specific, or would you like me to guide you through our collection?";
     setAiResponse(greeting);
     const speech = new SpeechSynthesisUtterance(greeting);
     window.speechSynthesis.speak(speech);
+    
+    // Start listening automatically if in continuous mode
+    if (isContinuousMode) {
+      speech.onend = () => {
+        startListening();
+      };
+    }
 
     return () => {
       window.speechSynthesis.cancel();
+      stopListening();
     };
   }, []);
+
+  const toggleListening = () => {
+    if (isListening) {
+      stopListening();
+      setIsContinuousMode(false);
+    } else {
+      startListening();
+      setIsContinuousMode(true);
+    }
+  };
 
   return (
     <div className="min-h-screen pb-16 bg-gray-50">
@@ -84,12 +140,20 @@ export const AIVoiceAgent = () => {
             
             <div className="flex items-center gap-4">
               <Button
-                onClick={() => startListening()}
-                disabled={isListening}
+                onClick={toggleListening}
                 className="w-full flex items-center justify-center gap-2"
               >
-                <Mic className={isListening ? "animate-pulse" : ""} />
-                {isListening ? "Listening..." : "Shop with Voice"}
+                {isListening ? (
+                  <>
+                    <MicOff className="animate-pulse" />
+                    Stop Listening
+                  </>
+                ) : (
+                  <>
+                    <Mic />
+                    Start Conversation
+                  </>
+                )}
               </Button>
             </div>
 

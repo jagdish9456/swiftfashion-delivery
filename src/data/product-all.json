@@ -871,6 +871,7 @@
           "id": "img14",
           "url": "/placeholder.svg",
           "alt": "Linen Summer Shirt",
+          
           "isDefault": true
         }
       ],
@@ -1280,6 +1281,34 @@
       "featured": true,
       "createdAt": "2024-01-01T00:00:00Z",
       "updatedAt": "2024-03-15T10:30:00Z"
+    },
+    {
+      "id": "21",
+      "name": "Premium Merino Wool Sweater",
+      "description": "Luxurious merino wool sweater perfect for cold weather",
+      "shortDescription": "Warm merino wool sweater",
+      "price": 129.99,
+      "compareAtPrice": 159.99,
+      "categoryId": "mens-clothing",
+      "subcategoryId": "mens-knitwear",
+      "brand": "EssentialWear",
+      "images": [
+        {
+          "id": "img21",
+          "url": "/placeholder.svg",
+          "alt": "Premium Merino Wool Sweater",
+          "isDefault": true
+        }
+      ],
+      "attributes": {
+        "material": "100% Merino Wool",
+        "sleeveType": "Long Sleeve",
+        "neckType": "Crew Neck",
+        "fit": "Regular",
+        "care": ["Hand wash cold", "Lay flat to dry"]
+      },
+      "tags": ["winter", "wool", "premium"],
+      "status": "active"
     }
   ]
 }

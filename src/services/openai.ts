@@ -6,16 +6,16 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: true
 });
 
-export const generateProductRecommendations = async (userInput: string) => {
+export const generateProductRecommendations = async (userInput: string, conversationHistory: Array<{ role: string, content: string }> = []) => {
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-4",
       messages: [
         {
           role: "system",
-          content: `You are a shopping assistant helping users find products from our catalog. 
-          Analyze the user's input and return product IDs that best match their requirements.
-          Consider these product attributes: brand, material, type, color, season, price range, style, and specific attributes like sleeveType and neckType.
+          content: `You are Quickkyy, a helpful AI shopping assistant for a clothing store. 
+          Analyze the conversation history and user's input to recommend products.
+          Consider these attributes: brand, material, type, color, season, price range, style, and specific details.
           Even if the match isn't perfect, try to return at least 2-3 relevant products.
           The response should be a valid JSON array of strings containing only the product IDs.
           
@@ -30,9 +30,9 @@ export const generateProductRecommendations = async (userInput: string) => {
             attributes: p.attributes,
             price: p.price,
             tags: p.tags
-          })))}
-          `
+          })))}`
         },
+        ...conversationHistory,
         {
           role: "user",
           content: userInput

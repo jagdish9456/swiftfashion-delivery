@@ -1,0 +1,264 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Classic Leather Belt",
+      "description": "Stylish leather belt for everyday wear.",
+      "shortDescription": "Durable leather belt.",
+      "price": 39.99,
+      "compareAtPrice": 49.99,
+      "categoryId": "accessories",
+      "subcategoryId": "belts",
+      "brand": "EssentialWear",
+      "images": [
+        {
+          "id": "img1",
+          "url": "/placeholder.svg",
+          "alt": "Classic Leather Belt",
+          "isDefault": true
+        }
+      ],
+      "attributes": {
+        "material": "100% Leather",
+        "size": "One Size",
+        "color": "Black"
+      },
+      "tags": ["belt", "leather", "accessory"],
+      "status": "active"
+    },
+    {
+      "id": "2",
+      "name": "Stylish Sunglasses",
+      "description": "Trendy sunglasses to protect your eyes from the sun.",
+      "shortDescription": "UV protection sunglasses.",
+      "price": 29.99,
+      "compareAtPrice": 39.99,
+      "categoryId": "accessories",
+      "subcategoryId": "sunglasses",
+      "brand": "EssentialWear",
+      "images": [
+        {
+          "id": "img2",
+          "url": "/placeholder.svg",
+          "alt": "Stylish Sunglasses",
+          "isDefault": true
+        }
+      ],
+      "attributes": {
+        "material": "Plastic",
+        "lensColor": "Gray",
+        "frameColor": "Black"
+      },
+      "tags": ["sunglasses", "accessory", "fashion"],
+      "status": "active"
+    },
+    {
+      "id": "3",
+      "name": "Wool Scarf",
+      "description": "Warm wool scarf for cold weather.",
+      "shortDescription": "Cozy wool scarf.",
+      "price": 49.99,
+      "compareAtPrice": 59.99,
+      "categoryId": "accessories",
+      "subcategoryId": "scarves",
+      "brand": "EssentialWear",
+      "images": [
+        {
+          "id": "img3",
+          "url": "/placeholder.svg",
+          "alt": "Wool Scarf",
+          "isDefault": true
+        }
+      ],
+      "attributes": {
+        "material": "100% Wool",
+        "size": "One Size",
+        "color": "Gray"
+      },
+      "tags": ["scarf", "wool", "accessory"],
+      "status": "active"
+    },
+    {
+      "id": "4",
+      "name": "Canvas Backpack",
+      "description": "Durable canvas backpack for daily use.",
+      "shortDescription": "Stylish and functional backpack.",
+      "price": 89.99,
+      "compareAtPrice": 109.99,
+      "categoryId": "accessories",
+      "subcategoryId": "bags",
+      "brand": "EssentialWear",
+      "images": [
+        {
+          "id": "img4",
+          "url": "/placeholder.svg",
+          "alt": "Canvas Backpack",
+          "isDefault": true
+        }
+      ],
+      "attributes": {
+        "material": "Canvas",
+        "size": "15L",
+        "color": "Navy"
+      },
+      "tags": ["backpack", "canvas", "accessory"],
+      "status": "active"
+    },
+    {
+      "id": "5",
+      "name": "Leather Wallet",
+      "description": "Classic leather wallet with multiple card slots.",
+      "shortDescription": "Elegant leather wallet.",
+      "price": 59.99,
+      "compareAtPrice": 69.99,
+      "categoryId": "accessories",
+      "subcategoryId": "wallets",
+      "brand": "EssentialWear",
+      "images": [
+        {
+          "id": "img5",
+          "url": "/placeholder.svg",
+          "alt": "Leather Wallet",
+          "isDefault": true
+        }
+      ],
+      "attributes": {
+        "material": "100% Leather",
+        "size": "One Size",
+        "color": "Brown"
+      },
+      "tags": ["wallet", "leather", "accessory"],
+      "status": "active"
+    },
+    {
+      "id": "6",
+      "name": "Silk Tie",
+      "description": "Elegant silk tie for formal occasions.",
+      "shortDescription": "Stylish silk tie.",
+      "price": 34.99,
+      "compareAtPrice": 44.99,
+      "categoryId": "accessories",
+      "subcategoryId": "ties",
+      "brand": "EssentialWear",
+      "images": [
+        {
+          "id": "img6",
+          "url": "/placeholder.svg",
+          "alt": "Silk Tie",
+          "isDefault": true
+        }
+      ],
+      "attributes": {
+        "material": "100% Silk",
+        "size": "Standard",
+        "color": "Red"
+      },
+      "tags": ["tie", "silk", "accessory"],
+      "status": "active"
+    },
+    {
+      "id": "7",
+      "name": "Baseball Cap",
+      "description": "Casual baseball cap for sunny days.",
+      "shortDescription": "Stylish cap.",
+      "price": 24.99,
+      "compareAtPrice": 29.99,
+      "categoryId": "accessories",
+      "subcategoryId": "hats",
+      "brand": "EssentialWear",
+      "images": [
+        {
+          "id": "img7",
+          "url": "/placeholder.svg",
+          "alt": "Baseball Cap",
+          "isDefault": true
+        }
+      ],
+      "attributes": {
+        "material": "Cotton",
+        "size": "Adjustable",
+        "color": "Black"
+      },
+      "tags": ["cap", "baseball", "accessory"],
+      "status": "active"
+    },
+    {
+      "id": "8",
+      "name": "Leather Gloves",
+      "description": "Warm leather gloves for winter.",
+      "shortDescription": "Stylish leather gloves.",
+      "price": 49.99,
+      "compareAtPrice": 59.99,
+      "categoryId": "accessories",
+      "subcategoryId": "gloves",
+      "brand": "EssentialWear",
+      "images": [
+        {
+          "id": "img8",
+          "url": "/placeholder.svg",
+          "alt": "Leather Gloves",
+          "isDefault": true
+        }
+      ],
+      "attributes": {
+        "material": "100% Leather",
+        "size": "M/L",
+        "color": "Brown"
+      },
+      "tags": ["gloves", "leather", "accessory"],
+      "status": "active"
+    },
+    {
+      "id": "9",
+      "name": "Travel Umbrella",
+      "description": "Compact travel umbrella for unexpected rain.",
+      "shortDescription": "Portable umbrella.",
+      "price": 19.99,
+      "compareAtPrice": 24.99,
+      "categoryId": "accessories",
+      "subcategoryId": "umbrellas",
+      "brand": "EssentialWear",
+      "images": [
+        {
+          "id": "img9",
+          "url": "/placeholder.svg",
+          "alt": "Travel Umbrella",
+          "isDefault": true
+        }
+      ],
+      "attributes": {
+        "material": "Polyester",
+        "size": "Compact",
+        "color": "Navy"
+      },
+      "tags": ["umbrella", "travel", "accessory"],
+      "status": "active"
+    },
+    {
+      "id": "10",
+      "name": "Fitness Tracker",
+      "description": "Smart fitness tracker to monitor your health.",
+      "shortDescription": "Wearable fitness tracker.",
+      "price": 99.99,
+      "compareAtPrice": 129.99,
+      "categoryId": "accessories",
+      "subcategoryId": "tech",
+      "brand": "EssentialWear",
+      "images": [
+        {
+          "id": "img10",
+          "url": "/placeholder.svg",
+          "alt": "Fitness Tracker",
+          "isDefault": true
+        }
+      ],
+      "attributes": {
+        "material": "Plastic",
+        "size": "One Size",
+        "color": "Black"
+      },
+      "tags": ["fitness", "tracker", "accessory"],
+      "status": "active"
+    }
+  ]
+}
