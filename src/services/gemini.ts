@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import products from "../data/product-all.json";
 
 // Initialize Gemini API
-const genAI = new GoogleGenerativeAI("AIzaSyB0fTl03Ez3vnW0IZzWXDpdmI7qbVHHHMw"); // Replace with your API key
+const genAI = new GoogleGenerativeAI("AIzaSyB0fTl03Ez3vnW0IZzWXDpdmI7qbVHHHMw");
 
 export const generateProductRecommendations = async (userInput: string, conversationHistory: Array<{ role: string, content: string }> = []) => {
   try {
@@ -10,11 +10,15 @@ export const generateProductRecommendations = async (userInput: string, conversa
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     // Format conversation history and system prompt
-    const systemPrompt = `You are Quickkyy, a helpful AI shopping assistant for a clothing store. 
-    Analyze the conversation history and user's input to recommend products.
-    Consider these attributes: brand, material, type, color, season, price range, style, and specific details.
-    Even if the match isn't perfect, try to return at least 2-3 relevant products.
-    The response should be a valid JSON array of strings containing only the product IDs.
+    const systemPrompt = `You are Quickkyy, a knowledgeable and friendly AI shopping assistant for a fashion store. 
+    Your role is to analyze customer requests and recommend the most suitable products.
+    
+    Guidelines for recommendations:
+    - Focus on understanding the customer's style preferences, occasion, and specific needs
+    - Consider factors like brand, material, type, color, season, price range, and style
+    - Provide 2-5 relevant products even if they don't match all criteria perfectly
+    - Be specific about why each product matches their needs
+    - If asked about product details, provide accurate information about materials, care instructions, and styling tips
     
     Available products: ${JSON.stringify(products.products.map(p => ({
       id: p.id,
@@ -27,7 +31,9 @@ export const generateProductRecommendations = async (userInput: string, conversa
       attributes: p.attributes,
       price: p.price,
       tags: p.tags
-    })))}`;
+    })))}
+    
+    Response format: Return a valid JSON array containing only the product IDs of recommended items.`;
 
     // Combine conversation history with current input
     const conversationContext = conversationHistory
@@ -46,7 +52,6 @@ export const generateProductRecommendations = async (userInput: string, conversa
 
     // Extract JSON array from response
     try {
-      // Find the first occurrence of a JSON array in the response
       const match = text.match(/\[.*?\]/);
       if (!match) return [];
       
@@ -64,7 +69,6 @@ export const generateProductRecommendations = async (userInput: string, conversa
   }
 };
 
-// Helper function for generating contextual responses
 export const generateContextualResponse = async (
   userInput: string, 
   products: any[], 
@@ -73,20 +77,32 @@ export const generateContextualResponse = async (
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-    const prompt = `You are Quickkyy, a helpful and concise AI shopping assistant.
-    Previous response (if any): ${previousResponse || 'None'}
-    Current products being shown: ${JSON.stringify(products.slice(0, 3))}
-    User input: ${userInput}
+    const prompt = `You are Quickkyy, a helpful and engaging AI shopping assistant.
     
-    Please provide a brief, natural response about the products. Keep it conversational but concise.
-    If discussing specific products, mention key details like price, material, or brand.
-    If no products are available, suggest alternatives or ask for clarification.`;
+    Context:
+    - Previous response: ${previousResponse || 'None'}
+    - Current products being shown: ${JSON.stringify(products.slice(0, 3))}
+    - User input: ${userInput}
+    
+    Guidelines for your response:
+    1. Be conversational but concise (1-2 sentences)
+    2. When discussing specific products:
+       - Highlight key features (price, material, brand)
+       - Explain why they match the user's needs
+       - Suggest styling tips when relevant
+    3. If no products are available:
+       - Ask clarifying questions
+       - Suggest alternative search terms
+       - Help narrow down preferences
+    4. Always maintain a helpful and friendly tone
+    
+    Please provide a natural, engaging response that helps the customer make informed decisions.`;
 
     const result = await model.generateContent(prompt);
     const response = result.response.text();
     
     // Ensure response is not too long
-    return response.split('.')[0] + '.';
+    return response.split('.').slice(0, 2).join('.') + '.';
   } catch (error) {
     console.error("Error generating contextual response:", error);
     return "I'm sorry, I couldn't process that request. Could you try again?";
