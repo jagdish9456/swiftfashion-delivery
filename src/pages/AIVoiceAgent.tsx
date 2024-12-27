@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Mic, MicOff } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { generateProductRecommendations } from "@/services/openai";
-import { ProductList } from "@/components/categories/ProductList";
 import { toast } from "@/hooks/use-toast";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import productsData from "@/data/product-all.json";
+import { ConversationUI } from "@/components/ai/ConversationUI";
+import { ProductRecommendations } from "@/components/ai/ProductRecommendations";
 
 interface Product {
   id: string;
@@ -40,12 +40,10 @@ interface APIProduct {
 
 export const AIVoiceAgent = () => {
   const navigate = useNavigate();
-  const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [aiResponse, setAiResponse] = useState("");
-  const [isContinuousMode, setIsContinuousMode] = useState(true);
   const conversationRef = useRef<Array<{ role: string, content: string }>>([]);
 
   const handleTranscript = async (text: string) => {
@@ -53,7 +51,7 @@ export const AIVoiceAgent = () => {
     await handleSubmit(text);
   };
 
-  const { startListening, stopListening } = useSpeechRecognition(handleTranscript);
+  const { isListening, startListening, stopListening } = useSpeechRecognition(handleTranscript);
 
   const mapToProduct = (apiProduct: APIProduct): Product => ({
     id: apiProduct.id,
@@ -88,12 +86,6 @@ export const AIVoiceAgent = () => {
       const speech = new SpeechSynthesisUtterance(response);
       window.speechSynthesis.speak(speech);
 
-      if (isContinuousMode) {
-        speech.onend = () => {
-          startListening();
-        };
-      }
-
     } catch (error) {
       toast({
         title: "Error",
@@ -125,33 +117,24 @@ export const AIVoiceAgent = () => {
     return `I found ${foundProducts.length} items that match your request for "${userInput}". Would you like me to describe them in detail or help you refine your search?`;
   };
 
+  const handleToggleListening = () => {
+    if (isListening) {
+      stopListening();
+    } else {
+      startListening();
+    }
+  };
+
   useEffect(() => {
     const greeting = "Hi! I'm Quickkyy, your AI shopping assistant. How can I help you today? Looking for something specific, or would you like me to guide you through our collection?";
     setAiResponse(greeting);
-    const speech = new SpeechSynthesisUtterance(greeting);
-    window.speechSynthesis.speak(speech);
     
-    if (isContinuousMode) {
-      speech.onend = () => {
-        startListening();
-      };
-    }
-
+    // Cleanup function to stop listening and speech synthesis when component unmounts
     return () => {
       window.speechSynthesis.cancel();
       stopListening();
     };
   }, []);
-
-  const toggleListening = () => {
-    if (isListening) {
-      stopListening();
-      setIsContinuousMode(false);
-    } else {
-      startListening();
-      setIsContinuousMode(true);
-    }
-  };
 
   return (
     <div className="min-h-screen pb-16 bg-gray-50">
@@ -164,40 +147,17 @@ export const AIVoiceAgent = () => {
       
       <main className="p-4">
         <div className="max-w-2xl mx-auto space-y-6">
-          <div className="bg-white p-4 rounded-lg shadow-sm">
-            <p className="text-gray-700 mb-4">{aiResponse}</p>
-            
-            <div className="flex items-center gap-4">
-              <Button
-                onClick={toggleListening}
-                className="w-full flex items-center justify-center gap-2"
-              >
-                {isListening ? (
-                  <>
-                    <MicOff className="animate-pulse" />
-                    Stop Listening
-                  </>
-                ) : (
-                  <>
-                    <Mic />
-                    Start Conversation
-                  </>
-                )}
-              </Button>
-            </div>
+          <ConversationUI
+            aiResponse={aiResponse}
+            transcript={transcript}
+            isListening={isListening}
+            onToggleListening={handleToggleListening}
+          />
 
-            {transcript && (
-              <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                <p className="text-sm text-gray-600">You said: {transcript}</p>
-              </div>
-            )}
-          </div>
-
-          {products.length > 0 && (
-            <div className="mt-6">
-              <ProductList products={products} isLoading={isLoading} />
-            </div>
-          )}
+          <ProductRecommendations 
+            products={products}
+            isLoading={isLoading}
+          />
         </div>
       </main>
       <BottomNav />
