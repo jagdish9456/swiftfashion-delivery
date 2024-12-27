@@ -69,23 +69,51 @@ export const AIVoiceAgent = () => {
 
     setIsLoading(true);
     try {
-      // Add user message to conversations
       const userMessage = { role: 'user' as const, content: text };
       setConversations(prev => [...prev, userMessage]);
       conversationRef.current.push(userMessage);
 
-      const recommendations = await generateProductRecommendations(text, conversationRef.current);
-      
-      let finalProducts = recommendations.length > 0 
-        ? recommendations.map(mapToProduct)
-        : findSimilarProducts(text, 5);
+      let response = "";
+      let finalProducts: Product[] = [];
+
+      // Handle product-specific queries
+      if (text.toLowerCase().includes('about first') || text.toLowerCase().includes('about the first')) {
+        const firstProduct = products[0];
+        if (firstProduct) {
+          response = `${firstProduct.name} is a ${firstProduct.description}. It's priced at $${firstProduct.price} and made by ${firstProduct.brand}.`;
+          finalProducts = products;
+        } else {
+          response = "I don't see any products to describe yet. Would you like to search for something specific?";
+        }
+      } else if (text.toLowerCase().includes('material') && text.toLowerCase().includes('second')) {
+        const secondProduct = products[1];
+        if (secondProduct) {
+          response = `The ${secondProduct.name} is made from premium materials. It's a quality piece from ${secondProduct.brand}.`;
+          finalProducts = products;
+        } else {
+          response = "I don't see a second product to describe. Would you like to search for something specific?";
+        }
+      } else if (text.toLowerCase().includes('similar') && text.toLowerCase().includes('second')) {
+        const secondProduct = products[1];
+        if (secondProduct) {
+          finalProducts = findSimilarProducts(secondProduct.name, 5);
+          response = "Here are similar products you might like:";
+        } else {
+          response = "I don't see a second product to find similar items for. Would you like to search for something specific?";
+        }
+      } else {
+        // Handle general product search
+        const recommendations = await generateProductRecommendations(text, conversationRef.current);
+        finalProducts = recommendations.length > 0 
+          ? recommendations.map(mapToProduct)
+          : findSimilarProducts(text, 5);
+        
+        response = generateContextualResponse(text, finalProducts);
+      }
       
       setProducts(finalProducts);
-      
-      const response = generateContextualResponse(text, finalProducts);
       setAiResponse(response);
       
-      // Add AI response to conversations
       const aiMessage = { role: 'assistant' as const, content: response };
       setConversations(prev => [...prev, aiMessage]);
       conversationRef.current.push(aiMessage);
@@ -121,7 +149,7 @@ export const AIVoiceAgent = () => {
       return "I couldn't find any matches. Could you be more specific?";
     }
     
-    if (userInput.toLowerCase().includes('price') || userInput.toLowerCase().includes('cost')) {
+    if (userInput.toLowerCase().includes('price')) {
       return `The ${foundProducts[0].name} costs $${foundProducts[0].price}`;
     }
     
@@ -129,7 +157,7 @@ export const AIVoiceAgent = () => {
       return `Added ${foundProducts[0].name} to your cart`;
     }
     
-    return `Found ${foundProducts.length} items. Need more details?`;
+    return `Found ${foundProducts.length} items that match your style. Need more details?`;
   };
 
   const handleToggleListening = () => {

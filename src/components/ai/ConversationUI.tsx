@@ -15,11 +15,14 @@ export const ConversationUI = ({
   isListening,
   onToggleListening,
 }: ConversationUIProps) => {
+  // Only show the last 4 messages
+  const recentConversations = conversations.slice(-4);
+
   return (
     <div className="bg-white p-4 rounded-lg shadow-sm">
-      <ScrollArea className="h-[300px] pr-4">
+      <ScrollArea className="h-[200px] pr-4">
         <div className="space-y-4">
-          {conversations.map((message, index) => (
+          {recentConversations.map((message, index) => (
             <div
               key={index}
               className={`p-3 rounded-lg ${
