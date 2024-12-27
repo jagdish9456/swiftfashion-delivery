@@ -13,7 +13,15 @@ interface Product {
   id: string;
   name: string;
   description: string;
-  // ... add other product properties as needed
+  price: number;
+  image: string;
+  brand: string;
+  images: Array<{
+    id: string;
+    url: string;
+    alt: string;
+    isDefault: boolean;
+  }>;
 }
 
 export const AIVoiceAgent = () => {
@@ -38,29 +46,23 @@ export const AIVoiceAgent = () => {
 
     setIsLoading(true);
     try {
-      // Add user message to conversation history
       conversationRef.current.push({ role: "user", content: text });
 
       const recommendations = await generateProductRecommendations(text, conversationRef.current);
       
-      // If no exact matches, find similar products
       let finalProducts = recommendations.length > 0 ? recommendations : 
         findSimilarProducts(text, 5);
       
       setProducts(finalProducts);
       
-      // Generate AI response based on context
       const response = generateContextualResponse(text, finalProducts);
       setAiResponse(response);
       
-      // Add AI response to conversation history
       conversationRef.current.push({ role: "assistant", content: response });
       
-      // Use Web Speech API for voice response
       const speech = new SpeechSynthesisUtterance(response);
       window.speechSynthesis.speak(speech);
 
-      // If in continuous mode, restart listening after response
       if (isContinuousMode) {
         speech.onend = () => {
           startListening();
@@ -81,12 +83,23 @@ export const AIVoiceAgent = () => {
   const findSimilarProducts = (query: string, limit: number): Product[] => {
     const searchTerms = query.toLowerCase().split(' ');
     
-    return productsData.products
+    const filteredProducts = productsData.products
       .filter(product => {
         const searchableText = `${product.name} ${product.description} ${product.tags.join(' ')}`.toLowerCase();
         return searchTerms.some(term => searchableText.includes(term));
       })
-      .slice(0, limit);
+      .slice(0, limit)
+      .map(product => ({
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        image: product.images[0]?.url || "/placeholder.svg",
+        brand: product.brand,
+        images: product.images
+      }));
+
+    return filteredProducts;
   };
 
   const generateContextualResponse = (userInput: string, foundProducts: Product[]): string => {
@@ -98,13 +111,11 @@ export const AIVoiceAgent = () => {
   };
 
   useEffect(() => {
-    // Initial greeting
     const greeting = "Hi! I'm Quickkyy, your AI shopping assistant. How can I help you today? Looking for something specific, or would you like me to guide you through our collection?";
     setAiResponse(greeting);
     const speech = new SpeechSynthesisUtterance(greeting);
     window.speechSynthesis.speak(speech);
     
-    // Start listening automatically if in continuous mode
     if (isContinuousMode) {
       speech.onend = () => {
         startListening();

@@ -3,7 +3,8 @@ import products from "../data/product-all.json";
 
 const openai = new OpenAI({
   apiKey: "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",
-  dangerouslyAllowBrowser: true
+  dangerouslyAllowBrowser: true,
+  baseURL: "https://api.openai.com/v1" // Explicitly set the base URL
 });
 
 export const generateProductRecommendations = async (userInput: string, conversationHistory: Array<{ role: string, content: string }> = []) => {
