@@ -1,11 +1,8 @@
-import { ProductCard } from "./ProductCard";
-
 interface Product {
   id: string;
   name: string;
   description: string;
   price: number;
-  image: string;
   brand: string;
   images: Array<{
     id: string;
@@ -38,7 +35,7 @@ export const ProductList = ({ products, isLoading, lastProductRef }: ProductList
             name={product.name}
             description={product.description}
             price={product.price}
-            image={product.image}
+            image={product.images[0]?.url || "/placeholder.svg"}
             brand={product.brand}
           />
         </div>
