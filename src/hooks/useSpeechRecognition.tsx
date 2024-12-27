@@ -15,12 +15,31 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
     };
   }, []);
 
+  const requestMicrophonePermission = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream.getTracks().forEach(track => track.stop());
+      return true;
+    } catch (error) {
+      console.error('Microphone permission error:', error);
+      toast({
+        variant: "destructive",
+        title: "Microphone Access Required",
+        description: "Please allow microphone access to use voice features.",
+      });
+      return false;
+    }
+  };
+
   const startListening = async () => {
     try {
       if (recognitionRef.current && (isListening || processingRef.current)) {
         console.log('Speech recognition is already active or processing');
         return;
       }
+
+      const hasPermission = await requestMicrophonePermission();
+      if (!hasPermission) return;
 
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       recognitionRef.current = new SpeechRecognition();
@@ -30,6 +49,7 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
       recognitionRef.current.onstart = () => {
         setIsListening(true);
         processingRef.current = false;
+        console.log('Speech recognition started');
       };
 
       recognitionRef.current.onresult = (event: any) => {
@@ -39,6 +59,7 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
         const transcript = Array.from(event.results)
           .map((result: any) => result[0].transcript)
           .join(' ');
+        console.log('Transcript received:', transcript);
         onTranscript(transcript);
         stopListening();
       };
@@ -57,6 +78,7 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
       };
 
       recognitionRef.current.onend = () => {
+        console.log('Speech recognition ended');
         setIsListening(false);
         processingRef.current = false;
       };
