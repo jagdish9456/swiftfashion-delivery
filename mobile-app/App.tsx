@@ -4,8 +4,13 @@ import { CartProvider } from './src/contexts/CartContext';
 import { NetworkProvider } from './src/contexts/NetworkContext';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
-import { Platform } from 'react-native';
+import { Platform, UIManager, BackHandler } from 'react-native';
 import { AppRegistry } from 'react-native';
+
+// Enable LayoutAnimation for Android
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 // Register the app for non-web platforms
 if (Platform.OS !== 'web') {
@@ -23,6 +28,21 @@ const App = () => {
         }
       }
     });
+
+    if (Platform.OS === 'android') {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+        if (navigationRef.current?.canGoBack()) {
+          navigationRef.current?.goBack();
+          return true;
+        }
+        return false;
+      });
+
+      return () => {
+        backHandler.remove();
+        unsubscribe();
+      };
+    }
 
     return unsubscribe;
   }, []);

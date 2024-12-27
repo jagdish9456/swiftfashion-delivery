@@ -1,23 +1,32 @@
-import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, TouchableOpacity, Text, StyleSheet, Platform, Animated } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Home, Search, ShoppingBag, Heart, User } from 'lucide-react-native';
 
 export const BottomNav = () => {
   const navigation = useNavigation();
   const route = useRoute();
+  const [isLoading, setIsLoading] = useState(false);
 
   const isActive = (routeName: string) => route.name === routeName;
 
-  const handleCategoryPress = () => {
-    navigation.navigate('Categories');
+  const handleNavigation = async (routeName: string) => {
+    if (route.name === routeName) return;
+    
+    setIsLoading(true);
+    try {
+      await navigation.navigate(routeName);
+    } finally {
+      setTimeout(() => setIsLoading(false), 500);
+    }
   };
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={styles.container}>
       <TouchableOpacity 
         style={styles.tab} 
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => handleNavigation('Home')}
+        disabled={isLoading}
       >
         <Home size={24} color={isActive('Home') ? '#000' : '#666'} />
         <Text style={[styles.label, isActive('Home') && styles.activeLabel]}>
@@ -27,7 +36,8 @@ export const BottomNav = () => {
 
       <TouchableOpacity 
         style={styles.tab} 
-        onPress={handleCategoryPress}
+        onPress={() => handleNavigation('Categories')}
+        disabled={isLoading}
       >
         <Search size={24} color={isActive('Categories') ? '#000' : '#666'} />
         <Text style={[styles.label, isActive('Categories') && styles.activeLabel]}>
@@ -37,7 +47,8 @@ export const BottomNav = () => {
 
       <TouchableOpacity 
         style={styles.tab} 
-        onPress={() => navigation.navigate('Cart')}
+        onPress={() => handleNavigation('Cart')}
+        disabled={isLoading}
       >
         <ShoppingBag size={24} color={isActive('Cart') ? '#000' : '#666'} />
         <Text style={[styles.label, isActive('Cart') && styles.activeLabel]}>
@@ -47,7 +58,8 @@ export const BottomNav = () => {
 
       <TouchableOpacity 
         style={styles.tab} 
-        onPress={() => navigation.navigate('Wishlist')}
+        onPress={() => handleNavigation('Wishlist')}
+        disabled={isLoading}
       >
         <Heart size={24} color={isActive('Wishlist') ? '#000' : '#666'} />
         <Text style={[styles.label, isActive('Wishlist') && styles.activeLabel]}>
@@ -57,14 +69,15 @@ export const BottomNav = () => {
 
       <TouchableOpacity 
         style={styles.tab} 
-        onPress={() => navigation.navigate('Profile')}
+        onPress={() => handleNavigation('Profile')}
+        disabled={isLoading}
       >
         <User size={24} color={isActive('Profile') ? '#000' : '#666'} />
         <Text style={[styles.label, isActive('Profile') && styles.activeLabel]}>
           Profile
         </Text>
       </TouchableOpacity>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -77,11 +90,26 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderTopWidth: 1,
     borderTopColor: '#eee',
+    ...Platform.select({
+      android: {
+        elevation: 8,
+      },
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: -2,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+      },
+    }),
   },
   tab: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+    paddingVertical: 4,
   },
   label: {
     fontSize: 12,
@@ -90,5 +118,6 @@ const styles = StyleSheet.create({
   },
   activeLabel: {
     color: '#000',
+    fontWeight: '500',
   },
 });
