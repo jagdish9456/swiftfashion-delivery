@@ -17,7 +17,16 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
 
   const requestMicrophonePermission = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      // Request with lower sample rate for better performance
+      const constraints = {
+        audio: {
+          sampleRate: 16000,
+          channelCount: 1,
+          echoCancellation: true,
+          noiseSuppression: true
+        }
+      };
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
       stream.getTracks().forEach(track => track.stop());
       return true;
     } catch (error) {
@@ -42,9 +51,19 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
       if (!hasPermission) return;
 
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+        recognitionRef.current = null;
+      }
+
       recognitionRef.current = new SpeechRecognition();
       recognitionRef.current.continuous = false;
       recognitionRef.current.interimResults = false;
+      recognitionRef.current.lang = 'en-US';
+
+      // Optimize for mobile browsers
+      recognitionRef.current.maxAlternatives = 1;
 
       recognitionRef.current.onstart = () => {
         setIsListening(true);
@@ -66,7 +85,12 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
 
       recognitionRef.current.onerror = (event: any) => {
         console.error('Speech recognition error:', event.error);
-        if (event.error !== 'aborted') {
+        if (event.error === 'no-speech') {
+          toast({
+            title: "No speech detected",
+            description: "Please try speaking again.",
+          });
+        } else if (event.error !== 'aborted') {
           toast({
             variant: "destructive",
             title: "Error",
@@ -75,6 +99,7 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
         }
         setIsListening(false);
         processingRef.current = false;
+        stopListening();
       };
 
       recognitionRef.current.onend = () => {
@@ -83,7 +108,22 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
         processingRef.current = false;
       };
 
-      recognitionRef.current.start();
+      // Add a small delay before starting recognition
+      setTimeout(() => {
+        try {
+          recognitionRef.current.start();
+        } catch (error) {
+          console.error('Failed to start speech recognition:', error);
+          toast({
+            variant: "destructive",
+            title: "Error",
+            description: "Failed to start speech recognition. Please try again.",
+          });
+          setIsListening(false);
+          processingRef.current = false;
+        }
+      }, 100);
+
     } catch (error) {
       console.error('Speech recognition error:', error);
       toast({
@@ -91,6 +131,8 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
         title: "Error",
         description: "Speech recognition is not supported in your browser.",
       });
+      setIsListening(false);
+      processingRef.current = false;
     }
   };
 
