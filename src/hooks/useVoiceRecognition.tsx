@@ -19,7 +19,7 @@ export const useVoiceRecognition = (onTranscript: (text: string) => void) => {
       }
 
       const permissionStatus = await SpeechRecognition.requestPermissions();
-      return permissionStatus.state === 'granted';
+      return permissionStatus.granted;
     } catch (error) {
       console.error('Permission check error:', error);
       return false;
