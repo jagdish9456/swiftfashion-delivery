@@ -18,10 +18,7 @@ export const useVoiceRecognition = (onTranscript: (text: string) => void) => {
         return false;
       }
 
-      const { state } = await SpeechRecognition.hasPermission();
-      if (state === 'granted') return true;
-
-      const { permission } = await SpeechRecognition.requestPermission();
+      const { permission } = await SpeechRecognition.requestPermissions();
       return permission === 'granted';
     } catch (error) {
       console.error('Permission check error:', error);
@@ -78,16 +75,15 @@ export const useVoiceRecognition = (onTranscript: (text: string) => void) => {
   }, []);
 
   useEffect(() => {
-    SpeechRecognition.addListener('partialResults', (data: { value: string[] }) => {
-      if (data.value?.[0]) {
-        onTranscript(data.value[0]);
+    SpeechRecognition.addListener('partialResults', (data: { matches: string[] }) => {
+      if (data.matches?.[0]) {
+        onTranscript(data.matches[0]);
       }
     });
 
-    SpeechRecognition.addListener('results', (data: { value: string[] }) => {
-      if (data.value?.[0]) {
-        onTranscript(data.value[0]);
-        stopListening();
+    SpeechRecognition.addListener('listeningState', (data: { status: 'started' | 'stopped' }) => {
+      if (data.status === 'stopped') {
+        setIsListening(false);
       }
     });
 
