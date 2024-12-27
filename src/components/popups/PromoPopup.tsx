@@ -2,7 +2,7 @@ import { X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
-import { Platform } from 'react-native';
+import { Platform } from 'react-native-web';
 
 export const PromoPopup = () => {
   const [isOpen, setIsOpen] = useState(true);
