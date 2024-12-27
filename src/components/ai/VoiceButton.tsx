@@ -11,7 +11,10 @@ export const VoiceButton = ({ isListening, onToggleListening }: VoiceButtonProps
   return (
     <Button
       onClick={onToggleListening}
-      className="w-full flex items-center justify-center gap-2 bg-primary-500 hover:bg-primary-600"
+      className={`w-full flex items-center justify-center gap-2 ${
+        isListening ? 'bg-red-500 hover:bg-red-600' : 'bg-primary-500 hover:bg-primary-600'
+      }`}
+      disabled={false}
     >
       {isListening ? (
         <>

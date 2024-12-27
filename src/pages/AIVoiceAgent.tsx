@@ -1,137 +1,66 @@
-import { useState, useEffect } from "react";
-import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { generateProductRecommendations, generateContextualResponse } from "@/services/gemini";
-import { toast } from "@/hooks/use-toast";
-import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
-import productsData from "@/data/product-all.json";
-import { ProductRecommendations } from "@/components/ai/ProductRecommendations";
-import { VoiceButton } from "@/components/ai/VoiceButton";
-import { TranscriptDisplay } from "@/components/ai/TranscriptDisplay";
-import { Shimmer } from "@/components/ui/shimmer";
-
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  brand: string;
-  images: Array<{
-    id: string;
-    url: string;
-    alt: string;
-    isDefault: boolean;
-  }>;
-}
-
-interface RawProduct {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  brand: string;
-  images: Array<{
-    id: string;
-    url: string;
-    alt: string;
-    isDefault: boolean;
-  }>;
-  [key: string]: any; // Allow additional properties
-}
+import React, { useState, useEffect } from 'react';
+import Voice from '@react-native-voice/voice';
+import { VoiceButton } from '@/components/ai/VoiceButton';
+import { ConversationUI } from '@/components/ai/ConversationUI';
+import { ProductRecommendations } from '@/components/ai/ProductRecommendations';
+import { TranscriptDisplay } from '@/components/ai/TranscriptDisplay';
+import { useToast } from '@/components/ui/use-toast';
 
 export const AIVoiceAgent = () => {
-  const navigate = useNavigate();
-  const [transcript, setTranscript] = useState("");
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [aiResponse, setAiResponse] = useState("");
-  const [isNavigating, setIsNavigating] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [transcript, setTranscript] = useState('');
+  const { toast } = useToast();
 
-  const handleTranscript = async (text: string) => {
-    setTranscript(text);
-    await handleSubmit(text);
-  };
+  useEffect(() => {
+    Voice.onSpeechStart = () => {
+      console.log('Speech started');
+    };
 
-  const { isListening, startListening, stopListening } = useSpeechRecognition(handleTranscript);
+    Voice.onSpeechEnd = () => {
+      console.log('Speech ended');
+    };
 
-  const mapToProduct = (rawProduct: RawProduct): Product => ({
-    id: rawProduct.id,
-    name: rawProduct.name,
-    description: rawProduct.description,
-    price: rawProduct.price,
-    brand: rawProduct.brand,
-    images: rawProduct.images
-  });
-
-  const findSimilarProducts = (query: string, limit: number): Product[] => {
-    const searchTerms = query.toLowerCase().split(' ');
-    
-    return productsData.products
-      .filter(product => {
-        const searchableText = `${product.name} ${product.description} ${product.tags?.join(' ')}`.toLowerCase();
-        return searchTerms.some(term => searchableText.includes(term));
-      })
-      .slice(0, limit)
-      .map(mapToProduct);
-  };
-
-  const handleSubmit = async (text: string) => {
-    if (!text.trim()) return;
-
-    setIsLoading(true);
-    try {
-      let response = "";
-      let finalProducts: Product[] = [];
-
-      if (text.toLowerCase().includes('about first') || text.toLowerCase().includes('about the first')) {
-        const firstProduct = products[0];
-        if (firstProduct) {
-          response = await generateContextualResponse(text, [firstProduct], aiResponse);
-          finalProducts = products;
-        } else {
-          response = "I don't see any products to describe yet. Would you like to search for something specific?";
-        }
-      } else if (text.toLowerCase().includes('material') && text.toLowerCase().includes('second')) {
-        const secondProduct = products[1];
-        if (secondProduct) {
-          response = await generateContextualResponse(text, [secondProduct], aiResponse);
-          finalProducts = products;
-        } else {
-          response = "I don't see a second product to describe. Would you like to search for something specific?";
-        }
-      } else if (text.toLowerCase().includes('similar') && text.toLowerCase().includes('second')) {
-        const secondProduct = products[1];
-        if (secondProduct) {
-          finalProducts = findSimilarProducts(secondProduct.name, 5);
-          response = "Here are similar products you might like:";
-        } else {
-          response = "I don't see a second product to find similar items for. Would you like to search for something specific?";
-        }
-      } else {
-        const recommendations = await generateProductRecommendations(text);
-        finalProducts = recommendations.length > 0 
-          ? recommendations.map(mapToProduct)
-          : findSimilarProducts(text, 5);
-        
-        response = await generateContextualResponse(text, finalProducts, aiResponse);
+    Voice.onSpeechResults = (e: any) => {
+      if (e.value && e.value[0]) {
+        setTranscript(e.value[0]);
       }
-      
-      setProducts(finalProducts);
-      setAiResponse(response);
-      
-      const speech = new SpeechSynthesisUtterance(response);
-      window.speechSynthesis.speak(speech);
+    };
 
-    } catch (error) {
+    Voice.onSpeechError = (e: any) => {
+      console.error('Speech error:', e);
       toast({
         title: "Error",
-        description: "Failed to get recommendations. Please try again.",
-        variant: "destructive",
+        description: "There was an error with speech recognition. Please try again.",
+        variant: "destructive"
       });
-    } finally {
-      setIsLoading(false);
-      setTranscript("");
-      stopListening();
+      setIsListening(false);
+    };
+
+    return () => {
+      Voice.destroy().then(Voice.removeAllListeners);
+    };
+  }, [toast]);
+
+  const startListening = async () => {
+    try {
+      await Voice.start('en-US');
+      setIsListening(true);
+    } catch (error) {
+      console.error('Error starting voice recognition:', error);
+      toast({
+        title: "Error",
+        description: "Could not start voice recognition. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const stopListening = async () => {
+    try {
+      await Voice.stop();
+      setIsListening(false);
+    } catch (error) {
+      console.error('Error stopping voice recognition:', error);
     }
   };
 
@@ -143,79 +72,22 @@ export const AIVoiceAgent = () => {
     }
   };
 
-  const handleBack = () => {
-    setIsNavigating(true);
-    setTimeout(() => {
-      navigate("/ai-chat");
-    }, 100);
-  };
-
-  useEffect(() => {
-    const greeting = "Hi! I'm Quickkyy. How can I help you find the perfect item today?";
-    setAiResponse(greeting);
-    
-    const speech = new SpeechSynthesisUtterance(greeting);
-    window.speechSynthesis.speak(speech);
-    
-    return () => {
-      window.speechSynthesis.cancel();
-      stopListening();
-    };
-  }, []);
-
-  if (isNavigating) {
-    return (
-      <div className="min-h-screen pb-16 bg-gray-50">
-        <div className="bg-white text-gray-900 p-4 flex items-center gap-2 shadow-sm">
-          <Shimmer className="h-8 w-8" />
-          <Shimmer className="h-6 w-48" />
-        </div>
-        <main className="p-4">
-          <div className="space-y-4">
-            {Array(3).fill(0).map((_, i) => (
-              <Shimmer key={i} className="h-48 w-full" />
-            ))}
-          </div>
-        </main>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen pb-16 bg-gray-50 overflow-x-hidden">
-      <div className="bg-white text-gray-900 p-4 flex items-center gap-2 shadow-sm sticky top-0 z-50">
-        <button 
-          onClick={handleBack} 
-          className="p-2 active:scale-95 transition-transform"
-          style={{ touchAction: 'manipulation' }}
-        >
-          <ArrowLeft className="h-5 w-5" />
-        </button>
-        <h1 className="text-lg font-medium">Quickkyy - AI Voice Assistant</h1>
-      </div>
+    <div className="container mx-auto px-4 py-8 space-y-6">
+      <h1 className="text-2xl font-bold text-center mb-6">AI Voice Assistant</h1>
       
-      <main className="p-4">
-        <div className="max-w-2xl mx-auto space-y-6">
-          <ProductRecommendations 
-            products={products}
-            isLoading={isLoading}
-          />
-          
-          <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200">
-            <div className="max-w-2xl mx-auto">
-              <VoiceButton 
-                isListening={isListening}
-                onToggleListening={handleToggleListening}
-              />
-            </div>
-          </div>
-
-          <TranscriptDisplay 
-            transcript={transcript}
-            isListening={isListening}
-          />
-        </div>
-      </main>
+      <VoiceButton 
+        isListening={isListening} 
+        onToggleListening={handleToggleListening} 
+      />
+      
+      <TranscriptDisplay transcript={transcript} />
+      
+      <ConversationUI transcript={transcript} />
+      
+      <ProductRecommendations transcript={transcript} />
     </div>
   );
 };
+
+export default AIVoiceAgent;
