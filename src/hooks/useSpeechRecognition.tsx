@@ -17,7 +17,6 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
 
   const startListening = async () => {
     try {
-      // If already listening or processing, don't start a new session
       if (recognitionRef.current && (isListening || processingRef.current)) {
         console.log('Speech recognition is already active or processing');
         return;
@@ -25,7 +24,7 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
 
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       recognitionRef.current = new SpeechRecognition();
-      recognitionRef.current.continuous = true;
+      recognitionRef.current.continuous = false;
       recognitionRef.current.interimResults = false;
 
       recognitionRef.current.onstart = () => {
@@ -41,6 +40,7 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
           .map((result: any) => result[0].transcript)
           .join(' ');
         onTranscript(transcript);
+        stopListening();
       };
 
       recognitionRef.current.onerror = (event: any) => {
@@ -57,16 +57,8 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
       };
 
       recognitionRef.current.onend = () => {
-        // Only restart if we're still supposed to be listening
-        if (isListening && !processingRef.current) {
-          try {
-            recognitionRef.current.start();
-          } catch (error) {
-            console.error('Error restarting speech recognition:', error);
-          }
-        } else {
-          setIsListening(false);
-        }
+        setIsListening(false);
+        processingRef.current = false;
       };
 
       recognitionRef.current.start();
