@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Send, Mic } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from "react-router-dom";
-import { generateProductRecommendations } from "@/services/openai";
+import { generateProductRecommendations } from "@/services/gemini";
 import { ProductList } from "@/components/categories/ProductList";
 import { toast } from "@/hooks/use-toast";
 import { BottomNav } from "@/components/layout/BottomNav";
@@ -75,7 +75,6 @@ export const AIChat = () => {
         </div>
       </main>
 
-      {/* Floating Voice Assistant Button */}
       <div className="fixed left-4 bottom-20 z-50">
         <Button
           size="icon"

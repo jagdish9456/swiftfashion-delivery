@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { generateProductRecommendations } from "@/services/openai";
+import { generateProductRecommendations, generateContextualResponse } from "@/services/gemini";
 import { toast } from "@/hooks/use-toast";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import productsData from "@/data/product-all.json";
@@ -74,22 +74,6 @@ export const AIVoiceAgent = () => {
       .map(mapToProduct);
   };
 
-  const generateContextualResponse = (userInput: string, foundProducts: Product[]): string => {
-    if (foundProducts.length === 0) {
-      return "I couldn't find any matches. Could you be more specific?";
-    }
-    
-    if (userInput.toLowerCase().includes('price')) {
-      return `The ${foundProducts[0].name} costs $${foundProducts[0].price}`;
-    }
-    
-    if (userInput.toLowerCase().includes('add to cart')) {
-      return `Added ${foundProducts[0].name} to your cart`;
-    }
-    
-    return `Found ${foundProducts.length} items that match your style. Need more details?`;
-  };
-
   const handleSubmit = async (text: string) => {
     if (!text.trim()) return;
 
@@ -101,7 +85,7 @@ export const AIVoiceAgent = () => {
       if (text.toLowerCase().includes('about first') || text.toLowerCase().includes('about the first')) {
         const firstProduct = products[0];
         if (firstProduct) {
-          response = `${firstProduct.name} is a ${firstProduct.description}. It's priced at $${firstProduct.price} and made by ${firstProduct.brand}.`;
+          response = await generateContextualResponse(text, [firstProduct], aiResponse);
           finalProducts = products;
         } else {
           response = "I don't see any products to describe yet. Would you like to search for something specific?";
@@ -109,7 +93,7 @@ export const AIVoiceAgent = () => {
       } else if (text.toLowerCase().includes('material') && text.toLowerCase().includes('second')) {
         const secondProduct = products[1];
         if (secondProduct) {
-          response = `The ${secondProduct.name} is made from premium materials. It's a quality piece from ${secondProduct.brand}.`;
+          response = await generateContextualResponse(text, [secondProduct], aiResponse);
           finalProducts = products;
         } else {
           response = "I don't see a second product to describe. Would you like to search for something specific?";
@@ -128,7 +112,7 @@ export const AIVoiceAgent = () => {
           ? recommendations.map(mapToProduct)
           : findSimilarProducts(text, 5);
         
-        response = generateContextualResponse(text, finalProducts);
+        response = await generateContextualResponse(text, finalProducts, aiResponse);
       }
       
       setProducts(finalProducts);
@@ -146,6 +130,7 @@ export const AIVoiceAgent = () => {
     } finally {
       setIsLoading(false);
       setTranscript("");
+      stopListening();
     }
   };
 
