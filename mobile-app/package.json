@@ -6,8 +6,7 @@
     "start": "expo start -c",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web",
-    "buildAll": "cd android && ./gradlew clean && cd .. && npm run android"
+    "web": "expo start --web"
   },
   "dependencies": {
     "@react-native-community/netinfo": "^11.1.0",

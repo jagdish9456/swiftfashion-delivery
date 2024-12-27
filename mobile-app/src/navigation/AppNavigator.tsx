@@ -11,14 +11,12 @@ import { Search } from '../screens/Search';
 import { Orders } from '../screens/Orders';
 import { ProductList } from '../screens/ProductList';
 import { SetLocation } from '../screens/SetLocation';
-import { AIVoiceAgent } from '../screens/AIVoiceAgent';
 
 const Stack = createNativeStackNavigator();
 
 export const AppNavigator = () => {
   return (
     <Stack.Navigator
-      id="app-navigator"
       screenOptions={{
         headerShown: false,
       }}
@@ -34,7 +32,6 @@ export const AppNavigator = () => {
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="Orders" component={Orders} />
       <Stack.Screen name="SetLocation" component={SetLocation} />
-      <Stack.Screen name="AIVoiceAgent" component={AIVoiceAgent} />
     </Stack.Navigator>
   );
 };

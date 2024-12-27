@@ -131,7 +131,7 @@ export const Cart = () => {
 
       <div className="bg-white p-3 mt-3">
         <div className="flex items-center justify-between">
-          <div className="mb-3">
+          <div>
             <p className="text-sm font-medium">SAVE50</p>
             <p className="text-xs text-gray-500">Offer applied on the bill</p>
           </div>
@@ -142,16 +142,16 @@ export const Cart = () => {
         </button>
       </div>
 
-      <div className="mt-6">
-        <div className="flex items-center justify-between mb-3 p-3 bg-white">
+      <div className="mt-6 p-3 bg-white">
+        <div className="flex items-center justify-between mb-3">
           <h2 className="text-sm font-medium">Review your Order</h2>
           <button className="text-xs text-orange-500">Why?</button>
         </div>
 
         <div className="space-y-4">
-          <div className="bg-white px-3">
+          <div>
             <div className="flex items-center gap-2 mb-2">
-              <p className="text-sm font-medium my-2">Delivery 1</p>
+              <p className="text-sm font-medium">Delivery 1</p>
               <div className="text-xs bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded flex items-center gap-1">
                 <span className="font-medium">5 Mins</span>
                 Superfast
@@ -187,9 +187,9 @@ export const Cart = () => {
             </div>
           </div>
 
-          <div className="bg-white mt-4 py-4 px-3">
-            <div className="flex items-center gap-2 mb-2 ">
-              <p className="text-sm font-medium my-2">Delivery 2</p>
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <p className="text-sm font-medium">Delivery 2</p>
               <div className="text-xs bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded flex items-center gap-1">
                 <span className="font-medium">8 Mins</span>
                 Superfast
