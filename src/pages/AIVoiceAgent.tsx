@@ -7,17 +7,24 @@ import { ProductList } from "@/components/categories/ProductList";
 import { toast } from "@/hooks/use-toast";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
-import products from "@/data/product-all.json";
+import productsData from "@/data/product-all.json";
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  // ... add other product properties as needed
+}
 
 export const AIVoiceAgent = () => {
   const navigate = useNavigate();
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState("");
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [aiResponse, setAiResponse] = useState("");
   const [isContinuousMode, setIsContinuousMode] = useState(true);
-  const conversationRef = useRef([]);
+  const conversationRef = useRef<Array<{ role: string, content: string }>>([]);
 
   const handleTranscript = async (text: string) => {
     setTranscript(text);
@@ -37,10 +44,8 @@ export const AIVoiceAgent = () => {
       const recommendations = await generateProductRecommendations(text, conversationRef.current);
       
       // If no exact matches, find similar products
-      let finalProducts = recommendations;
-      if (recommendations.length === 0) {
-        finalProducts = findSimilarProducts(text, 5);
-      }
+      let finalProducts = recommendations.length > 0 ? recommendations : 
+        findSimilarProducts(text, 5);
       
       setProducts(finalProducts);
       
@@ -73,12 +78,10 @@ export const AIVoiceAgent = () => {
     }
   };
 
-  const findSimilarProducts = (query: string, limit: number) => {
-    // Implement fuzzy search logic here to find similar products
-    // This is a simplified version - you might want to use a proper search library
+  const findSimilarProducts = (query: string, limit: number): Product[] => {
     const searchTerms = query.toLowerCase().split(' ');
     
-    return products.products
+    return productsData.products
       .filter(product => {
         const searchableText = `${product.name} ${product.description} ${product.tags.join(' ')}`.toLowerCase();
         return searchTerms.some(term => searchableText.includes(term));
@@ -86,7 +89,7 @@ export const AIVoiceAgent = () => {
       .slice(0, limit);
   };
 
-  const generateContextualResponse = (userInput: string, foundProducts: any[]) => {
+  const generateContextualResponse = (userInput: string, foundProducts: Product[]): string => {
     if (foundProducts.length === 0) {
       return `I couldn't find exact matches for "${userInput}", but here are some similar items you might like. Would you like me to search for something specific?`;
     }

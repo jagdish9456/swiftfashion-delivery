@@ -32,7 +32,10 @@ export const generateProductRecommendations = async (userInput: string, conversa
             tags: p.tags
           })))}`
         },
-        ...conversationHistory,
+        ...conversationHistory.map(msg => ({
+          role: msg.role as "system" | "user" | "assistant",
+          content: msg.content
+        })),
         {
           role: "user",
           content: userInput
