@@ -1,11 +1,8 @@
-import { ProductList } from "@/components/categories/ProductList";
-
 interface Product {
   id: string;
   name: string;
   description: string;
   price: number;
-  image: string;
   brand: string;
   images: Array<{
     id: string;

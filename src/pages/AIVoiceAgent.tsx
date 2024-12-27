@@ -15,7 +15,6 @@ interface Product {
   name: string;
   description: string;
   price: number;
-  image: string;
   brand: string;
   images: Array<{
     id: string;
@@ -23,6 +22,21 @@ interface Product {
     alt: string;
     isDefault: boolean;
   }>;
+}
+
+interface RawProduct {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  brand: string;
+  images: Array<{
+    id: string;
+    url: string;
+    alt: string;
+    isDefault: boolean;
+  }>;
+  [key: string]: any; // Allow additional properties
 }
 
 export const AIVoiceAgent = () => {
@@ -40,14 +54,13 @@ export const AIVoiceAgent = () => {
 
   const { isListening, startListening, stopListening } = useSpeechRecognition(handleTranscript);
 
-  const mapToProduct = (product: Product): Product => ({
-    id: product.id,
-    name: product.name,
-    description: product.description,
-    price: product.price,
-    image: product.images[0]?.url || "/placeholder.svg",
-    brand: product.brand,
-    images: product.images
+  const mapToProduct = (rawProduct: RawProduct): Product => ({
+    id: rawProduct.id,
+    name: rawProduct.name,
+    description: rawProduct.description,
+    price: rawProduct.price,
+    brand: rawProduct.brand,
+    images: rawProduct.images
   });
 
   const findSimilarProducts = (query: string, limit: number): Product[] => {
@@ -55,7 +68,7 @@ export const AIVoiceAgent = () => {
     
     return productsData.products
       .filter(product => {
-        const searchableText = `${product.name} ${product.description} ${product.tags.join(' ')}`.toLowerCase();
+        const searchableText = `${product.name} ${product.description} ${product.tags?.join(' ')}`.toLowerCase();
         return searchTerms.some(term => searchableText.includes(term));
       })
       .slice(0, limit)
