@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">quickyy-clothes</string>
+    <string name="title_activity_main">quickyy-clothes</string>
+    <string name="package_name">com.quickky.app</string>
+    <string name="custom_url_scheme">com.quickky.app</string>
+</resources>
