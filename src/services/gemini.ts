@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import products from "../data/product-all.json";
 
 // Initialize Gemini API
-const genAI = new GoogleGenerativeAI("YOUR_API_KEY"); // Replace with your API key
+const genAI = new GoogleGenerativeAI("AIzaSyB0fTl03Ez3vnW0IZzWXDpdmI7qbVHHHMw"); // Replace with your API key
 
 export const generateProductRecommendations = async (userInput: string, conversationHistory: Array<{ role: string, content: string }> = []) => {
   try {
