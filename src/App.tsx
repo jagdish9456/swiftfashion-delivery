@@ -15,6 +15,7 @@ import { Cart } from "@/pages/Cart";
 import { NearYou } from "@/pages/NearYou";
 import { Notifications } from "@/pages/Notifications";
 import { AIChat } from "@/pages/AIChat";
+import { AIVoiceAgent } from "@/pages/AIVoiceAgent";
 import { FloatingAIButton } from "@/components/ai/FloatingAIButton";
 import { Login } from "@/pages/Login";
 import { Wishlist } from "@/pages/Wishlist";
@@ -57,6 +58,7 @@ function App() {
           <Route path="/near-you" element={<ProtectedRoute><NearYou /></ProtectedRoute>} />
           <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
           <Route path="/ai-chat" element={<ProtectedRoute><AIChat /></ProtectedRoute>} />
+          <Route path="/ai-voice-agent" element={<ProtectedRoute><AIVoiceAgent /></ProtectedRoute>} />
           <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
           <Route path="/search" element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
           <Route path="/track-order/:orderId" element={<ProtectedRoute><TrackOrder /></ProtectedRoute>} />

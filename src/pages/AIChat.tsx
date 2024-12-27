@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Send } from "lucide-react";
+import { ArrowLeft, Send, Mic } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from "react-router-dom";
 import { generateProductRecommendations } from "@/services/openai";
@@ -74,6 +74,18 @@ export const AIChat = () => {
           )}
         </div>
       </main>
+
+      {/* Floating Voice Assistant Button */}
+      <div className="fixed left-4 bottom-20 z-50">
+        <Button
+          size="icon"
+          className="h-12 w-12 rounded-full shadow-lg bg-primary hover:bg-primary/90"
+          onClick={() => navigate("/ai-voice-agent")}
+        >
+          <Mic className="h-6 w-6 text-white" />
+        </Button>
+      </div>
+
       <BottomNav />
     </div>
   );
