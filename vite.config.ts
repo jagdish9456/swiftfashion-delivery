@@ -19,15 +19,4 @@ export default defineConfig(({ mode }) => ({
     },
     extensions: ['.web.tsx', '.web.ts', '.web.jsx', '.web.js', '.tsx', '.ts', '.jsx', '.js'],
   },
-  optimizeDeps: {
-    esbuildOptions: {
-      resolveExtensions: ['.web.tsx', '.web.ts', '.web.jsx', '.web.js', '.tsx', '.ts', '.jsx', '.js'],
-      mainFields: ['browser', 'module', 'main'],
-    },
-  },
-  build: {
-    commonjsOptions: {
-      transformMixedEsModules: true,
-    },
-  },
 }));
