@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Platform, Animated } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Home, Search, ShoppingBag, Heart, User } from 'lucide-react-native';
+import { ShimmerLoader } from '../common/ShimmerLoader';
 
 export const BottomNav = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const [isLoading, setIsLoading] = useState(false);
+  const fadeAnim = React.useRef(new Animated.Value(1)).current;
 
   const isActive = (routeName: string) => route.name === routeName;
 
@@ -14,15 +16,36 @@ export const BottomNav = () => {
     if (route.name === routeName) return;
     
     setIsLoading(true);
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 150,
+      useNativeDriver: true,
+    }).start();
+
     try {
       await navigation.navigate(routeName);
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 150,
+        useNativeDriver: true,
+      }).start();
     } finally {
-      setTimeout(() => setIsLoading(false), 500);
+      setTimeout(() => setIsLoading(false), 300);
     }
   };
 
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        {Array(5).fill(0).map((_, index) => (
+          <ShimmerLoader key={index} width={50} height={50} />
+        ))}
+      </View>
+    );
+  }
+
   return (
-    <Animated.View style={styles.container}>
+    <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
       <TouchableOpacity 
         style={styles.tab} 
         onPress={() => handleNavigation('Home')}

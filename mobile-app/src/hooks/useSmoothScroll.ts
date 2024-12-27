@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
-import { ScrollView, Animated, Platform, BackHandler } from 'react-native';
+import { ScrollView, Animated, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { App } from '@capacitor/app';
 
 export const useSmoothScroll = () => {
   const scrollRef = useRef<ScrollView>(null);
@@ -8,29 +9,31 @@ export const useSmoothScroll = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (Platform.OS !== 'web') {
-      const backAction = () => {
+    if (Platform.OS === 'android') {
+      const handleBackButton = () => {
         if (navigation.canGoBack()) {
           navigation.goBack();
           return true;
         }
-        return false;
+        App.exitApp();
+        return true;
       };
 
-      const backHandler = BackHandler.addEventListener(
-        'hardwareBackPress',
-        backAction
-      );
+      const backListener = App.addListener('backButton', handleBackButton);
 
-      return () => backHandler.remove();
+      return () => {
+        backListener.then(listener => listener.remove());
+      };
     }
   }, [navigation]);
 
   const scrollToTop = () => {
-    scrollRef.current?.scrollTo({
-      y: 0,
-      animated: true,
-    });
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        y: 0,
+        animated: true,
+      });
+    }
   };
 
   return {
