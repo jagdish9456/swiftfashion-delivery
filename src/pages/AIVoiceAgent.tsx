@@ -40,14 +40,14 @@ export const AIVoiceAgent = () => {
 
   const { isListening, startListening, stopListening } = useSpeechRecognition(handleTranscript);
 
-  const mapToProduct = (apiProduct: APIProduct): Product => ({
-    id: apiProduct.id,
-    name: apiProduct.name,
-    description: apiProduct.description,
-    price: apiProduct.price,
-    image: apiProduct.images[0]?.url || "/placeholder.svg",
-    brand: apiProduct.brand,
-    images: apiProduct.images
+  const mapToProduct = (product: Product): Product => ({
+    id: product.id,
+    name: product.name,
+    description: product.description,
+    price: product.price,
+    image: product.images[0]?.url || "/placeholder.svg",
+    brand: product.brand,
+    images: product.images
   });
 
   const findSimilarProducts = (query: string, limit: number): Product[] => {
