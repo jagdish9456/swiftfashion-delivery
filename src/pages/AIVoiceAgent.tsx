@@ -118,10 +118,18 @@ export const AIVoiceAgent = () => {
 
   const generateContextualResponse = (userInput: string, foundProducts: Product[]): string => {
     if (foundProducts.length === 0) {
-      return `I couldn't find exact matches for "${userInput}". Could you tell me more about what you're looking for? For example, any specific color, style, or occasion in mind?`;
+      return "I couldn't find any matches. Could you be more specific?";
     }
     
-    return `I found ${foundProducts.length} items that match your request. Would you like me to describe their features, or would you prefer to know more about a specific aspect like prices or materials?`;
+    if (userInput.toLowerCase().includes('price') || userInput.toLowerCase().includes('cost')) {
+      return `The ${foundProducts[0].name} costs $${foundProducts[0].price}`;
+    }
+    
+    if (userInput.toLowerCase().includes('add to cart')) {
+      return `Added ${foundProducts[0].name} to your cart`;
+    }
+    
+    return `Found ${foundProducts.length} items. Need more details?`;
   };
 
   const handleToggleListening = () => {

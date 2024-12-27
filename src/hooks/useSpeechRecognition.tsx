@@ -5,6 +5,7 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
   const [isListening, setIsListening] = useState(false);
   const { toast } = useToast();
   const recognitionRef = useRef<any>(null);
+  const processingRef = useRef(false);
 
   useEffect(() => {
     return () => {
@@ -16,9 +17,9 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
 
   const startListening = async () => {
     try {
-      // If already listening, don't start a new session
-      if (recognitionRef.current && isListening) {
-        console.log('Speech recognition is already active');
+      // If already listening or processing, don't start a new session
+      if (recognitionRef.current && (isListening || processingRef.current)) {
+        console.log('Speech recognition is already active or processing');
         return;
       }
 
@@ -29,9 +30,13 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
 
       recognitionRef.current.onstart = () => {
         setIsListening(true);
+        processingRef.current = false;
       };
 
       recognitionRef.current.onresult = (event: any) => {
+        if (processingRef.current) return;
+        
+        processingRef.current = true;
         const transcript = Array.from(event.results)
           .map((result: any) => result[0].transcript)
           .join(' ');
@@ -48,21 +53,17 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
           });
         }
         setIsListening(false);
+        processingRef.current = false;
       };
 
       recognitionRef.current.onend = () => {
         // Only restart if we're still supposed to be listening
-        if (isListening) {
-          // Add a small delay before restarting to prevent rapid restarts
-          setTimeout(() => {
-            if (recognitionRef.current && isListening) {
-              try {
-                recognitionRef.current.start();
-              } catch (error) {
-                console.error('Error restarting speech recognition:', error);
-              }
-            }
-          }, 100);
+        if (isListening && !processingRef.current) {
+          try {
+            recognitionRef.current.start();
+          } catch (error) {
+            console.error('Error restarting speech recognition:', error);
+          }
         } else {
           setIsListening(false);
         }
@@ -83,6 +84,7 @@ export const useSpeechRecognition = (onTranscript: (text: string) => void) => {
     if (recognitionRef.current) {
       recognitionRef.current.stop();
       setIsListening(false);
+      processingRef.current = false;
     }
   };
 
