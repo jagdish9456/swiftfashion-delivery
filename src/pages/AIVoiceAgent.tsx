@@ -8,6 +8,7 @@ import productsData from "@/data/product-all.json";
 import { ProductRecommendations } from "@/components/ai/ProductRecommendations";
 import { VoiceButton } from "@/components/ai/VoiceButton";
 import { TranscriptDisplay } from "@/components/ai/TranscriptDisplay";
+import { Shimmer } from "@/components/ui/shimmer";
 
 interface Product {
   id: string;
@@ -24,26 +25,13 @@ interface Product {
   }>;
 }
 
-interface APIProduct {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  brand: string;
-  images: Array<{
-    id: string;
-    url: string;
-    alt: string;
-    isDefault: boolean;
-  }>;
-}
-
 export const AIVoiceAgent = () => {
   const navigate = useNavigate();
   const [transcript, setTranscript] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [aiResponse, setAiResponse] = useState("");
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const handleTranscript = async (text: string) => {
     setTranscript(text);
@@ -142,6 +130,13 @@ export const AIVoiceAgent = () => {
     }
   };
 
+  const handleBack = () => {
+    setIsNavigating(true);
+    setTimeout(() => {
+      navigate("/ai-chat");
+    }, 100);
+  };
+
   useEffect(() => {
     const greeting = "Hi! I'm Quickkyy. How can I help you find the perfect item today?";
     setAiResponse(greeting);
@@ -155,10 +150,32 @@ export const AIVoiceAgent = () => {
     };
   }, []);
 
+  if (isNavigating) {
+    return (
+      <div className="min-h-screen pb-16 bg-gray-50">
+        <div className="bg-white text-gray-900 p-4 flex items-center gap-2 shadow-sm">
+          <Shimmer className="h-8 w-8" />
+          <Shimmer className="h-6 w-48" />
+        </div>
+        <main className="p-4">
+          <div className="space-y-4">
+            {Array(3).fill(0).map((_, i) => (
+              <Shimmer key={i} className="h-48 w-full" />
+            ))}
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen pb-16 bg-gray-50">
-      <div className="bg-white text-gray-900 p-4 flex items-center gap-2 shadow-sm">
-        <button onClick={() => navigate("/ai-chat")} className="p-2">
+    <div className="min-h-screen pb-16 bg-gray-50 overflow-x-hidden">
+      <div className="bg-white text-gray-900 p-4 flex items-center gap-2 shadow-sm sticky top-0 z-50">
+        <button 
+          onClick={handleBack} 
+          className="p-2 active:scale-95 transition-transform"
+          style={{ touchAction: 'manipulation' }}
+        >
           <ArrowLeft className="h-5 w-5" />
         </button>
         <h1 className="text-lg font-medium">Quickkyy - AI Voice Assistant</h1>
