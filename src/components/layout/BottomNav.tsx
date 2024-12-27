@@ -6,7 +6,7 @@ const navItems = [
   { icon: Grid, label: "Categories", path: "/gender-categories" },
   { icon: ShoppingBag, label: "Cart", path: "/cart" },
   { icon: MapPin, label: "Near You", path: "/near-you" },
-  { icon: MessageSquare, label: "Q-AI", path: "/ai-chat" },
+  { icon: MessageSquare, label: "AI-Shop", path: "/ai-chat" },
 ];
 
 export const BottomNav = () => {
