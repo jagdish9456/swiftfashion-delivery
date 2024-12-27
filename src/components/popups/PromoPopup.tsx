@@ -2,19 +2,21 @@ import { X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
+import { Platform } from 'react-native';
 
 export const PromoPopup = () => {
   const [isOpen, setIsOpen] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === '/') {
+    // Only show popup on web and home page
+    if (location.pathname === '/' && Platform.OS === 'web') {
       setIsOpen(true);
       console.log("PromoPopup: Showing popup on home page");
     }
   }, [location]);
 
-  if (!isOpen || location.pathname !== '/') return null;
+  if (!isOpen || location.pathname !== '/' || Platform.OS !== 'web') return null;
 
   return (
     <div className="fixed inset-0 z-[200] flex items-end justify-center bg-black/60 backdrop-blur-sm animate-in fade-in">
