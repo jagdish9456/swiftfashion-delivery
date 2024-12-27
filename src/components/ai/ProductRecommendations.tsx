@@ -1,3 +1,5 @@
+import { ProductList } from "@/components/categories/ProductList";
+
 interface Product {
   id: string;
   name: string;
