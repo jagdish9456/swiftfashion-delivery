@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Mic, MicOff, Send } from "lucide-react";
+import { ArrowLeft, Mic, MicOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { generateProductRecommendations } from "@/services/openai";
 import { ProductList } from "@/components/categories/ProductList";
@@ -15,6 +15,20 @@ interface Product {
   description: string;
   price: number;
   image: string;
+  brand: string;
+  images: Array<{
+    id: string;
+    url: string;
+    alt: string;
+    isDefault: boolean;
+  }>;
+}
+
+interface APIProduct {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
   brand: string;
   images: Array<{
     id: string;
@@ -41,6 +55,16 @@ export const AIVoiceAgent = () => {
 
   const { startListening, stopListening } = useSpeechRecognition(handleTranscript);
 
+  const mapToProduct = (apiProduct: APIProduct): Product => ({
+    id: apiProduct.id,
+    name: apiProduct.name,
+    description: apiProduct.description,
+    price: apiProduct.price,
+    image: apiProduct.images[0]?.url || "/placeholder.svg",
+    brand: apiProduct.brand,
+    images: apiProduct.images
+  });
+
   const handleSubmit = async (text: string) => {
     if (!text.trim()) return;
 
@@ -50,8 +74,9 @@ export const AIVoiceAgent = () => {
 
       const recommendations = await generateProductRecommendations(text, conversationRef.current);
       
-      let finalProducts = recommendations.length > 0 ? recommendations : 
-        findSimilarProducts(text, 5);
+      let finalProducts = recommendations.length > 0 
+        ? recommendations.map(mapToProduct)
+        : findSimilarProducts(text, 5);
       
       setProducts(finalProducts);
       
@@ -83,23 +108,13 @@ export const AIVoiceAgent = () => {
   const findSimilarProducts = (query: string, limit: number): Product[] => {
     const searchTerms = query.toLowerCase().split(' ');
     
-    const filteredProducts = productsData.products
+    return productsData.products
       .filter(product => {
         const searchableText = `${product.name} ${product.description} ${product.tags.join(' ')}`.toLowerCase();
         return searchTerms.some(term => searchableText.includes(term));
       })
       .slice(0, limit)
-      .map(product => ({
-        id: product.id,
-        name: product.name,
-        description: product.description,
-        price: product.price,
-        image: product.images[0]?.url || "/placeholder.svg",
-        brand: product.brand,
-        images: product.images
-      }));
-
-    return filteredProducts;
+      .map(mapToProduct);
   };
 
   const generateContextualResponse = (userInput: string, foundProducts: Product[]): string => {
