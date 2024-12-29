@@ -3,6 +3,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 // Array of API keys
 const API_KEYS = [
   "AIzaSyDiUlIA-d2x8TpBbPZN1gNOHFCj1eYcZhw",
+  "AIzaSyArzeOPhgc7CrEo76nRR4dkgGD0iCmbSqo",
+  "AIzaSyDTZ2yWh_e_2TTrrw9PxYKaXsKDXYzfe2k"
   // Add more API keys here
 ];
 
