@@ -20,3 +20,6 @@ export const ShimmerLoader = ({ className, ...props }: ShimmerLoaderProps) => {
     />
   );
 };
+
+// Export both names for compatibility
+export const Shimmer = ShimmerLoader;

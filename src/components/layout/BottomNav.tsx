@@ -1,7 +1,7 @@
 import { Home, Grid, ShoppingBag, MapPin, MessageSquare } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Shimmer } from "@/components/ui/shimmer";
+import { ShimmerLoader } from "@/components/ui/shimmer";
 
 const navItems = [
   { icon: Home, label: "Home", path: "/" },
@@ -39,8 +39,8 @@ export const BottomNav = () => {
         <div className="flex justify-around items-center h-16">
           {Array(5).fill(0).map((_, i) => (
             <div key={i} className="flex flex-col items-center gap-1">
-              <Shimmer className="h-5 w-5 rounded" />
-              <Shimmer className="h-3 w-12 rounded" />
+              <ShimmerLoader className="h-5 w-5 rounded" />
+              <ShimmerLoader className="h-3 w-12 rounded" />
             </div>
           ))}
         </div>
