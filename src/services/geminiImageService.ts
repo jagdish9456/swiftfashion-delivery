@@ -2,6 +2,7 @@ import { getCurrentGenAI, rotateApiKey } from './geminiConfig';
 import { retryWithBackoff } from '../utils/retryUtils';
 import { imageCache } from '../utils/imageCache';
 import { requestQueue } from '../utils/requestQueue';
+import { toast } from 'sonner';
 
 export const generateImageOverlay = async (userImage: string, productImage: string): Promise<string[]> => {
   try {
@@ -15,7 +16,7 @@ export const generateImageOverlay = async (userImage: string, productImage: stri
     }
 
     // Initialize the model with current API key
-    let model = getCurrentGenAI().getGenerativeModel({ model: "imagegeneration.googleapis.com" });
+    let model = getCurrentGenAI().getGenerativeModel({ model: "gemini-1.5-flash" });
 
     // Prepare the prompt
     const prompt = `Generate a realistic virtual try-on image by overlaying the product on the user's image. 
@@ -32,7 +33,7 @@ export const generateImageOverlay = async (userImage: string, productImage: stri
     const result = await requestQueue.add(async () => {
       return retryWithBackoff(async () => {
         try {
-          return await model.generateContent([
+          const response = await model.generateContent([
             prompt,
             {
               inlineData: {
@@ -47,14 +48,29 @@ export const generateImageOverlay = async (userImage: string, productImage: stri
               }
             }
           ]);
+
+          if (!response || !response.response) {
+            throw new Error("Empty response from API");
+          }
+
+          return response;
         } catch (error: any) {
+          console.error("Gemini API error:", error);
+          
           if (error?.status === 429) {
-            model = rotateApiKey().getGenerativeModel({ model: "imagegeneration.googleapis.com" });
+            model = rotateApiKey().getGenerativeModel({ model: "gemini-1.5-flash" });
+            toast.error("Rate limit reached. Retrying with new API key...");
             throw error; // Throw to trigger retry with new key
           }
+          
+          if (error?.status === 404) {
+            toast.error("API model not found. Please contact support.");
+            throw new Error("Invalid API model configuration");
+          }
+
           throw error;
         }
-      });
+      }, 3, 5000, 30000); // max 3 retries, starting at 5s delay, max 30s delay
     });
 
     const response = await result.response;
@@ -66,14 +82,18 @@ export const generateImageOverlay = async (userImage: string, productImage: stri
 
     return processedImages;
   } catch (error: any) {
-    console.error("Error calling Gemini API:", error);
+    console.error("Error in generateImageOverlay:", error);
     
     if (error?.status === 429 || error?.code === 429) {
-      throw new Error("Service is temporarily busy. Please try again in a few minutes.");
+      toast.error("Service is temporarily busy. Please try again in a few minutes.");
     } else if (error?.status === 400) {
-      throw new Error("Invalid image format. Please try with a different image.");
+      toast.error("Invalid image format. Please try with a different image.");
+    } else if (error?.status === 404) {
+      toast.error("API configuration error. Please contact support.");
     } else {
-      throw new Error("Failed to generate try-on images. Please try again later.");
+      toast.error("Failed to generate try-on images. Please try again later.");
     }
+    
+    throw error;
   }
 };
