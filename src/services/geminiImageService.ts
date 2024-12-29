@@ -49,7 +49,7 @@ export const generateImageOverlay = async (userImage: string, productImage: stri
           ]);
         } catch (error: any) {
           if (error?.status === 429) {
-            model = rotateApiKey().getGenerativeModel({ model: "gemini-pro-vision" });
+            model = rotateApiKey().getGenerativeModel({ model: "imagegeneration.googleapis.com" });
             throw error; // Throw to trigger retry with new key
           }
           throw error;
