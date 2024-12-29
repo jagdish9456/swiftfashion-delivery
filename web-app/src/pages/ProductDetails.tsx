@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Check } from "lucide-react";
 import { useState } from "react";
+import { TryOnDialog } from "@/components/product/TryOnDialog";
 
 const ProductDetails = () => {
   const { toast } = useToast();
@@ -121,6 +122,7 @@ const ProductDetails = () => {
       XXL: "48.8",
     },
   };
+  const [tryOnDialogOpen, setTryOnDialogOpen] = useState(false);
 
   const handleAddToBag = () => {
     addItem({
@@ -290,8 +292,23 @@ const ProductDetails = () => {
         >
           ADD TO BAG
         </Button>
-        <Button className="flex-1 bg-red-500 hover:bg-red-600">BUY NOW</Button>
+        <Button className="flex-1 bg-red-500 hover:bg-red-600">
+          BUY NOW
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={() => setTryOnDialogOpen(true)}
+          className="flex-shrink-0"
+        >
+          Try It On
+        </Button>
       </div>
+
+      <TryOnDialog
+        open={tryOnDialogOpen}
+        onOpenChange={setTryOnDialogOpen}
+        productImage={product.images[0]}
+      />
     </div>
   );
 };
