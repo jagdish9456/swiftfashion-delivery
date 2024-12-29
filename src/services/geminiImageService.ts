@@ -15,7 +15,7 @@ export const generateImageOverlay = async (userImage: string, productImage: stri
     }
 
     // Initialize the model with current API key
-    let model = getCurrentGenAI().getGenerativeModel({ model: "gemini-pro-vision" });
+    let model = getCurrentGenAI().getGenerativeModel({ model: "imagegeneration.googleapis.com" });
 
     // Prepare the prompt
     const prompt = `Generate a realistic virtual try-on image by overlaying the product on the user's image. 
