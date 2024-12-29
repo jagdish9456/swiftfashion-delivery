@@ -14,6 +14,7 @@ let currentKeyIndex = 0;
 
 const getNextApiKey = () => {
   currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
+  console.log(`Rotating to next API key (index: ${currentKeyIndex})`);
   return API_KEYS[currentKeyIndex];
 };
 
@@ -21,7 +22,6 @@ export const getCurrentGenAI = () => new GoogleGenerativeAI(API_KEYS[currentKeyI
 
 export const rotateApiKey = () => {
   const newKey = getNextApiKey();
-  console.log(`Rotating to next API key (index: ${currentKeyIndex})`);
   return new GoogleGenerativeAI(newKey);
 };
 
@@ -30,5 +30,17 @@ export const getTextModel = () => getCurrentGenAI().getGenerativeModel({ model: 
 
 // Wrap model generation with request queue and key rotation
 export const queuedGenerateContent = async (model: any, content: any) => {
-  return requestQueue.add(() => model.generateContent(content));
+  return requestQueue.add(async () => {
+    try {
+      const response = await model.generateContent(content);
+      return response;
+    } catch (error: any) {
+      if (error?.status === 429) {
+        // If we hit rate limit, rotate to next API key and throw error to trigger retry
+        rotateApiKey();
+        throw error;
+      }
+      throw error;
+    }
+  });
 };
