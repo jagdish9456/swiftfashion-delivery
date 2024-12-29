@@ -14,12 +14,7 @@ interface Product {
   }>;
 }
 
-const placeholderImages = [
-  "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
-  "https://images.unsplash.com/photo-1518770660439-4636190af475",
-  "https://images.unsplash.com/photo-1461749280684-dccba630e2f6",
-  "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
-];
+const PLACEHOLDER_IMAGE = "https://png.pngtree.com/png-clipart/20220626/original/pngtree-default-placeholder-businessman-half-length-portr-png-image_8195580.png";
 
 interface ProductListProps {
   products: Product[];
@@ -33,10 +28,6 @@ export const ProductList = ({ products, isLoading, lastProductRef, isAIResult = 
     return <div className="animate-pulse">Loading...</div>;
   }
 
-  const getPlaceholderImage = (index: number) => {
-    return placeholderImages[index % placeholderImages.length];
-  };
-
   return (
     <div className="grid grid-cols-2 gap-4">
       {products.map((product, index) => (
@@ -49,7 +40,7 @@ export const ProductList = ({ products, isLoading, lastProductRef, isAIResult = 
             name={product.name}
             description={product.description}
             price={product.price}
-            image={isAIResult ? getPlaceholderImage(index) : (product.images[0]?.url || "/placeholder.svg")}
+            image={isAIResult ? PLACEHOLDER_IMAGE : (product.images[0]?.url || "/placeholder.svg")}
             brand={product.brand}
           />
         </div>
