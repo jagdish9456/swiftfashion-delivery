@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { requestQueue } from '../utils/requestQueue';
 
 // Array of API keys
 const API_KEYS = [
