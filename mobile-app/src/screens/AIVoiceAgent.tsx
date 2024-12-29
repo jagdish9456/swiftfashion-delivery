@@ -5,7 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 import { generateProductRecommendations, generateContextualResponse } from '../services/gemini';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import { ShimmerLoader } from '../components/common/ShimmerLoader';
-import { ProductCard } from '../components/categories/ProductCard';
+import { ProductCard } from '../components/product/ProductCard';
+import { AIResponseLoader } from '../components/ai/AIResponseLoader';
+import { VoiceControls } from '../components/ai/VoiceControls';
 
 export const AIVoiceAgent = () => {
   const navigation = useNavigation();
@@ -82,34 +84,22 @@ export const AIVoiceAgent = () => {
         showsVerticalScrollIndicator={false}
       >
         {isLoading ? (
-          Array(3).fill(0).map((_, index) => (
-            <ShimmerLoader 
-              key={index}
-              height={200}
-              style={styles.shimmer}
-            />
-          ))
+          <AIResponseLoader />
         ) : (
           products.map((product: any) => (
             <ProductCard
               key={product.id}
-              product={product}
-              onPress={() => navigation.navigate('ProductDetails', { id: product.id })}
+              {...product}
             />
           ))
         )}
       </ScrollView>
 
-      <View style={styles.footer}>
-        <TouchableOpacity 
-          style={[styles.voiceButton, isListening && styles.voiceButtonActive]}
-          onPress={isListening ? stopListening : startListening}
-        >
-          <Text style={styles.voiceButtonText}>
-            {isListening ? 'Listening...' : 'Tap to Speak'}
-          </Text>
-        </TouchableOpacity>
-      </View>
+      <VoiceControls
+        isListening={isListening}
+        transcript={transcript}
+        onToggleListening={isListening ? stopListening : startListening}
+      />
     </View>
   );
 };
@@ -148,29 +138,5 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 16,
-  },
-  shimmer: {
-    marginBottom: 16,
-    borderRadius: 8,
-  },
-  footer: {
-    padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#eee',
-    backgroundColor: '#fff',
-  },
-  voiceButton: {
-    backgroundColor: '#9b87f5',
-    padding: 16,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  voiceButtonActive: {
-    backgroundColor: '#7b5cf5',
-  },
-  voiceButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
   },
 });
