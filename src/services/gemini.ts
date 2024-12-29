@@ -1,11 +1,10 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-
-const genAI = new GoogleGenerativeAI(process.env.VITE_GEMINI_API_KEY || '');
+import { getTextModel, queuedGenerateContent } from "./geminiConfig";
 
 export const generateResponse = async (prompt: string) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    const result = await model.generateContent(prompt);
+    const model = getTextModel();
+    const result = await queuedGenerateContent(model, prompt);
     return result.response.text();
   } catch (error) {
     console.error("Error generating response:", error);
@@ -15,8 +14,8 @@ export const generateResponse = async (prompt: string) => {
 
 export const generateProductRecommendations = async (prompt: string) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    const result = await model.generateContent(prompt);
+    const model = getTextModel();
+    const result = await queuedGenerateContent(model, prompt);
     const response = result.response.text();
     // Parse the response to get product recommendations
     return JSON.parse(response);
@@ -28,10 +27,10 @@ export const generateProductRecommendations = async (prompt: string) => {
 
 export const generateContextualResponse = async (prompt: string, products: any[], previousResponse: string) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = getTextModel();
     const context = `Previous response: ${previousResponse}\nProducts: ${JSON.stringify(products)}`;
     const fullPrompt = `${context}\nUser: ${prompt}`;
-    const result = await model.generateContent(fullPrompt);
+    const result = await queuedGenerateContent(model, fullPrompt);
     return result.response.text();
   } catch (error) {
     console.error("Error generating contextual response:", error);
@@ -41,8 +40,8 @@ export const generateContextualResponse = async (prompt: string, products: any[]
 
 export const generateImageOverlay = async (userImage: string, productImage: string) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
-    const result = await model.generateContent([
+    const model = getTextModel();
+    const result = await queuedGenerateContent(model, [
       { inlineData: { data: userImage, mimeType: "image/jpeg" } },
       { inlineData: { data: productImage, mimeType: "image/jpeg" } }
     ]);
