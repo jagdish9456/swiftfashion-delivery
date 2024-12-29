@@ -8,7 +8,8 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "androidBuild": "npm run build && npx cap copy && npx cap open android"
   },
   "dependencies": {
     "@capacitor/android": "^6.2.0",
