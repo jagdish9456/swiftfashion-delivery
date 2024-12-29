@@ -1,5 +1,6 @@
 import { getTextModel } from './geminiConfig';
 import { retryWithBackoff } from '../utils/retryUtils';
+import { requestQueue } from '../utils/requestQueue';
 import products from "../data/product-all.json";
 
 const generateProductRecommendations = async (userInput: string, conversationHistory: Array<{ role: string, content: string }> = []) => {
@@ -39,17 +40,22 @@ const generateProductRecommendations = async (userInput: string, conversationHis
       .map(msg => `${msg.role}: ${msg.content}`)
       .join('\n');
 
-    // Generate response
-    const result = await model.generateContent([
-      systemPrompt,
-      conversationContext,
-      `User: ${userInput}\nAssistant: Provide product recommendations as a JSON array of product IDs only.`
-    ]);
+    // Generate response using request queue and retry with backoff
+    const result = await retryWithBackoff(async () => {
+      return requestQueue.add(async () => {
+        const response = await model.generateContent([
+          systemPrompt,
+          conversationContext,
+          `User: ${userInput}\nAssistant: Provide product recommendations as a JSON array of product IDs only.`
+        ]);
+        return response;
+      });
+    });
 
     const response = result.response;
     const text = response.text();
     
-    console.log("Gemini raw response:", text); // Debug log
+    console.log("Gemini raw response:", text);
 
     // Extract JSON array from response
     try {
@@ -129,7 +135,13 @@ const generateContextualResponse = async (
     
     Please provide a natural, engaging response that helps the customer make informed decisions.`;
 
-    const result = await model.generateContent(prompt);
+    const result = await retryWithBackoff(async () => {
+      return requestQueue.add(async () => {
+        const response = await model.generateContent(prompt);
+        return response;
+      });
+    });
+
     const response = result.response.text();
     
     // Ensure response is not too long
