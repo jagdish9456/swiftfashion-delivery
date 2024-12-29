@@ -11,7 +11,7 @@ class RequestQueue {
   private requestsThisMinute = 0;
   private lastRequestTime = Date.now();
   private readonly MAX_REQUESTS_PER_MINUTE = 60;
-  private readonly MIN_REQUEST_INTERVAL = 1000; // 1 second
+  private readonly MIN_REQUEST_INTERVAL = 3000; // 3 seconds between requests
 
   async add<T>(execute: () => Promise<T>): Promise<T> {
     return new Promise((resolve, reject) => {
@@ -46,6 +46,7 @@ class RequestQueue {
     // Check if we've hit the rate limit
     if (this.requestsThisMinute >= this.MAX_REQUESTS_PER_MINUTE) {
       const waitTime = 60000 - (now - this.lastRequestTime);
+      console.log(`Rate limit reached. Waiting ${waitTime}ms before next request`);
       await new Promise(resolve => setTimeout(resolve, waitTime));
       this.requestsThisMinute = 0;
       this.lastRequestTime = Date.now();
