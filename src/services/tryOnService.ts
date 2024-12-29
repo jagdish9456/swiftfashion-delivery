@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+
 const API_ENDPOINT = "wss://ws-api.runware.ai/v1";
 
 export interface GenerateImageParams {
@@ -20,7 +22,7 @@ export interface GeneratedImage {
   NSFWContent: boolean;
 }
 
-export class RunwareService {
+class RunwareService {
   private ws: WebSocket | null = null;
   private apiKey: string | null = null;
   private connectionSessionUUID: string | null = null;
@@ -49,7 +51,8 @@ export class RunwareService {
         if (response.error || response.errors) {
           console.error("WebSocket error response:", response);
           const errorMessage = response.errorMessage || response.errors?.[0]?.message || "An error occurred";
-          throw new Error(errorMessage);
+          toast.error(errorMessage);
+          return;
         }
 
         if (response.data) {
@@ -71,7 +74,8 @@ export class RunwareService {
 
       this.ws.onerror = (error) => {
         console.error("WebSocket error:", error);
-        reject(new Error("Connection error. Please try again."));
+        toast.error("Connection error. Please try again.");
+        reject(error);
       };
 
       this.ws.onclose = () => {
@@ -179,7 +183,7 @@ class TryOnService {
       const params: GenerateImageParams = {
         positivePrompt: `Generate a realistic virtual try-on image showing a person wearing the clothing item. User image: ${userImageBase64}, Product image: ${productImage}`,
         model: "runware:100@1",
-        numberResults: 3, // Generate 3 variations
+        numberResults: 3,
         outputFormat: "WEBP",
         CFGScale: 7.5,
         strength: 0.8,
