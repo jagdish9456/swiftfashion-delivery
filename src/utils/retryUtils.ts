@@ -3,8 +3,8 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export const retryWithBackoff = async <T>(
   fn: () => Promise<T>,
   maxRetries: number = 5,
-  initialDelay: number = 3000, // Increased initial delay to 3 seconds
-  maxDelay: number = 30000 // Maximum delay of 30 seconds
+  initialDelay: number = 3000,
+  maxDelay: number = 30000
 ): Promise<T> => {
   let retries = 0;
   let delay = initialDelay;
@@ -13,16 +13,25 @@ export const retryWithBackoff = async <T>(
     try {
       return await fn();
     } catch (error: any) {
-      if (retries >= maxRetries || (error?.status !== 429 && error?.code !== 429)) {
+      if (retries >= maxRetries) {
         throw error;
       }
 
-      // Calculate next delay with exponential backoff, but cap it
-      delay = Math.min(delay * 2, maxDelay);
-      
-      console.log(`Rate limited. Retrying in ${delay}ms... (Attempt ${retries + 1}/${maxRetries})`);
-      await sleep(delay);
-      retries++;
+      // Check if it's a rate limit error (429)
+      if (error?.status === 429 || error?.code === 429) {
+        // Try rotating the API key first
+        const { rotateApiKey } = await import('../services/geminiConfig');
+        rotateApiKey();
+        
+        // If we still have retries left, wait before trying again
+        delay = Math.min(delay * 2, maxDelay);
+        console.log(`Rate limited. Retrying with new API key in ${delay}ms... (Attempt ${retries + 1}/${maxRetries})`);
+        await sleep(delay);
+        retries++;
+      } else {
+        // For other errors, throw immediately
+        throw error;
+      }
     }
   }
 };

@@ -1,4 +1,4 @@
-import { getImageModel } from './geminiConfig';
+import { getCurrentGenAI, rotateApiKey } from './geminiConfig';
 import { retryWithBackoff } from '../utils/retryUtils';
 import { imageCache } from '../utils/imageCache';
 import { requestQueue } from '../utils/requestQueue';
@@ -14,8 +14,8 @@ export const generateImageOverlay = async (userImage: string, productImage: stri
       return cachedImages;
     }
 
-    // Initialize the model
-    const model = getImageModel();
+    // Initialize the model with current API key
+    let model = getCurrentGenAI().getGenerativeModel({ model: "gemini-pro-vision" });
 
     // Prepare the prompt
     const prompt = `Generate a realistic virtual try-on image by overlaying the product on the user's image. 
@@ -28,24 +28,32 @@ export const generateImageOverlay = async (userImage: string, productImage: stri
     
     Generate 3 variations with slightly different positioning and lighting.`;
 
-    // Queue the API request
+    // Queue the API request with key rotation support
     const result = await requestQueue.add(async () => {
       return retryWithBackoff(async () => {
-        return model.generateContent([
-          prompt,
-          {
-            inlineData: {
-              mimeType: "image/jpeg",
-              data: userImage.split(",")[1]
+        try {
+          return await model.generateContent([
+            prompt,
+            {
+              inlineData: {
+                mimeType: "image/jpeg",
+                data: userImage.split(",")[1]
+              }
+            },
+            {
+              inlineData: {
+                mimeType: "image/jpeg",
+                data: productImage.split(",")[1]
+              }
             }
-          },
-          {
-            inlineData: {
-              mimeType: "image/jpeg",
-              data: productImage.split(",")[1]
-            }
+          ]);
+        } catch (error: any) {
+          if (error?.status === 429) {
+            model = rotateApiKey().getGenerativeModel({ model: "gemini-pro-vision" });
+            throw error; // Throw to trigger retry with new key
           }
-        ]);
+          throw error;
+        }
       });
     });
 

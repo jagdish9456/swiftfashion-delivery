@@ -1,12 +1,12 @@
-import { getTextModel } from './geminiConfig';
+import { getCurrentGenAI, rotateApiKey } from './geminiConfig';
 import { retryWithBackoff } from '../utils/retryUtils';
 import { requestQueue } from '../utils/requestQueue';
 import products from "../data/product-all.json";
 
 const generateProductRecommendations = async (userInput: string, conversationHistory: Array<{ role: string, content: string }> = []) => {
   try {
-    // Initialize the model
-    const model = getTextModel();
+    // Initialize the model with current API key
+    let model = getCurrentGenAI().getGenerativeModel({ model: "gemini-pro" });
 
     // Format conversation history and system prompt
     const systemPrompt = `You are Quickkyy, a knowledgeable and friendly AI shopping assistant for a fashion store. 
@@ -40,15 +40,23 @@ const generateProductRecommendations = async (userInput: string, conversationHis
       .map(msg => `${msg.role}: ${msg.content}`)
       .join('\n');
 
-    // Generate response using request queue and retry with backoff
+    // Generate response using request queue and retry with backoff (includes key rotation)
     const result = await retryWithBackoff(async () => {
       return requestQueue.add(async () => {
-        const response = await model.generateContent([
-          systemPrompt,
-          conversationContext,
-          `User: ${userInput}\nAssistant: Provide product recommendations as a JSON array of product IDs only.`
-        ]);
-        return response;
+        try {
+          const response = await model.generateContent([
+            systemPrompt,
+            conversationContext,
+            `User: ${userInput}\nAssistant: Provide product recommendations as a JSON array of product IDs only.`
+          ]);
+          return response;
+        } catch (error: any) {
+          if (error?.status === 429) {
+            model = rotateApiKey().getGenerativeModel({ model: "gemini-pro" });
+            throw error; // Throw to trigger retry with new key
+          }
+          throw error;
+        }
       });
     });
 
@@ -100,6 +108,7 @@ const generateProductRecommendations = async (userInput: string, conversationHis
       console.error("Failed to parse Gemini response:", e);
       return [];
     }
+
   } catch (error) {
     console.error("Error calling Gemini API:", error);
     throw error;
@@ -112,10 +121,9 @@ const generateContextualResponse = async (
   previousResponse?: string
 ) => {
   try {
-    const model = getTextModel();
+    let model = getCurrentGenAI().getGenerativeModel({ model: "gemini-pro" });
 
     const prompt = `You are Quickkyy, a helpful and engaging AI shopping assistant.
-    
     Context:
     - Previous response: ${previousResponse || 'None'}
     - Current products being shown: ${JSON.stringify(products.slice(0, 3))}
@@ -137,14 +145,20 @@ const generateContextualResponse = async (
 
     const result = await retryWithBackoff(async () => {
       return requestQueue.add(async () => {
-        const response = await model.generateContent(prompt);
-        return response;
+        try {
+          const response = await model.generateContent(prompt);
+          return response;
+        } catch (error: any) {
+          if (error?.status === 429) {
+            model = rotateApiKey().getGenerativeModel({ model: "gemini-pro" });
+            throw error; // Throw to trigger retry with new key
+          }
+          throw error;
+        }
       });
     });
 
     const response = result.response.text();
-    
-    // Ensure response is not too long
     return response.split('.').slice(0, 2).join('.') + '.';
   } catch (error) {
     console.error("Error generating contextual response:", error);
