@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, Upload, ZoomIn, Download } from "lucide-react";
-import { tryOnService } from '@/services/tryOnService';
+import { unifiedTryOnService } from '@/services/unifiedTryOnService';
 import { toast } from 'sonner';
 
 interface TryOnDialogProps {
@@ -47,10 +47,12 @@ export const TryOnDialog: React.FC<TryOnDialogProps> = ({
 
     setIsLoading(true);
     try {
-      const images = await tryOnService.generateTryOnImage(selectedFile, productImage);
-      setGeneratedImages(images);
-      toast.success('Try-on images generated successfully!');
-    } catch (error) {
+      const images = await unifiedTryOnService.generateTryOnImage(selectedFile, productImage);
+      if (images.length > 0) {
+        setGeneratedImages(images);
+        toast.success('Try-on images generated successfully!');
+      }
+    } catch (error: any) {
       toast.error('Failed to generate try-on images');
       console.error(error);
     } finally {
