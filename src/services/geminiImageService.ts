@@ -1,12 +1,13 @@
 import { getImageModel } from './geminiConfig';
 import { retryWithBackoff } from '../utils/retryUtils';
 import { imageCache } from '../utils/imageCache';
+import { requestQueue } from '../utils/requestQueue';
 
 export const generateImageOverlay = async (userImage: string, productImage: string): Promise<string[]> => {
   try {
     const cacheKey = imageCache.generateKey(userImage, productImage);
     
-    // Check cache
+    // Check cache first
     const cachedImages = imageCache.get(cacheKey);
     if (cachedImages) {
       console.log('Returning cached result');
@@ -27,23 +28,25 @@ export const generateImageOverlay = async (userImage: string, productImage: stri
     
     Generate 3 variations with slightly different positioning and lighting.`;
 
-    // Use retry logic for the API call
-    const result = await retryWithBackoff(async () => {
-      return model.generateContent([
-        prompt,
-        {
-          inlineData: {
-            mimeType: "image/jpeg",
-            data: userImage.split(",")[1]
+    // Queue the API request
+    const result = await requestQueue.add(async () => {
+      return retryWithBackoff(async () => {
+        return model.generateContent([
+          prompt,
+          {
+            inlineData: {
+              mimeType: "image/jpeg",
+              data: userImage.split(",")[1]
+            }
+          },
+          {
+            inlineData: {
+              mimeType: "image/jpeg",
+              data: productImage.split(",")[1]
+            }
           }
-        },
-        {
-          inlineData: {
-            mimeType: "image/jpeg",
-            data: productImage.split(",")[1]
-          }
-        }
-      ]);
+        ]);
+      });
     });
 
     const response = await result.response;
