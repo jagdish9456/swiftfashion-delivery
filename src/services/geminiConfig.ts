@@ -10,9 +10,18 @@ const API_KEYS = [
 ];
 
 let currentKeyIndex = 0;
+let lastKeyRotation = Date.now();
+const KEY_ROTATION_COOLDOWN = 5000; // 5 seconds cooldown between key rotations
 
 const getNextApiKey = () => {
+  const now = Date.now();
+  if (now - lastKeyRotation < KEY_ROTATION_COOLDOWN) {
+    console.log('Key rotation on cooldown, waiting...');
+    return API_KEYS[currentKeyIndex];
+  }
+  
   currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
+  lastKeyRotation = now;
   console.log(`Rotating to next API key (index: ${currentKeyIndex})`);
   return API_KEYS[currentKeyIndex];
 };
