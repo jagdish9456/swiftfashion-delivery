@@ -10,18 +10,9 @@ const API_KEYS = [
 ];
 
 let currentKeyIndex = 0;
-let lastKeyRotation = Date.now();
-const KEY_ROTATION_COOLDOWN = 5000; // 5 seconds cooldown between key rotations
 
 const getNextApiKey = () => {
-  const now = Date.now();
-  if (now - lastKeyRotation < KEY_ROTATION_COOLDOWN) {
-    console.log('Key rotation on cooldown, waiting...');
-    return API_KEYS[currentKeyIndex];
-  }
-  
   currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
-  lastKeyRotation = now;
   console.log(`Rotating to next API key (index: ${currentKeyIndex})`);
   return API_KEYS[currentKeyIndex];
 };
@@ -38,17 +29,30 @@ export const getTextModel = () => getCurrentGenAI().getGenerativeModel({ model: 
 
 // Wrap model generation with request queue and key rotation
 export const queuedGenerateContent = async (model: any, content: any) => {
-  return requestQueue.add(async () => {
+  let attempts = 0;
+  const maxAttempts = API_KEYS.length;
+
+  while (attempts < maxAttempts) {
     try {
-      const response = await model.generateContent(content);
+      const response = await requestQueue.add(async () => {
+        return await model.generateContent(content);
+      });
       return response;
     } catch (error: any) {
+      attempts++;
+      console.log(`Attempt ${attempts} failed with key ${currentKeyIndex}`);
+      
       if (error?.status === 429 || error?.status === 403) {
-        // If we hit rate limit or permission denied, rotate to next API key and throw error to trigger retry
-        rotateApiKey();
-        throw error;
+        if (attempts < maxAttempts) {
+          console.log(`Rotating API key and retrying...`);
+          model = rotateApiKey().getGenerativeModel({ 
+            model: model.modelName 
+          });
+          continue;
+        }
       }
       throw error;
     }
-  });
+  }
+  throw new Error("All API keys exhausted");
 };

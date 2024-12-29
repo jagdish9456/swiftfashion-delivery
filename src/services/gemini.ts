@@ -16,7 +16,6 @@ export const generateProductRecommendations = async (prompt: string) => {
     const model = getTextModel();
     const result = await queuedGenerateContent(model, prompt);
     const response = result.response.text();
-    // Parse the response to get product recommendations
     return JSON.parse(response);
   } catch (error) {
     console.error("Error generating product recommendations:", error);
@@ -44,7 +43,7 @@ export const generateImageOverlay = async (userImage: string, productImage: stri
       { inlineData: { data: userImage, mimeType: "image/jpeg" } },
       { inlineData: { data: productImage, mimeType: "image/jpeg" } }
     ]);
-    return [result.response.text()]; // Return as array to match expected type
+    return [result.response.text()];
   } catch (error) {
     console.error("Error generating image overlay:", error);
     throw error;
