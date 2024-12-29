@@ -292,13 +292,10 @@ const ProductDetails = () => {
         >
           ADD TO BAG
         </Button>
-        <Button className="flex-1 bg-red-500 hover:bg-red-600">
-          BUY NOW
-        </Button>
         <Button
           variant="secondary"
           onClick={() => setIsTryOnOpen(true)}
-          className="flex-1"
+          className="flex-1 bg-purple-600 hover:bg-purple-700 text-white"
         >
           TRY IT ON
         </Button>

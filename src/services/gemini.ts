@@ -1,8 +1,8 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import products from "../data/product-all.json";
 
-// Initialize Gemini API
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || "");
+// Initialize Gemini API with hardcoded key
+const genAI = new GoogleGenerativeAI("AIzaSyDiUlIA-d2x8TpBbPZN1gNOHFCj1eYcZhw");
 
 export const generateProductRecommendations = async (userInput: string, conversationHistory: Array<{ role: string, content: string }> = []) => {
   try {
@@ -185,3 +185,4 @@ export const generateImageOverlay = async (userImage: string, productImage: stri
     throw error;
   }
 };
+
