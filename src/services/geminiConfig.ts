@@ -7,7 +7,6 @@ const API_KEYS = [
   "AIzaSyArzeOPhgc7CrEo76nRR4dkgGD0iCmbSqo",
   "AIzaSyDTZ2yWh_e_2TTrrw9PxYKaXsKDXYzfe2k",
   "AIzaSyCsuMLXO46y4LvoNw1bkjYrft8rGoVVhDI"
-  // Add more API keys here
 ];
 
 let currentKeyIndex = 0;
@@ -35,8 +34,8 @@ export const queuedGenerateContent = async (model: any, content: any) => {
       const response = await model.generateContent(content);
       return response;
     } catch (error: any) {
-      if (error?.status === 429) {
-        // If we hit rate limit, rotate to next API key and throw error to trigger retry
+      if (error?.status === 429 || error?.status === 403) {
+        // If we hit rate limit or permission denied, rotate to next API key and throw error to trigger retry
         rotateApiKey();
         throw error;
       }

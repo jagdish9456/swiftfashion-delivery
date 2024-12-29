@@ -1,5 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { getTextModel, queuedGenerateContent } from "./geminiConfig";
+import { getTextModel, getImageModel, queuedGenerateContent } from "./geminiConfig";
 
 export const generateResponse = async (prompt: string) => {
   try {
@@ -40,7 +39,7 @@ export const generateContextualResponse = async (prompt: string, products: any[]
 
 export const generateImageOverlay = async (userImage: string, productImage: string) => {
   try {
-    const model = getTextModel();
+    const model = getImageModel();
     const result = await queuedGenerateContent(model, [
       { inlineData: { data: userImage, mimeType: "image/jpeg" } },
       { inlineData: { data: productImage, mimeType: "image/jpeg" } }
