@@ -17,14 +17,21 @@ class TryOnService {
       const results = await generateImageOverlay(userImageBase64, productImage);
       
       if (!results || results.length === 0) {
-        toast.error("Failed to generate try-on images");
+        toast.error("Failed to generate try-on images. Please try again.");
         return [];
       }
 
       return results;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error generating try-on image:', error);
-      toast.error("An error occurred while generating try-on images");
+      
+      // Handle different types of errors
+      if (error?.status === 429) {
+        toast.error("Service is busy. Please try again in a few moments.");
+      } else {
+        toast.error(error.message || "An error occurred while generating try-on images");
+      }
+      
       return [];
     }
   }

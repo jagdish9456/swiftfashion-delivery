@@ -4,6 +4,32 @@ import products from "../data/product-all.json";
 // Initialize Gemini API with hardcoded key
 const genAI = new GoogleGenerativeAI("AIzaSyDiUlIA-d2x8TpBbPZN1gNOHFCj1eYcZhw");
 
+// Simple in-memory cache for generated images
+const imageCache = new Map<string, string[]>();
+
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+const retryWithBackoff = async <T>(
+  fn: () => Promise<T>,
+  maxRetries: number = 3,
+  initialDelay: number = 1000
+): Promise<T> => {
+  let retries = 0;
+  while (true) {
+    try {
+      return await fn();
+    } catch (error: any) {
+      if (retries >= maxRetries || error?.status !== 429) {
+        throw error;
+      }
+      const delay = initialDelay * Math.pow(2, retries);
+      console.log(`Rate limited. Retrying in ${delay}ms...`);
+      await sleep(delay);
+      retries++;
+    }
+  }
+};
+
 export const generateProductRecommendations = async (userInput: string, conversationHistory: Array<{ role: string, content: string }> = []) => {
   try {
     // Initialize the model
@@ -144,6 +170,16 @@ export const generateContextualResponse = async (
 
 export const generateImageOverlay = async (userImage: string, productImage: string): Promise<string[]> => {
   try {
+    // Generate a cache key from the input images
+    const cacheKey = `${userImage.slice(0, 100)}-${productImage.slice(0, 100)}`;
+    
+    // Check cache first
+    const cachedResult = imageCache.get(cacheKey);
+    if (cachedResult) {
+      console.log('Returning cached result');
+      return cachedResult;
+    }
+
     // Initialize the model
     const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
 
@@ -158,31 +194,35 @@ export const generateImageOverlay = async (userImage: string, productImage: stri
     
     Generate 3 variations with slightly different positioning and lighting.`;
 
-    // Call Gemini API
-    const result = await model.generateContent([
-      prompt,
-      {
-        inlineData: {
-          mimeType: "image/jpeg",
-          data: userImage.split(",")[1] // Remove the data:image/jpeg;base64, prefix
+    // Use retry logic for the API call
+    const result = await retryWithBackoff(async () => {
+      return model.generateContent([
+        prompt,
+        {
+          inlineData: {
+            mimeType: "image/jpeg",
+            data: userImage.split(",")[1] // Remove the data:image/jpeg;base64, prefix
+          }
+        },
+        {
+          inlineData: {
+            mimeType: "image/jpeg",
+            data: productImage.split(",")[1]
+          }
         }
-      },
-      {
-        inlineData: {
-          mimeType: "image/jpeg",
-          data: productImage.split(",")[1]
-        }
-      }
-    ]);
+      ]);
+    });
 
     const response = await result.response;
     const generatedImages = response.text().split(",");
+    const processedImages = generatedImages.map(img => `data:image/jpeg;base64,${img.trim()}`);
 
-    // Process and return the generated images
-    return generatedImages.map(img => `data:image/jpeg;base64,${img.trim()}`);
+    // Cache the result
+    imageCache.set(cacheKey, processedImages);
+
+    return processedImages;
   } catch (error) {
     console.error("Error calling Gemini API:", error);
-    throw error;
+    throw new Error("Failed to generate try-on images. Please try again later.");
   }
 };
-
