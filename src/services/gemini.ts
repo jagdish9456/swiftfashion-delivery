@@ -4,26 +4,27 @@ import products from "../data/product-all.json";
 // Initialize Gemini API with hardcoded key
 const genAI = new GoogleGenerativeAI("AIzaSyDiUlIA-d2x8TpBbPZN1gNOHFCj1eYcZhw");
 
-// Simple in-memory cache for generated images
-const imageCache = new Map<string, string[]>();
+// Simple in-memory cache for generated images with 1-hour expiration
+const imageCache = new Map<string, { images: string[], timestamp: number }>();
+const CACHE_EXPIRY = 60 * 60 * 1000; // 1 hour in milliseconds
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 const retryWithBackoff = async <T>(
   fn: () => Promise<T>,
-  maxRetries: number = 3,
-  initialDelay: number = 1000
+  maxRetries: number = 5, // Increased from 3 to 5
+  initialDelay: number = 2000 // Increased from 1000 to 2000
 ): Promise<T> => {
   let retries = 0;
   while (true) {
     try {
       return await fn();
     } catch (error: any) {
-      if (retries >= maxRetries || error?.status !== 429) {
+      if (retries >= maxRetries || (error?.status !== 429 && error?.code !== 429)) {
         throw error;
       }
       const delay = initialDelay * Math.pow(2, retries);
-      console.log(`Rate limited. Retrying in ${delay}ms...`);
+      console.log(`Rate limited. Retrying in ${delay}ms... (Attempt ${retries + 1}/${maxRetries})`);
       await sleep(delay);
       retries++;
     }
@@ -173,11 +174,11 @@ export const generateImageOverlay = async (userImage: string, productImage: stri
     // Generate a cache key from the input images
     const cacheKey = `${userImage.slice(0, 100)}-${productImage.slice(0, 100)}`;
     
-    // Check cache first
-    const cachedResult = imageCache.get(cacheKey);
-    if (cachedResult) {
+    // Check cache first and validate timestamp
+    const cachedData = imageCache.get(cacheKey);
+    if (cachedData && Date.now() - cachedData.timestamp < CACHE_EXPIRY) {
       console.log('Returning cached result');
-      return cachedResult;
+      return cachedData.images;
     }
 
     // Initialize the model
@@ -194,14 +195,14 @@ export const generateImageOverlay = async (userImage: string, productImage: stri
     
     Generate 3 variations with slightly different positioning and lighting.`;
 
-    // Use retry logic for the API call
+    // Use retry logic for the API call with increased delays
     const result = await retryWithBackoff(async () => {
       return model.generateContent([
         prompt,
         {
           inlineData: {
             mimeType: "image/jpeg",
-            data: userImage.split(",")[1] // Remove the data:image/jpeg;base64, prefix
+            data: userImage.split(",")[1]
           }
         },
         {
@@ -217,12 +218,23 @@ export const generateImageOverlay = async (userImage: string, productImage: stri
     const generatedImages = response.text().split(",");
     const processedImages = generatedImages.map(img => `data:image/jpeg;base64,${img.trim()}`);
 
-    // Cache the result
-    imageCache.set(cacheKey, processedImages);
+    // Cache the result with timestamp
+    imageCache.set(cacheKey, {
+      images: processedImages,
+      timestamp: Date.now()
+    });
 
     return processedImages;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error calling Gemini API:", error);
-    throw new Error("Failed to generate try-on images. Please try again later.");
+    
+    // More specific error messages based on error type
+    if (error?.status === 429 || error?.code === 429) {
+      throw new Error("Service is temporarily busy. Please wait a moment and try again.");
+    } else if (error?.status === 400) {
+      throw new Error("Invalid image format. Please try with a different image.");
+    } else {
+      throw new Error("Failed to generate try-on images. Please try again later.");
+    }
   }
 };

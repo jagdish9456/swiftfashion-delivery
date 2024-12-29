@@ -25,9 +25,11 @@ class TryOnService {
     } catch (error: any) {
       console.error('Error generating try-on image:', error);
       
-      // Handle different types of errors
-      if (error?.status === 429) {
-        toast.error("Service is busy. Please try again in a few moments.");
+      // Handle different types of errors with more specific messages
+      if (error?.status === 429 || error?.code === 429) {
+        toast.error("Service is busy. Please wait a few moments and try again.");
+      } else if (error?.status === 400) {
+        toast.error("Please try with a different image format.");
       } else {
         toast.error(error.message || "An error occurred while generating try-on images");
       }
