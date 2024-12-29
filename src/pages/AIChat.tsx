@@ -73,7 +73,7 @@ export const AIChat = () => {
           ) : (
             products.length > 0 && (
               <div className="mt-6">
-                <ProductList products={products} isLoading={isLoading} />
+                <ProductList products={products} isLoading={isLoading} isAIResult={true} />
               </div>
             )
           )}
