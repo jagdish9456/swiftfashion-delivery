@@ -7,6 +7,7 @@ const API_KEYS = [
   "AIzaSyArzeOPhgc7CrEo76nRR4dkgGD0iCmbSqo",
   "AIzaSyDTZ2yWh_e_2TTrrw9PxYKaXsKDXYzfe2k",
   "AIzaSyCsuMLXO46y4LvoNw1bkjYrft8rGoVVhDI"
+  // Add more API keys here
 ];
 
 let currentKeyIndex = 0;
@@ -29,30 +30,17 @@ export const getTextModel = () => getCurrentGenAI().getGenerativeModel({ model: 
 
 // Wrap model generation with request queue and key rotation
 export const queuedGenerateContent = async (model: any, content: any) => {
-  let attempts = 0;
-  const maxAttempts = API_KEYS.length;
-
-  while (attempts < maxAttempts) {
+  return requestQueue.add(async () => {
     try {
-      const response = await requestQueue.add(async () => {
-        return await model.generateContent(content);
-      });
+      const response = await model.generateContent(content);
       return response;
     } catch (error: any) {
-      attempts++;
-      console.log(`Attempt ${attempts} failed with key ${currentKeyIndex}`);
-      
-      if (error?.status === 429 || error?.status === 403) {
-        if (attempts < maxAttempts) {
-          console.log(`Rotating API key and retrying...`);
-          model = rotateApiKey().getGenerativeModel({ 
-            model: model.modelName 
-          });
-          continue;
-        }
+      if (error?.status === 429) {
+        // If we hit rate limit, rotate to next API key and throw error to trigger retry
+        rotateApiKey();
+        throw error;
       }
       throw error;
     }
-  }
-  throw new Error("All API keys exhausted");
+  });
 };

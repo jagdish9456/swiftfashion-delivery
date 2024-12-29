@@ -7,7 +7,6 @@ import { generateProductRecommendations } from "@/services/gemini";
 import { ProductList } from "@/components/categories/ProductList";
 import { toast } from "@/hooks/use-toast";
 import { BottomNav } from "@/components/layout/BottomNav";
-import { ShimmerLoader } from "@/components/ui/shimmer";
 
 export const AIChat = () => {
   const navigate = useNavigate();
@@ -30,14 +29,11 @@ export const AIChat = () => {
         });
       }
     } catch (error) {
-      // Only show error toast if it's not a retry-related error
-      if (error?.status !== 429) {
-        toast({
-          title: "Error",
-          description: "Failed to get recommendations. Please try again.",
-          variant: "destructive",
-        });
-      }
+      toast({
+        title: "Error",
+        description: "Failed to get recommendations. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -71,18 +67,10 @@ export const AIChat = () => {
             </Button>
           </form>
 
-          {isLoading ? (
-            <div className="space-y-4">
-              {[1, 2, 3].map((i) => (
-                <ShimmerLoader key={i} className="h-48 w-full rounded-lg" />
-              ))}
+          {products.length > 0 && (
+            <div className="mt-6">
+              <ProductList products={products} isLoading={isLoading} />
             </div>
-          ) : (
-            products.length > 0 && (
-              <div className="mt-6">
-                <ProductList products={products} isLoading={isLoading} />
-              </div>
-            )
           )}
         </div>
       </main>

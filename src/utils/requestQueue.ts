@@ -3,7 +3,6 @@ type QueuedRequest = {
   execute: () => Promise<any>;
   resolve: (value: any) => void;
   reject: (error: any) => void;
-  retryCount?: number;
 };
 
 class RequestQueue {
@@ -11,9 +10,8 @@ class RequestQueue {
   private processing = false;
   private requestsThisMinute = 0;
   private lastRequestTime = Date.now();
-  private readonly MAX_REQUESTS_PER_MINUTE = 30; // Reduced from 60 to be more conservative
+  private readonly MAX_REQUESTS_PER_MINUTE = 60;
   private readonly MIN_REQUEST_INTERVAL = 3000; // 3 seconds between requests
-  private readonly MAX_RETRIES = 3;
 
   async add<T>(execute: () => Promise<T>): Promise<T> {
     return new Promise((resolve, reject) => {
@@ -22,18 +20,12 @@ class RequestQueue {
         execute,
         resolve,
         reject,
-        retryCount: 0,
       });
       
       if (!this.processing) {
         this.processQueue();
       }
     });
-  }
-
-  private calculateBackoff(retryCount: number): number {
-    // Exponential backoff: 3s, 9s, 27s
-    return Math.min(3000 * Math.pow(3, retryCount), 30000);
   }
 
   private async processQueue() {
@@ -79,28 +71,11 @@ class RequestQueue {
       this.requestsThisMinute++;
       this.lastRequestTime = Date.now();
       request.resolve(result);
-    } catch (error: any) {
-      // Handle rate limit errors with retries
-      if ((error?.status === 429 || error?.status === 403) && (request.retryCount || 0) < this.MAX_RETRIES) {
-        const retryCount = (request.retryCount || 0) + 1;
-        const backoffTime = this.calculateBackoff(retryCount);
-        
-        console.log(`Request failed (${error?.status}). Retry ${retryCount}/${this.MAX_RETRIES} in ${backoffTime}ms`);
-        
-        // Put the request back in the queue with increased retry count
-        this.queue.unshift({
-          ...request,
-          retryCount,
-        });
-        
-        // Wait before processing next request
-        await new Promise(resolve => setTimeout(resolve, backoffTime));
-      } else {
-        request.reject(error);
-      }
+    } catch (error) {
+      request.reject(error);
     }
 
-    // Process next request with a delay
+    // Process next request
     setTimeout(() => this.processQueue(), this.MIN_REQUEST_INTERVAL);
   }
 }
