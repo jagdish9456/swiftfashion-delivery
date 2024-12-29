@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import products from "../data/product-all.json";
 
 // Initialize Gemini API
-const genAI = new GoogleGenerativeAI("AIzaSyB0fTl03Ez3vnW0IZzWXDpdmI7qbVHHHMw");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 export const generateProductRecommendations = async (userInput: string, conversationHistory: Array<{ role: string, content: string }> = []) => {
   try {
@@ -139,5 +139,49 @@ export const generateContextualResponse = async (
   } catch (error) {
     console.error("Error generating contextual response:", error);
     return "I'm sorry, I couldn't process that request. Could you try again?";
+  }
+};
+
+export const generateImageOverlay = async (userImage: string, productImage: string): Promise<string[]> => {
+  try {
+    // Initialize the model
+    const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+
+    // Prepare the prompt
+    const prompt = `Generate a realistic virtual try-on image by overlaying the product on the user's image. 
+    Follow these steps:
+    1. Analyze the user's pose and body position
+    2. Identify key points (shoulders, chest, waist)
+    3. Scale and position the product image appropriately
+    4. Blend the edges naturally
+    5. Adjust lighting and shadows for realism
+    
+    Generate 3 variations with slightly different positioning and lighting.`;
+
+    // Call Gemini API
+    const result = await model.generateContent([
+      prompt,
+      {
+        inlineData: {
+          mimeType: "image/jpeg",
+          data: userImage.split(",")[1] // Remove the data:image/jpeg;base64, prefix
+        }
+      },
+      {
+        inlineData: {
+          mimeType: "image/jpeg",
+          data: productImage.split(",")[1]
+        }
+      }
+    ]);
+
+    const response = await result.response;
+    const generatedImages = response.text().split(",");
+
+    // Process and return the generated images
+    return generatedImages.map(img => `data:image/jpeg;base64,${img.trim()}`);
+  } catch (error) {
+    console.error("Error calling Gemini API:", error);
+    throw error;
   }
 };
