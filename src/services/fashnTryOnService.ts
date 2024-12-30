@@ -42,7 +42,10 @@ class FashnTryOnService {
     try {
       const userImageBase64 = await this.fileToBase64(userImage);
       
-      const response = await fetch(`${this.API_URL}/run`, {
+      // Create a proxy URL to handle CORS
+      const proxyUrl = `/api/fashn/run`; // This assumes you'll set up a proxy endpoint
+
+      const response = await fetch(proxyUrl, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${this.apiKey}`,
@@ -79,7 +82,9 @@ class FashnTryOnService {
     let attempts = 0;
 
     while (attempts < maxAttempts) {
-      const response = await fetch(`${this.API_URL}/status/${id}`, {
+      const proxyUrl = `/api/fashn/status/${id}`; // This assumes you'll set up a proxy endpoint
+      
+      const response = await fetch(proxyUrl, {
         headers: {
           'Authorization': `Bearer ${this.apiKey}`,
         },

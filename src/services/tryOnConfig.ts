@@ -7,7 +7,7 @@ interface TryOnConfig {
 
 // Default configuration
 const config: TryOnConfig = {
-  provider: 'gemini',
+  provider: 'fashn', // Changed default to fashn
 };
 
 export const tryOnConfig = {
