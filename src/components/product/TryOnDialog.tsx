@@ -119,6 +119,7 @@ export const TryOnDialog: React.FC<TryOnDialogProps> = ({
             <div className="space-y-4">
               <div className={`relative ${isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}>
                 <img
+                  style={{width:'50%'}}
                   src={generatedImages[selectedImageIndex]}
                   alt={`Try-on result ${selectedImageIndex + 1}`}
                   className={`w-full rounded-lg transition-transform ${

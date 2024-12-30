@@ -7,7 +7,8 @@ interface TryOnConfig {
 
 // Default configuration
 const config: TryOnConfig = {
-  provider: 'fashn', // Changed default to fashn
+  provider: 'fashn', // Changed default to fashn,
+  fashnApiKey: 'fa-cmcVumUEd6iE-EH5qutXJRkSl45DJHA0srUzc'
 };
 
 export const tryOnConfig = {

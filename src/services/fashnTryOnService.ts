@@ -41,11 +41,9 @@ class FashnTryOnService {
 
     try {
       const userImageBase64 = await this.fileToBase64(userImage);
-      
-      // Create a proxy URL to handle CORS
-      const proxyUrl = `/api/fashn/run`; // This assumes you'll set up a proxy endpoint
+      const pImage = await this.convertImageToBase64(productImage);
 
-      const response = await fetch(proxyUrl, {
+      const response = await fetch(`${this.API_URL}/run`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${this.apiKey}`,
@@ -53,7 +51,7 @@ class FashnTryOnService {
         },
         body: JSON.stringify({
           model_image: userImageBase64,
-          garment_image: productImage,
+          garment_image: pImage,
           category,
           ...DEFAULT_OPTIONS,
           ...options,
@@ -65,10 +63,8 @@ class FashnTryOnService {
       }
 
       const result = await response.json();
-      
-      // Poll for status until complete
       const finalResult = await this.pollStatus(result.id);
-      return finalResult.images || [];
+      return finalResult.output || [];
     } catch (error: any) {
       console.error('Error generating try-on image:', error);
       toast.error(error.message || 'Failed to generate try-on images');
@@ -82,9 +78,7 @@ class FashnTryOnService {
     let attempts = 0;
 
     while (attempts < maxAttempts) {
-      const proxyUrl = `/api/fashn/status/${id}`; // This assumes you'll set up a proxy endpoint
-      
-      const response = await fetch(proxyUrl, {
+      const response = await fetch(`${this.API_URL}/status/${id}`, {
         headers: {
           'Authorization': `Bearer ${this.apiKey}`,
         },
@@ -95,7 +89,7 @@ class FashnTryOnService {
       }
 
       const result = await response.json();
-      
+
       if (result.status === 'completed') {
         return result;
       } else if (result.status === 'failed') {
@@ -116,6 +110,26 @@ class FashnTryOnService {
       reader.onload = () => resolve(reader.result as string);
       reader.onerror = error => reject(error);
     });
+  }
+
+  private async convertImageToBase64(imageUrl: string): Promise<string> {
+    try {
+      const response = await fetch(imageUrl);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch image: ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(blob);
+      });
+    } catch (error) {
+      console.error('Error converting image to Base64:', error);
+      throw error;
+    }
   }
 }
 
