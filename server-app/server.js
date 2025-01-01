@@ -1,8 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const config = require('./config/config');
+const connectDB = require('./src/utils/database');
 const productRoutes = require('./src/routes/productRoutes');
 const errorHandler = require('./src/middleware/errorHandler');
+
+// Connect to MongoDB
+connectDB();
 
 const app = express();
 
