@@ -5,7 +5,6 @@ interface Product {
   name: string;
   description: string;
   price: number;
-  image: string;
   brand: string;
   images: Array<{
     id: string;
@@ -25,7 +24,7 @@ export const ProductRecommendations = ({ products, isLoading }: ProductRecommend
 
   return (
     <div className="mt-6">
-      <ProductList products={products} isLoading={isLoading} />
+      <ProductList products={products} isLoading={isLoading} isAIResult={true} />
     </div>
   );
 };

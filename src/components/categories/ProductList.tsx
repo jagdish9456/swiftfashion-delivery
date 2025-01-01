@@ -5,7 +5,6 @@ interface Product {
   name: string;
   description: string;
   price: number;
-  image: string;
   brand: string;
   images: Array<{
     id: string;
@@ -15,13 +14,16 @@ interface Product {
   }>;
 }
 
+const PLACEHOLDER_IMAGE = "https://png.pngtree.com/png-clipart/20220626/original/pngtree-default-placeholder-businessman-half-length-portr-png-image_8195580.png";
+
 interface ProductListProps {
   products: Product[];
   isLoading?: boolean;
   lastProductRef?: (node: HTMLDivElement | null) => void;
+  isAIResult?: boolean;
 }
 
-export const ProductList = ({ products, isLoading, lastProductRef }: ProductListProps) => {
+export const ProductList = ({ products, isLoading, lastProductRef, isAIResult = false }: ProductListProps) => {
   if (isLoading) {
     return <div className="animate-pulse">Loading...</div>;
   }
@@ -38,7 +40,7 @@ export const ProductList = ({ products, isLoading, lastProductRef }: ProductList
             name={product.name}
             description={product.description}
             price={product.price}
-            image={product.image}
+            image={isAIResult ? PLACEHOLDER_IMAGE : (product.images[0]?.url || "/placeholder.svg")}
             brand={product.brand}
           />
         </div>

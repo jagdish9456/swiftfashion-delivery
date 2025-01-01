@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Check } from "lucide-react";
 import { useState } from "react";
+import { TryOnDialog } from "@/components/product/TryOnDialog";
 
 const ProductDetails = () => {
   const { toast } = useToast();
@@ -134,6 +135,7 @@ const ProductDetails = () => {
       description: "Product has been added to your shopping bag",
     });
   };
+  const [isTryOnOpen, setIsTryOnOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -290,8 +292,21 @@ const ProductDetails = () => {
         >
           ADD TO BAG
         </Button>
-        <Button className="flex-1 bg-red-500 hover:bg-red-600">BUY NOW</Button>
+        <Button
+          variant="secondary"
+          onClick={() => setIsTryOnOpen(true)}
+          className="flex-1 bg-purple-600 hover:bg-purple-700 text-white"
+        >
+          TRY IT ON
+        </Button>
       </div>
+
+      {/* Try On Dialog */}
+      <TryOnDialog
+        isOpen={isTryOnOpen}
+        onClose={() => setIsTryOnOpen(false)}
+        productImage={product.images[0]}
+      />
     </div>
   );
 };

@@ -4,27 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { generateProductRecommendations, generateContextualResponse } from "@/services/gemini";
 import { toast } from "@/hooks/use-toast";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
-import productsData from "@/data/product-all.json";
 import { ProductRecommendations } from "@/components/ai/ProductRecommendations";
-import { VoiceButton } from "@/components/ai/VoiceButton";
-import { TranscriptDisplay } from "@/components/ai/TranscriptDisplay";
+import { VoiceControls } from "@/components/ai/VoiceControls";
+import { AIResponseLoader } from "@/components/ai/AIResponseLoader";
 
 interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  brand: string;
-  images: Array<{
-    id: string;
-    url: string;
-    alt: string;
-    isDefault: boolean;
-  }>;
-}
-
-interface APIProduct {
   id: string;
   name: string;
   description: string;
@@ -44,6 +28,7 @@ export const AIVoiceAgent = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [aiResponse, setAiResponse] = useState("");
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const handleTranscript = async (text: string) => {
     setTranscript(text);
@@ -51,28 +36,6 @@ export const AIVoiceAgent = () => {
   };
 
   const { isListening, startListening, stopListening } = useSpeechRecognition(handleTranscript);
-
-  const mapToProduct = (apiProduct: APIProduct): Product => ({
-    id: apiProduct.id,
-    name: apiProduct.name,
-    description: apiProduct.description,
-    price: apiProduct.price,
-    image: apiProduct.images[0]?.url || "/placeholder.svg",
-    brand: apiProduct.brand,
-    images: apiProduct.images
-  });
-
-  const findSimilarProducts = (query: string, limit: number): Product[] => {
-    const searchTerms = query.toLowerCase().split(' ');
-    
-    return productsData.products
-      .filter(product => {
-        const searchableText = `${product.name} ${product.description} ${product.tags.join(' ')}`.toLowerCase();
-        return searchTerms.some(term => searchableText.includes(term));
-      })
-      .slice(0, limit)
-      .map(mapToProduct);
-  };
 
   const handleSubmit = async (text: string) => {
     if (!text.trim()) return;
@@ -90,28 +53,9 @@ export const AIVoiceAgent = () => {
         } else {
           response = "I don't see any products to describe yet. Would you like to search for something specific?";
         }
-      } else if (text.toLowerCase().includes('material') && text.toLowerCase().includes('second')) {
-        const secondProduct = products[1];
-        if (secondProduct) {
-          response = await generateContextualResponse(text, [secondProduct], aiResponse);
-          finalProducts = products;
-        } else {
-          response = "I don't see a second product to describe. Would you like to search for something specific?";
-        }
-      } else if (text.toLowerCase().includes('similar') && text.toLowerCase().includes('second')) {
-        const secondProduct = products[1];
-        if (secondProduct) {
-          finalProducts = findSimilarProducts(secondProduct.name, 5);
-          response = "Here are similar products you might like:";
-        } else {
-          response = "I don't see a second product to find similar items for. Would you like to search for something specific?";
-        }
       } else {
         const recommendations = await generateProductRecommendations(text);
-        finalProducts = recommendations.length > 0 
-          ? recommendations.map(mapToProduct)
-          : findSimilarProducts(text, 5);
-        
+        finalProducts = recommendations;
         response = await generateContextualResponse(text, finalProducts, aiResponse);
       }
       
@@ -134,12 +78,11 @@ export const AIVoiceAgent = () => {
     }
   };
 
-  const handleToggleListening = () => {
-    if (isListening) {
-      stopListening();
-    } else {
-      startListening();
-    }
+  const handleBack = () => {
+    setIsNavigating(true);
+    setTimeout(() => {
+      navigate("/ai-chat");
+    }, 100);
   };
 
   useEffect(() => {
@@ -155,10 +98,18 @@ export const AIVoiceAgent = () => {
     };
   }, []);
 
+  if (isNavigating) {
+    return <AIResponseLoader />;
+  }
+
   return (
-    <div className="min-h-screen pb-16 bg-gray-50">
-      <div className="bg-white text-gray-900 p-4 flex items-center gap-2 shadow-sm">
-        <button onClick={() => navigate("/ai-chat")} className="p-2">
+    <div className="min-h-screen pb-16 bg-gray-50 overflow-x-hidden">
+      <div className="bg-white text-gray-900 p-4 flex items-center gap-2 shadow-sm sticky top-0 z-50">
+        <button 
+          onClick={handleBack} 
+          className="p-2 active:scale-95 transition-transform"
+          style={{ touchAction: 'manipulation' }}
+        >
           <ArrowLeft className="h-5 w-5" />
         </button>
         <h1 className="text-lg font-medium">Quickkyy - AI Voice Assistant</h1>
@@ -166,23 +117,19 @@ export const AIVoiceAgent = () => {
       
       <main className="p-4">
         <div className="max-w-2xl mx-auto space-y-6">
-          <ProductRecommendations 
-            products={products}
-            isLoading={isLoading}
-          />
+          {isLoading ? (
+            <AIResponseLoader />
+          ) : (
+            <ProductRecommendations 
+              products={products}
+              isLoading={isLoading}
+            />
+          )}
           
-          <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200">
-            <div className="max-w-2xl mx-auto">
-              <VoiceButton 
-                isListening={isListening}
-                onToggleListening={handleToggleListening}
-              />
-            </div>
-          </div>
-
-          <TranscriptDisplay 
-            transcript={transcript}
+          <VoiceControls 
             isListening={isListening}
+            transcript={transcript}
+            onToggleListening={isListening ? stopListening : startListening}
           />
         </div>
       </main>

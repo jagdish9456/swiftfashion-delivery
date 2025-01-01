@@ -7,6 +7,7 @@ import { generateProductRecommendations } from "@/services/gemini";
 import { ProductList } from "@/components/categories/ProductList";
 import { toast } from "@/hooks/use-toast";
 import { BottomNav } from "@/components/layout/BottomNav";
+import { AIResponseLoader } from "@/components/ai/AIResponseLoader";
 
 export const AIChat = () => {
   const navigate = useNavigate();
@@ -67,10 +68,14 @@ export const AIChat = () => {
             </Button>
           </form>
 
-          {products.length > 0 && (
-            <div className="mt-6">
-              <ProductList products={products} isLoading={isLoading} />
-            </div>
+          {isLoading ? (
+            <AIResponseLoader />
+          ) : (
+            products.length > 0 && (
+              <div className="mt-6">
+                <ProductList products={products} isLoading={isLoading} isAIResult={true} />
+              </div>
+            )
           )}
         </div>
       </main>
