@@ -45,20 +45,18 @@ export const OTPForm = ({ onSubmit, onBack, isLoading, mobileNumber }: OTPFormPr
                   </p>
                   <InputOTP
                     maxLength={6}
-                    value={field.value}
-                    onChange={(value) => field.onChange(value)}
                     render={({ slots }) => (
                       <InputOTPGroup className="gap-2">
                         {slots.map((slot, idx) => (
                           <InputOTPSlot
                             key={idx}
                             {...slot}
-                            index={idx}
                             className="bg-white/90 border-0"
                           />
                         ))}
                       </InputOTPGroup>
                     )}
+                    {...field}
                   />
                 </div>
               </FormControl>
