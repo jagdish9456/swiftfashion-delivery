@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-const mobileFormSchema = z.object({
+export const mobileFormSchema = z.object({
   mobile: z
     .string()
     .min(10, "Mobile number must be 10 digits")

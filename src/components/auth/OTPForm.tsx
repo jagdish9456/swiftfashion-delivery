@@ -11,7 +11,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
 
-const otpFormSchema = z.object({
+export const otpFormSchema = z.object({
   otp: z.string().length(6, "OTP must be 6 digits"),
 })
 

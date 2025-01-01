@@ -4,6 +4,8 @@ import { useToast } from "@/hooks/use-toast"
 import { MobileForm } from "@/components/auth/MobileForm"
 import { OTPForm } from "@/components/auth/OTPForm"
 import { z } from "zod"
+import { mobileFormSchema } from "@/components/auth/MobileForm"
+import { otpFormSchema } from "@/components/auth/OTPForm"
 
 export const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
