@@ -1,8 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import { Package2, Heart, Gift, Headphones, ChevronRight, ArrowLeft, Bell } from "lucide-react";
+import { Package2, Heart, Gift, Headphones, ChevronRight, ArrowLeft, Bell, LogOut } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export const Profile = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated");
+    toast({
+      title: "Success",
+      description: "Logged out successfully",
+    });
+    navigate("/login", { replace: true });
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -86,6 +97,16 @@ export const Profile = () => {
             </div>
             <ChevronRight className="h-5 w-5 text-gray-400" />
           </div>
+        </div>
+
+        <div className="p-4">
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center gap-2 p-3 bg-red-50 text-red-600 rounded-lg border border-red-200 hover:bg-red-100 transition-colors"
+          >
+            <LogOut className="h-5 w-5" />
+            <span>Logout</span>
+          </button>
         </div>
       </main>
     </div>
