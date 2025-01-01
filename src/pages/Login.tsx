@@ -181,6 +181,8 @@ export const Login = () => {
                           </p>
                           <InputOTP
                             maxLength={6}
+                            value={field.value}
+                            onChange={field.onChange}
                             render={({ slots }) => (
                               <InputOTPGroup className="gap-2">
                                 {slots.map((slot, idx) => (
@@ -193,7 +195,6 @@ export const Login = () => {
                                 ))}
                               </InputOTPGroup>
                             )}
-                            {...field}
                           />
                         </div>
                       </FormControl>
