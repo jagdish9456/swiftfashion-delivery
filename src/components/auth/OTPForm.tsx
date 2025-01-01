@@ -51,6 +51,7 @@ export const OTPForm = ({ onSubmit, onBack, isLoading, mobileNumber }: OTPFormPr
                           <InputOTPSlot
                             key={idx}
                             {...slot}
+                            index={idx}
                             className="bg-white/90 border-0"
                           />
                         ))}
