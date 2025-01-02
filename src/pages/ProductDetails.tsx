@@ -10,7 +10,7 @@ import { Check } from "lucide-react";
 import { useState } from "react";
 import { TryOnDialog } from "@/components/product/TryOnDialog";
 
-const ProductDetails = () => {
+export const ProductDetails = () => {
   const { toast } = useToast();
   const { addItem } = useCart();
   const [selectedSize, setSelectedSize] = useState("S");
@@ -310,5 +310,3 @@ const ProductDetails = () => {
     </div>
   );
 };
-
-export default ProductDetails;
