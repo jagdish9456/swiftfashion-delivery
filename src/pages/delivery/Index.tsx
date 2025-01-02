@@ -1,11 +1,12 @@
 import { Home, Wallet, MessageSquare, User } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { Switch } from "@/components/ui/switch";
+import { Link } from "react-router-dom";
 import { useState } from "react";
+import { StatusCard } from "@/components/delivery/StatusCard";
+import { OrdersCard } from "@/components/delivery/OrdersCard";
+import { TransactionCard } from "@/components/delivery/TransactionCard";
 
 export const DeliveryIndex = () => {
   const [isOnline, setIsOnline] = useState(true);
-  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-white">
@@ -29,55 +30,19 @@ export const DeliveryIndex = () => {
       </div>
 
       {/* Status Section */}
-      <div className="p-4 bg-white shadow-sm m-4 rounded-xl border">
-        <div className="flex justify-between items-center">
-          <div>
-            <h2 className="text-xl font-semibold text-gray-800">Status: {isOnline ? 'Online' : 'Offline'}</h2>
-            <p className="text-gray-500 text-sm">Open to any delivery.</p>
-          </div>
-          <Switch 
-            checked={isOnline} 
-            onCheckedChange={setIsOnline}
-          />
-        </div>
+      <div className="p-4">
+        <StatusCard isOnline={isOnline} onStatusChange={setIsOnline} />
       </div>
 
       {/* Orders Section */}
-      <div className="p-4 bg-white shadow-sm m-4 rounded-xl border">
-        <div className="flex items-center space-x-4">
-          <div className="bg-primary-50 p-3 rounded-xl">
-            <img src="/placeholder.svg" alt="Orders" className="w-8 h-8" />
-          </div>
-          <div className="flex-1">
-            <div className="flex justify-between items-center">
-              <div>
-                <h3 className="text-lg font-semibold text-gray-800">4 delivery orders found!</h3>
-                <p className="text-primary">View details &gt;</p>
-              </div>
-              <div className="bg-orange-100 px-4 py-2 rounded-xl flex items-center space-x-2">
-                <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
-                <p className="text-orange-700 text-sm font-medium">Rush hour</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="p-4">
+        <OrdersCard />
       </div>
 
       {/* Recent Transactions */}
       <div className="p-4">
         <h2 className="text-xl font-semibold mb-4 text-gray-800">Recent Transactions</h2>
-        <div className="bg-white shadow-sm p-4 rounded-xl border">
-          <div className="flex justify-between items-center">
-            <div>
-              <h3 className="font-semibold text-gray-800">5 batch deliveries</h3>
-              <p className="text-sm text-gray-500">Today, 1:23 pm • 18.7 mi</p>
-            </div>
-            <div className="text-right">
-              <p className="font-semibold text-gray-800">+ $79.90</p>
-              <p className="text-sm text-primary">+ $21.10 tips</p>
-            </div>
-          </div>
-        </div>
+        <TransactionCard />
       </div>
 
       {/* Bottom Navigation */}

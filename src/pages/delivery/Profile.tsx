@@ -1,4 +1,4 @@
-import { ArrowLeft, User, MapPin, Phone, Mail, LogOut } from "lucide-react";
+import { ArrowLeft, User, MapPin, Phone, Mail, LogOut, Award, Star, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
@@ -13,7 +13,6 @@ export const DeliveryProfile = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <div className="bg-primary p-6 relative">
         <button onClick={() => navigate(-1)} className="absolute top-6 left-4">
           <ArrowLeft className="h-6 w-6 text-white" />
@@ -21,24 +20,49 @@ export const DeliveryProfile = () => {
         <h1 className="text-2xl font-bold text-center mt-8 text-white">Profile</h1>
       </div>
 
-      {/* Profile Info */}
       <div className="p-4 -mt-6">
         <div className="bg-white rounded-xl p-6 shadow-sm">
           <div className="flex flex-col items-center">
-            <div className="w-24 h-24 bg-gray-100 rounded-full mb-4">
+            <div className="w-24 h-24 bg-primary-50 rounded-full mb-4 relative">
               <img
-                src="/placeholder.svg"
+                src="https://sr-website.shiprocket.in/wp-content/uploads/2024/10/q-f-i-4.webp"
                 alt="Profile"
                 className="w-full h-full rounded-full object-cover"
               />
+              <div className="absolute -bottom-2 -right-2 bg-green-500 p-1 rounded-full">
+                <Star className="h-4 w-4 text-white" />
+              </div>
             </div>
             <h2 className="text-xl font-bold text-gray-800">Alex Johnson</h2>
             <p className="text-gray-500">Partner ID: #123456</p>
+            
+            <div className="flex gap-4 mt-4">
+              <div className="text-center">
+                <div className="bg-primary-50 p-2 rounded-lg mb-1">
+                  <Award className="h-5 w-5 text-primary" />
+                </div>
+                <p className="text-xs font-medium">Level 4</p>
+              </div>
+              <div className="text-center">
+                <div className="bg-yellow-50 p-2 rounded-lg mb-1">
+                  <Star className="h-5 w-5 text-yellow-500" />
+                </div>
+                <p className="text-xs font-medium">4.8 Rating</p>
+              </div>
+              <div className="text-center">
+                <div className="bg-blue-50 p-2 rounded-lg mb-1">
+                  <Clock className="h-5 w-5 text-blue-500" />
+                </div>
+                <p className="text-xs font-medium">2 Years</p>
+              </div>
+            </div>
           </div>
 
           <div className="mt-8 space-y-6">
             <div className="flex items-center space-x-4">
-              <User className="h-5 w-5 text-primary" />
+              <div className="bg-primary-50 p-2 rounded-lg">
+                <User className="h-5 w-5 text-primary" />
+              </div>
               <div>
                 <p className="text-sm text-gray-500">Full Name</p>
                 <p className="font-medium text-gray-800">Alex Johnson</p>
@@ -46,7 +70,9 @@ export const DeliveryProfile = () => {
             </div>
 
             <div className="flex items-center space-x-4">
-              <Phone className="h-5 w-5 text-primary" />
+              <div className="bg-primary-50 p-2 rounded-lg">
+                <Phone className="h-5 w-5 text-primary" />
+              </div>
               <div>
                 <p className="text-sm text-gray-500">Phone Number</p>
                 <p className="font-medium text-gray-800">+91 9900990099</p>
@@ -54,7 +80,9 @@ export const DeliveryProfile = () => {
             </div>
 
             <div className="flex items-center space-x-4">
-              <Mail className="h-5 w-5 text-primary" />
+              <div className="bg-primary-50 p-2 rounded-lg">
+                <Mail className="h-5 w-5 text-primary" />
+              </div>
               <div>
                 <p className="text-sm text-gray-500">Email</p>
                 <p className="font-medium text-gray-800">alex.j@example.com</p>
@@ -62,7 +90,9 @@ export const DeliveryProfile = () => {
             </div>
 
             <div className="flex items-center space-x-4">
-              <MapPin className="h-5 w-5 text-primary" />
+              <div className="bg-primary-50 p-2 rounded-lg">
+                <MapPin className="h-5 w-5 text-primary" />
+              </div>
               <div>
                 <p className="text-sm text-gray-500">Service Area</p>
                 <p className="font-medium text-gray-800">Mumbai Central</p>

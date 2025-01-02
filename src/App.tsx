@@ -1,88 +1,20 @@
-import { Routes, Route } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { CartProvider } from "@/contexts/CartContext";
-import { ScrollToTop } from "@/components/utils/ScrollToTop";
-import { SmoothScrollProvider } from "@/components/utils/SmoothScrollProvider";
-import { Toaster } from "@/components/ui/toaster";
-import { Index } from "@/pages/Index";
-import { Categories } from "@/pages/Categories";
-import ProductDetails from "@/pages/ProductDetails";
-import { GenderCategories } from "@/pages/GenderCategories";
-import { SetLocation } from "@/pages/SetLocation";
-import { Profile } from "@/pages/Profile";
-import { ProfileDetails } from "@/pages/ProfileDetails";
-import { Orders } from "@/pages/Orders";
-import { Cart } from "@/pages/Cart";
-import { NearYou } from "@/pages/NearYou";
-import { Notifications } from "@/pages/Notifications";
-import { AIChat } from "@/pages/AIChat";
-import { AIVoiceAgent } from "@/pages/AIVoiceAgent";
-import { FloatingAIButton } from "@/components/ai/FloatingAIButton";
-import { Login } from "@/pages/Login";
-import { Wishlist } from "@/pages/Wishlist";
-import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
-import { SearchResults } from "@/pages/SearchResults";
-import { PromoPopup } from "@/components/popups/PromoPopup";
-import { TrackOrder } from "@/pages/TrackOrder";
-import { useCapacitorBackButton } from "@/hooks/useCapacitorBackButton";
-import { DeliveryIndex } from "@/pages/delivery/Index";
-import { DeliveryProfile } from "@/pages/delivery/Profile";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { DeliveryIndex } from "./pages/delivery/Index";
+import { SearchOrder } from "./pages/delivery/SearchOrder";
+import { DeliveryProfile } from "./pages/delivery/Profile";
+import { DeliveryWallet } from "./pages/delivery/Wallet";
+import { DeliveryChat } from "./pages/delivery/Chat";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 3,
-      staleTime: 5 * 60 * 1000,
-      refetchOnWindowFocus: false,
-      meta: {
-        onError: (error: Error) => {
-          console.error('Query Error:', error);
-        }
-      }
-    },
-  },
-});
-
-function App() {
-  useCapacitorBackButton();
-
+export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <CartProvider>
-        <SmoothScrollProvider>
-          <ScrollToTop />
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            
-            {/* Customer Routes */}
-            <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
-            <Route path="/category/:id" element={<ProtectedRoute><Categories /></ProtectedRoute>} />
-            <Route path="/product/:id" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} />
-            <Route path="/gender-categories" element={<ProtectedRoute><GenderCategories /></ProtectedRoute>} />
-            <Route path="/set-location" element={<ProtectedRoute><SetLocation /></ProtectedRoute>} />
-            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-            <Route path="/profile/details" element={<ProtectedRoute><ProfileDetails /></ProtectedRoute>} />
-            <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
-            <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-            <Route path="/near-you" element={<ProtectedRoute><NearYou /></ProtectedRoute>} />
-            <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
-            <Route path="/ai-chat" element={<ProtectedRoute><AIChat /></ProtectedRoute>} />
-            <Route path="/ai-voice-agent" element={<ProtectedRoute><AIVoiceAgent /></ProtectedRoute>} />
-            <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
-            <Route path="/search" element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
-            <Route path="/track-order/:orderId" element={<ProtectedRoute><TrackOrder /></ProtectedRoute>} />
-            
-            {/* Delivery Partner Routes */}
-            <Route path="/delivery" element={<ProtectedRoute><DeliveryIndex /></ProtectedRoute>} />
-            <Route path="/delivery/profile" element={<ProtectedRoute><DeliveryProfile /></ProtectedRoute>} />
-          </Routes>
-          <FloatingAIButton />
-          <PromoPopup />
-          <Toaster />
-        </SmoothScrollProvider>
-      </CartProvider>
-    </QueryClientProvider>
+    <Router>
+      <Routes>
+        <Route path="/delivery" element={<DeliveryIndex />} />
+        <Route path="/delivery/search-order" element={<SearchOrder />} />
+        <Route path="/delivery/profile" element={<DeliveryProfile />} />
+        <Route path="/delivery/wallet" element={<DeliveryWallet />} />
+        <Route path="/delivery/chat" element={<DeliveryChat />} />
+      </Routes>
+    </Router>
   );
 }
-
-export default App;
