@@ -88,22 +88,25 @@ export const AIChat = () => {
             </div>
           )}
 
+          {/* Predefined Prompts - Moved above the input box */}
           {showPrompts && (
-            <div className="flex flex-wrap gap-2">
-              {predefinedPrompts.map((prompt, index) => (
-                <button
-                  key={index}
-                  onClick={() => handlePromptClick(prompt)}
-                  className="p-2 text-xs text-primary-600 bg-white rounded-lg shadow-sm hover:bg-primary-50 transition-colors flex-1"
-                >
-                  {prompt}
-                </button>
-              ))}
+            <div className="fixed bottom-32 left-0 right-0 px-3 z-10">
+              <div className="max-w-2xl mx-auto flex flex-col gap-2">
+                {predefinedPrompts.map((prompt, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handlePromptClick(prompt)}
+                    className="w-full p-2 text-xs text-primary-600 bg-white rounded-lg shadow-sm hover:bg-primary-50 transition-colors text-left"
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
           {/* Search Results with padding bottom to prevent content hiding */}
-          <div className="pb-20">
+          <div className="pb-32">
             {isLoading ? (
               <AIResponseLoader />
             ) : (
@@ -113,6 +116,17 @@ export const AIChat = () => {
                 </div>
               )
             )}
+          </div>
+
+          {/* Floating Voice Button - Adjusted position above text box */}
+          <div className="fixed left-4 bottom-28 z-50">
+            <Button
+              size="icon"
+              className="h-10 w-10 rounded-full shadow-lg bg-primary hover:bg-primary/90"
+              onClick={() => navigate("/ai-voice-agent")}
+            >
+              <Mic className="h-5 w-5 text-white" />
+            </Button>
           </div>
 
           {/* Input Form */}
@@ -136,17 +150,6 @@ export const AIChat = () => {
           </form>
         </div>
       </main>
-
-      {/* Floating Voice Button - Adjusted position and size */}
-      <div className="fixed left-4 bottom-24 z-50">
-        <Button
-          size="icon"
-          className="h-10 w-10 rounded-full shadow-lg bg-primary hover:bg-primary/90"
-          onClick={() => navigate("/ai-voice-agent")}
-        >
-          <Mic className="h-5 w-5 text-white" />
-        </Button>
-      </div>
 
       <BottomNav />
     </div>
