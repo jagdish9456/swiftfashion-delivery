@@ -19,6 +19,7 @@ import { TrackOrder } from "./pages/TrackOrder";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { DeliveryIndex } from "./pages/delivery/Index";
 import { SearchOrder } from "./pages/delivery/SearchOrder";
+import { PickupScreen } from "./pages/delivery/PickupScreen";
 import { DeliveryProfile } from "./pages/delivery/Profile";
 import { DeliveryWallet } from "./pages/delivery/Wallet";
 import { DeliveryChat } from "./pages/delivery/Chat";
@@ -50,6 +51,7 @@ export default function App() {
       {/* Protected Delivery Partner Routes */}
       <Route path="/delivery" element={<ProtectedRoute><DeliveryIndex /></ProtectedRoute>} />
       <Route path="/delivery/search-order" element={<ProtectedRoute><SearchOrder /></ProtectedRoute>} />
+      <Route path="/delivery/pickup/:orderId" element={<ProtectedRoute><PickupScreen /></ProtectedRoute>} />
       <Route path="/delivery/profile" element={<ProtectedRoute><DeliveryProfile /></ProtectedRoute>} />
       <Route path="/delivery/wallet" element={<ProtectedRoute><DeliveryWallet /></ProtectedRoute>} />
       <Route path="/delivery/chat" element={<ProtectedRoute><DeliveryChat /></ProtectedRoute>} />

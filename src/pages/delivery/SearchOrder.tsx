@@ -1,4 +1,4 @@
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -6,6 +6,11 @@ import { useState } from "react";
 export const SearchOrder = () => {
   const navigate = useNavigate();
   const [isAnimating, setIsAnimating] = useState(true);
+
+  const handleAcceptOrder = () => {
+    // Navigate to pickup screen with the order ID
+    navigate('/delivery/pickup/567100248');
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -62,7 +67,10 @@ export const SearchOrder = () => {
             >
               Deny
             </Button>
-            <Button className="flex-1 bg-green-500 hover:bg-green-600">
+            <Button 
+              className="flex-1 bg-green-500 hover:bg-green-600"
+              onClick={handleAcceptOrder}
+            >
               Accept order
             </Button>
           </div>
