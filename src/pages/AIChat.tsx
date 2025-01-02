@@ -21,6 +21,7 @@ export const AIChat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [showPrompts, setShowPrompts] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(true);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,6 +29,7 @@ export const AIChat = () => {
 
     setIsLoading(true);
     setShowPrompts(false);
+    setShowWelcome(false);
     try {
       const recommendations = await generateProductRecommendations(message);
       setProducts(recommendations);
@@ -55,44 +57,44 @@ export const AIChat = () => {
 
   return (
     <div className="min-h-screen pb-16 bg-gray-50">
-      <div className="bg-white text-gray-900 p-4 flex items-center gap-2 shadow-sm">
-        <button onClick={() => navigate("/")} className="p-2">
-          <ArrowLeft className="h-5 w-5" />
+      <div className="bg-white text-gray-900 p-3 flex items-center gap-2 shadow-sm">
+        <button onClick={() => navigate("/")} className="p-1">
+          <ArrowLeft className="h-4 w-4" />
         </button>
         <div className="flex flex-col">
-          <h1 className="text-lg font-medium">Maya</h1>
-          <p className="text-sm text-gray-500">Your ChatGPT powered assistant</p>
+          <h1 className="text-base font-medium">Maya</h1>
+          <p className="text-xs text-gray-500">Your ChatGPT powered assistant</p>
         </div>
       </div>
       
-      <main className="p-4">
-        <div className="max-w-2xl mx-auto space-y-6">
-          {/* AI Welcome Message */}
-          <div className="flex gap-3 items-start">
-            <div className="w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center text-white">
-              M
-            </div>
-            <div className="flex flex-col gap-2">
-              <div className="bg-white p-4 rounded-lg shadow-sm">
-                <p className="text-lg font-medium">Hi, I am Maya ❤️</p>
-                <p className="text-gray-600">
-                  I am here to help you get your fashion and beauty needs met.
-                </p>
+      <main className="p-3 pb-24">
+        <div className="max-w-2xl mx-auto space-y-4">
+          {showWelcome && (
+            <div className="flex gap-2 items-start">
+              <div className="w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center text-white text-xs">
+                M
               </div>
-              <div className="bg-white p-4 rounded-lg shadow-sm">
-                <p>How can I assist you today?</p>
+              <div className="flex flex-col gap-2">
+                <div className="bg-white p-3 rounded-lg shadow-sm">
+                  <p className="text-sm font-medium">Hi, I am Maya ❤️</p>
+                  <p className="text-xs text-gray-600">
+                    I am here to help you get your fashion and beauty needs met.
+                  </p>
+                </div>
+                <div className="bg-white p-3 rounded-lg shadow-sm">
+                  <p className="text-xs">How can I assist you today?</p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
-          {/* Predefined Prompts */}
           {showPrompts && (
-            <div className="space-y-2">
+            <div className="flex flex-wrap gap-2">
               {predefinedPrompts.map((prompt, index) => (
                 <button
                   key={index}
                   onClick={() => handlePromptClick(prompt)}
-                  className="w-full p-4 text-left text-primary-600 bg-white rounded-lg shadow-sm hover:bg-primary-50 transition-colors"
+                  className="p-2 text-xs text-primary-600 bg-white rounded-lg shadow-sm hover:bg-primary-50 transition-colors flex-1"
                 >
                   {prompt}
                 </button>
@@ -100,47 +102,49 @@ export const AIChat = () => {
             </div>
           )}
 
-          {/* Search Results */}
-          {isLoading ? (
-            <AIResponseLoader />
-          ) : (
-            products.length > 0 && (
-              <div className="mt-6">
-                <ProductList products={products} isLoading={isLoading} isAIResult={true} />
-              </div>
-            )
-          )}
+          {/* Search Results with padding bottom to prevent content hiding */}
+          <div className="pb-20">
+            {isLoading ? (
+              <AIResponseLoader />
+            ) : (
+              products.length > 0 && (
+                <div className="mt-4">
+                  <ProductList products={products} isLoading={isLoading} isAIResult={true} />
+                </div>
+              )
+            )}
+          </div>
 
           {/* Input Form */}
-          <form onSubmit={handleSubmit} className="fixed bottom-16 left-0 right-0 p-4 bg-gray-50">
+          <form onSubmit={handleSubmit} className="fixed bottom-16 left-0 right-0 p-3 bg-gray-50">
             <div className="max-w-2xl mx-auto relative">
               <input
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type here..."
-                className="w-full p-4 pr-12 rounded-full bg-white border border-gray-200 focus:outline-none focus:border-primary-500"
+                className="w-full p-3 pr-12 rounded-full bg-white border border-gray-200 focus:outline-none focus:border-primary-500 text-sm"
               />
               <Button
                 type="submit"
                 size="icon"
-                className="absolute right-2 top-1/2 -translate-y-1/2"
+                className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8"
                 disabled={!message.trim() || isLoading}
               >
-                <Send className="h-4 w-4" />
+                <Send className="h-3 w-3" />
               </Button>
             </div>
           </form>
         </div>
       </main>
 
-      {/* Floating Voice Button */}
-      <div className="fixed left-4 bottom-20 z-50">
+      {/* Floating Voice Button - Adjusted position and size */}
+      <div className="fixed left-4 bottom-24 z-50">
         <Button
           size="icon"
-          className="h-12 w-12 rounded-full shadow-lg bg-primary hover:bg-primary/90"
+          className="h-10 w-10 rounded-full shadow-lg bg-primary hover:bg-primary/90"
           onClick={() => navigate("/ai-voice-agent")}
         >
-          <Mic className="h-6 w-6 text-white" />
+          <Mic className="h-5 w-5 text-white" />
         </Button>
       </div>
 
