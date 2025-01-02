@@ -8,55 +8,55 @@ export const DeliveryIndex = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#1A1F2C] text-white">
+    <div className="min-h-screen bg-white">
       {/* Header Section */}
-      <div className="bg-[#4CAF50] p-6 rounded-b-[30px]">
+      <div className="bg-primary p-6 rounded-b-[30px]">
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
-            <span className="bg-[#388E3C] px-3 py-1 rounded-full text-sm">Level 4</span>
+            <span className="bg-primary-600 px-3 py-1 rounded-full text-sm text-white">Level 4</span>
           </div>
-          <h1 className="text-2xl font-bold">Partner Alex</h1>
+          <h1 className="text-2xl font-bold text-white">Partner Alex</h1>
           <div className="space-y-1">
-            <p className="text-sm opacity-90">YOUR EARNINGS</p>
-            <p className="text-4xl font-bold">$ 157.34</p>
+            <p className="text-sm text-white/90">YOUR EARNINGS</p>
+            <p className="text-4xl font-bold text-white">$ 157.34</p>
           </div>
         </div>
         <img 
-          src="/public/lovable-uploads/ffa76e9f-02dd-4288-aa1f-07d05ea54eca.png" 
+          src="https://sr-website.shiprocket.in/wp-content/uploads/2024/10/q-f-i-4.webp" 
           alt="Delivery Partner" 
           className="w-48 h-48 object-contain absolute top-4 right-4"
         />
       </div>
 
       {/* Status Section */}
-      <div className="p-4 bg-white dark:bg-[#221F26] m-4 rounded-xl">
+      <div className="p-4 bg-white shadow-sm m-4 rounded-xl border">
         <div className="flex justify-between items-center">
           <div>
-            <h2 className="text-xl font-semibold">Status: {isOnline ? 'Online' : 'Offline'}</h2>
-            <p className="text-gray-500 dark:text-gray-400 text-sm">Open to any delivery.</p>
+            <h2 className="text-xl font-semibold text-gray-800">Status: {isOnline ? 'Online' : 'Offline'}</h2>
+            <p className="text-gray-500 text-sm">Open to any delivery.</p>
           </div>
           <Switch 
             checked={isOnline} 
             onCheckedChange={setIsOnline}
-            className="bg-gray-200 dark:bg-gray-700"
           />
         </div>
       </div>
 
       {/* Orders Section */}
-      <div className="p-4 bg-white dark:bg-[#221F26] m-4 rounded-xl">
+      <div className="p-4 bg-white shadow-sm m-4 rounded-xl border">
         <div className="flex items-center space-x-4">
-          <div className="bg-orange-100 p-3 rounded-xl">
+          <div className="bg-primary-50 p-3 rounded-xl">
             <img src="/placeholder.svg" alt="Orders" className="w-8 h-8" />
           </div>
           <div className="flex-1">
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="text-lg font-semibold">4 delivery orders found!</h3>
-                <p className="text-[#4CAF50]">View details &gt;</p>
+                <h3 className="text-lg font-semibold text-gray-800">4 delivery orders found!</h3>
+                <p className="text-primary">View details &gt;</p>
               </div>
-              <div className="bg-red-100 dark:bg-red-900/20 px-3 py-1 rounded-full">
-                <p className="text-red-600 dark:text-red-400 text-sm">Rush hour, be careful.</p>
+              <div className="bg-orange-100 px-4 py-2 rounded-xl flex items-center space-x-2">
+                <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
+                <p className="text-orange-700 text-sm font-medium">Rush hour</p>
               </div>
             </div>
           </div>
@@ -65,25 +65,25 @@ export const DeliveryIndex = () => {
 
       {/* Recent Transactions */}
       <div className="p-4">
-        <h2 className="text-xl font-semibold mb-4">Recent Transactions</h2>
-        <div className="bg-white dark:bg-[#221F26] p-4 rounded-xl">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800">Recent Transactions</h2>
+        <div className="bg-white shadow-sm p-4 rounded-xl border">
           <div className="flex justify-between items-center">
             <div>
-              <h3 className="font-semibold">5 batch deliveries</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Today, 1:23 pm • 18.7 mi</p>
+              <h3 className="font-semibold text-gray-800">5 batch deliveries</h3>
+              <p className="text-sm text-gray-500">Today, 1:23 pm • 18.7 mi</p>
             </div>
             <div className="text-right">
-              <p className="font-semibold">+ $79.90</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">+ $21.10 tips</p>
+              <p className="font-semibold text-gray-800">+ $79.90</p>
+              <p className="text-sm text-primary">+ $21.10 tips</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-[#221F26] border-t border-gray-200 dark:border-gray-800">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200">
         <div className="flex justify-around items-center h-16">
-          <Link to="/delivery" className="flex flex-col items-center text-[#4CAF50]">
+          <Link to="/delivery" className="flex flex-col items-center text-primary">
             <Home className="h-6 w-6" />
             <span className="text-xs mt-1">Home</span>
           </Link>
