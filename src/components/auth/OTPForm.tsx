@@ -40,34 +40,36 @@ export const OTPForm = ({ onSubmit, onBack, isLoading, mobileNumber }: OTPFormPr
             <FormItem>
               <FormControl>
                 <div className="flex flex-col items-center space-y-4">
-                  <p className="text-white text-sm">
+                  <p className="text-white text-sm mb-4">
                     Enter OTP sent to +91 {mobileNumber}
                   </p>
-                  <InputOTP
-                    maxLength={6}
-                    value={field.value}
-                    onChange={field.onChange}
-                    render={({ slots }) => (
-                      <InputOTPGroup className="gap-2">
-                        {slots.map((slot, idx) => (
-                          <InputOTPSlot
-                            key={idx}
-                            {...slot}
-                            index={idx}
-                            className="bg-white/90 border-0"
-                          />
-                        ))}
-                      </InputOTPGroup>
-                    )}
-                  />
+                  <div className="w-full max-w-[360px] mx-auto">
+                    <InputOTP
+                      maxLength={6}
+                      value={field.value}
+                      onChange={field.onChange}
+                      render={({ slots }) => (
+                        <InputOTPGroup className="gap-2 justify-center">
+                          {slots.map((slot, idx) => (
+                            <InputOTPSlot
+                              key={idx}
+                              {...slot}
+                              index={idx}
+                              className="w-12 h-12 text-lg bg-white/90 border-2 border-primary-300 focus:border-primary-500 rounded-lg"
+                            />
+                          ))}
+                        </InputOTPGroup>
+                      )}
+                    />
+                  </div>
                 </div>
               </FormControl>
-              <FormMessage className="text-primary-200" />
+              <FormMessage className="text-primary-200 text-center mt-2" />
             </FormItem>
           )}
         />
 
-        <div className="space-y-3">
+        <div className="space-y-3 mt-8">
           <Button
             type="submit"
             className="w-full bg-gradient-to-r from-primary-400 to-primary-500 hover:from-primary-500 hover:to-primary-600 text-white font-semibold py-3 rounded-full"
