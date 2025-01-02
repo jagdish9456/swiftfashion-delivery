@@ -11,15 +11,19 @@ export const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [showOTP, setShowOTP] = useState(false)
   const [mobileNumber, setMobileNumber] = useState("")
+  const [userRole, setUserRole] = useState<"user" | "delivery">("user")
   const navigate = useNavigate()
   const { toast } = useToast()
 
   useEffect(() => {
     const isAuthenticated = localStorage.getItem("isAuthenticated") === "true"
-    console.log("Authentication check:", isAuthenticated)
+    const role = localStorage.getItem("userRole")
     if (isAuthenticated) {
-      console.log("User is authenticated, redirecting to home")
-      navigate("/")
+      if (role === "delivery") {
+        navigate("/delivery")
+      } else {
+        navigate("/")
+      }
     }
   }, [navigate])
 
@@ -28,6 +32,15 @@ export const Login = () => {
     try {
       console.log("Mobile submitted:", values.mobile)
       if (values.mobile === "7289993664") {
+        setUserRole("user")
+        setMobileNumber(values.mobile)
+        setShowOTP(true)
+        toast({
+          title: "Success",
+          description: "OTP sent successfully",
+        })
+      } else if (values.mobile === "9900990099") {
+        setUserRole("delivery")
         setMobileNumber(values.mobile)
         setShowOTP(true)
         toast({
@@ -52,10 +65,14 @@ export const Login = () => {
     try {
       console.log("OTP submitted:", values.otp)
       if (values.otp === "123456") {
-        console.log("Valid OTP, setting localStorage and redirecting")
         localStorage.setItem("isAuthenticated", "true")
+        localStorage.setItem("userRole", userRole)
         
-        navigate("/", { replace: true })
+        if (userRole === "delivery") {
+          navigate("/delivery", { replace: true })
+        } else {
+          navigate("/", { replace: true })
+        }
         
         setTimeout(() => {
           toast({
@@ -63,10 +80,7 @@ export const Login = () => {
             description: "Logged in successfully",
           })
         }, 100)
-        
-        console.log("Navigation and toast triggered")
       } else {
-        console.log("Invalid OTP")
         toast({
           variant: "destructive",
           title: "Error",
@@ -87,10 +101,10 @@ export const Login = () => {
               quickyy
             </h1>
             <h2 className="text-3xl font-bold text-white text-center mb-1">
-              Clothes
+              {userRole === "delivery" ? "Partner Login" : "Customer Login"}
             </h2>
             <h3 className="text-2xl font-bold text-white text-center mb-8">
-              delivered in 90 minutes
+              {userRole === "delivery" ? "Deliver with us" : "delivered in 90 minutes"}
             </h3>
           </div>
 

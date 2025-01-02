@@ -25,6 +25,8 @@ import { SearchResults } from "@/pages/SearchResults";
 import { PromoPopup } from "@/components/popups/PromoPopup";
 import { TrackOrder } from "@/pages/TrackOrder";
 import { useCapacitorBackButton } from "@/hooks/useCapacitorBackButton";
+import { DeliveryIndex } from "@/pages/delivery/Index";
+import { DeliveryProfile } from "@/pages/delivery/Profile";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -51,6 +53,8 @@ function App() {
           <ScrollToTop />
           <Routes>
             <Route path="/login" element={<Login />} />
+            
+            {/* Customer Routes */}
             <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/category/:id" element={<ProtectedRoute><Categories /></ProtectedRoute>} />
             <Route path="/product/:id" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} />
@@ -67,6 +71,10 @@ function App() {
             <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
             <Route path="/search" element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
             <Route path="/track-order/:orderId" element={<ProtectedRoute><TrackOrder /></ProtectedRoute>} />
+            
+            {/* Delivery Partner Routes */}
+            <Route path="/delivery" element={<ProtectedRoute><DeliveryIndex /></ProtectedRoute>} />
+            <Route path="/delivery/profile" element={<ProtectedRoute><DeliveryProfile /></ProtectedRoute>} />
           </Routes>
           <FloatingAIButton />
           <PromoPopup />
