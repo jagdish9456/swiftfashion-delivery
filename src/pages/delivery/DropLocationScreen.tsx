@@ -3,33 +3,29 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { LocationMap } from "@/components/address/LocationMap";
 
-export const PickupScreen = () => {
+export const DropLocationScreen = () => {
   const navigate = useNavigate();
-  const center = { lat: 28.4595, lng: 77.0266 }; // DLF Phase 1, Gurugram coordinates
-
-  const handleMapClick = (e: google.maps.MapMouseEvent) => {
-    // Handle map click events if needed
-  };
+  const center = { lat: 28.4595, lng: 77.0266 }; // DLF Phase 4, Gurugram coordinates
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white p-4 flex items-center gap-2 border-b">
-        <button onClick={() => navigate('/delivery')} className="p-2">
+        <button onClick={() => navigate(-1)} className="p-2">
           <ArrowLeft className="h-5 w-5" />
         </button>
-        <h1 className="text-lg font-medium">Reach pickup</h1>
+        <h1 className="text-lg font-medium">Reach drop</h1>
       </div>
 
       <div className="relative h-[40vh]">
-        <LocationMap center={center} onClick={handleMapClick} />
+        <LocationMap center={center} onClick={() => {}} />
       </div>
 
       <div className="p-4 space-y-4">
         <div className="bg-white rounded-lg shadow-sm">
           <div className="p-4 space-y-4">
-            <h2 className="text-xl font-semibold">Burger Shop</h2>
+            <h2 className="text-xl font-semibold">Shreni Dand</h2>
             <p className="text-gray-600">
-              Ground Floor, DT Mega Mall, DLF Phase 1, Gurugram
+              B5/156, Second Floor, Galaxy Apartments, Near St. Mary's School, Sector 42, Gurugram
             </p>
 
             <div className="bg-gray-50 rounded-lg p-3">
@@ -57,20 +53,23 @@ export const PickupScreen = () => {
 
           <div className="border-t p-4 space-y-3">
             <div className="flex items-center gap-3 text-gray-600">
-              <span className="text-sm">Order: 567100248</span>
+              <span className="text-sm">Order: 567100428</span>
             </div>
             <div className="flex items-center gap-3 text-gray-600">
-              <span className="text-sm">Customer: Shreni Dand</span>
+              <span className="text-sm">Pickup: Burger Shop</span>
             </div>
           </div>
         </div>
 
         <Button 
           className="w-full bg-green-500 hover:bg-green-600 text-white h-14 rounded-full"
-          onClick={() => navigate('/delivery/order/567100248')}
+          onClick={() => {
+            // Handle reached drop location
+            navigate('/delivery');
+          }}
         >
           <span className="mr-2">»</span>
-          Reached pickup location
+          Reached drop location
         </Button>
       </div>
     </div>
