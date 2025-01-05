@@ -67,9 +67,10 @@ export const PickupScreen = () => {
 
         <Button 
           className="w-full bg-green-500 hover:bg-green-600 text-white h-14 rounded-full"
-          onClick={() => navigate('/delivery/order/567100248')}
+          onClick={() => {
+            // Handle reached pickup location
+          }}
         >
-          <span className="mr-2">»</span>
           Reached pickup location
         </Button>
       </div>
