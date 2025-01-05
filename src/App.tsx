@@ -23,6 +23,8 @@ import { PickupScreen } from "./pages/delivery/PickupScreen";
 import { DeliveryProfile } from "./pages/delivery/Profile";
 import { DeliveryWallet } from "./pages/delivery/Wallet";
 import { DeliveryChat } from "./pages/delivery/Chat";
+import { OrderDetailsScreen } from "./pages/delivery/OrderDetailsScreen";
+import { DropLocationScreen } from "./pages/delivery/DropLocationScreen";
 
 export default function App() {
   return (
@@ -52,6 +54,8 @@ export default function App() {
       <Route path="/delivery" element={<ProtectedRoute><DeliveryIndex /></ProtectedRoute>} />
       <Route path="/delivery/search-order" element={<ProtectedRoute><SearchOrder /></ProtectedRoute>} />
       <Route path="/delivery/pickup/:orderId" element={<ProtectedRoute><PickupScreen /></ProtectedRoute>} />
+      <Route path="/delivery/order-details/:orderId" element={<ProtectedRoute><OrderDetailsScreen /></ProtectedRoute>} />
+      <Route path="/delivery/drop-location/:orderId" element={<ProtectedRoute><DropLocationScreen /></ProtectedRoute>} />
       <Route path="/delivery/profile" element={<ProtectedRoute><DeliveryProfile /></ProtectedRoute>} />
       <Route path="/delivery/wallet" element={<ProtectedRoute><DeliveryWallet /></ProtectedRoute>} />
       <Route path="/delivery/chat" element={<ProtectedRoute><DeliveryChat /></ProtectedRoute>} />
