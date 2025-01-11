@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import { VRErrorBoundary } from './VRErrorBoundary';
 import { VRProductCard } from './VRProductCard';
 import * as THREE from 'three';
+import { useLoader } from '@react-three/fiber';
+import { TextureLoader } from 'three';
 
 const dummyProducts = [
   { id: '1', name: 'Product 1', image: '/placeholder.svg', position: [-4, 2, -2] as [number, number, number] },
@@ -20,7 +22,8 @@ const dummyProducts = [
 
 export const VRCategoryView = () => {
   const { categoryId } = useParams();
-
+  const backgroundTexture = useLoader(TextureLoader, "https://media.istockphoto.com/id/1219824966/video/a-fashionistas-haven.jpg");
+  
   useEffect(() => {
     const enterFullscreen = () => {
       if (document.documentElement.requestFullscreen) {
@@ -57,9 +60,7 @@ export const VRCategoryView = () => {
             {/* Background */}
             <mesh position={[0, 0, -5]}>
               <planeGeometry args={[20, 10]} />
-              <meshBasicMaterial>
-                <meshBasicMaterial map={useLoader(THREE.TextureLoader, "https://media.istockphoto.com/id/1219824966/video/a-fashionistas-haven.jpg")} />
-              </meshBasicMaterial>
+              <meshBasicMaterial map={backgroundTexture} />
             </mesh>
 
             {/* Product Cards */}

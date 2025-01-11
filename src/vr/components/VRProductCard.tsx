@@ -24,7 +24,7 @@ export const VRProductCard = ({ name, image, position, productId }: VRProductCar
   });
 
   // Apply filter effects to texture
-  texture.encoding = THREE.sRGBEncoding;
+  texture.colorSpace = THREE.SRGBColorSpace;
   texture.needsUpdate = true;
 
   return (

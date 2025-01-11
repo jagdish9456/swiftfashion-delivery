@@ -30,7 +30,7 @@ export const VRCategoryCard = ({ name, image, position, categoryId }: VRCategory
   };
 
   // Apply filter effects to texture
-  texture.encoding = THREE.sRGBEncoding;
+  texture.colorSpace = THREE.SRGBColorSpace;
   texture.needsUpdate = true;
 
   return (

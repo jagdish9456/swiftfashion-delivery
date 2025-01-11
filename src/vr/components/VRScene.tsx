@@ -6,6 +6,7 @@ import { VRNavigation } from './VRNavigation';
 import { VRErrorBoundary } from './VRErrorBoundary';
 import * as THREE from 'three';
 import { useLoader } from '@react-three/fiber';
+import { TextureLoader } from 'three';
 
 const categories = [
   {
@@ -81,8 +82,8 @@ export const VRScene = () => {
     };
   }, []);
 
-  const backgroundTexture = useLoader(THREE.TextureLoader, "https://media.istockphoto.com/id/1219824966/video/a-fashionistas-haven.jpg");
-  backgroundTexture.encoding = THREE.sRGBEncoding;
+  const backgroundTexture = useLoader(TextureLoader, "https://media.istockphoto.com/id/1219824966/video/a-fashionistas-haven.jpg");
+  backgroundTexture.colorSpace = THREE.SRGBColorSpace;
 
   return (
     <div className="h-screen w-screen">
