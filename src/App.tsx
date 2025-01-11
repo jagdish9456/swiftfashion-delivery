@@ -30,10 +30,11 @@ import { DropLocationScreen } from "./pages/delivery/DropLocationScreen";
 import { ShopDashboard } from "./pages/shop/Index"
 import { Menu } from "./pages/shop/Menu"
 
+import { VRView } from "./pages/VRView";
+
 export default function App() {
   return (
     <Routes>
-      {/* Public Route */}
       <Route path="/login" element={<Login />} />
 
       {/* Protected Customer Routes */}
@@ -53,8 +54,7 @@ export default function App() {
       <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
       <Route path="/search" element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
       <Route path="/track-order/:orderId" element={<ProtectedRoute><TrackOrder /></ProtectedRoute>} />
-
-      {/* Protected Delivery Partner Routes */}
+      <Route path="/vr-view" element={<ProtectedRoute><VRView /></ProtectedRoute>} />
       <Route path="/delivery" element={<ProtectedRoute><DeliveryIndex /></ProtectedRoute>} />
       <Route path="/delivery/search-order" element={<ProtectedRoute><SearchOrder /></ProtectedRoute>} />
       <Route path="/delivery/pickup/:orderId" element={<ProtectedRoute><PickupScreen /></ProtectedRoute>} />

@@ -1,4 +1,4 @@
-import { Bell, UserRound } from "lucide-react";
+import { Bell, UserRound, Glasses } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -51,6 +51,14 @@ export const Header = () => {
         <div className="flex items-center justify-between">
           <LocationButton address={location.address} area={location.area} />
           <div className="flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-8 w-8"
+              onClick={() => navigate("/vr-view")}
+            >
+              <Glasses className="h-4 w-4" />
+            </Button>
             <Button 
               variant="ghost" 
               size="icon" 
