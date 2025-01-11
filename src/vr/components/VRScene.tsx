@@ -1,60 +1,68 @@
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment, Preload } from '@react-three/drei';
-import { Suspense, useState } from 'react';
+import { OrbitControls, Environment } from '@react-three/drei';
+import { Suspense } from 'react';
+import { VRRestaurantCard } from './VRRestaurantCard';
 import { VRNavigation } from './VRNavigation';
 import { VRErrorBoundary } from './VRErrorBoundary';
-import { VRShowroom } from './VRShowroom';
-import { VRCategoryMenu } from './VRCategoryMenu';
-import categoryData from '@/data/category.json';
+
+const restaurants = [
+  {
+    id: 1,
+    name: "Pizza Hut",
+    image: "/lovable-uploads/bc5a7aa2-424a-4b9b-82c9-423b3da8ef4a.png",
+    position: [-2, 0, 0] as [number, number, number]
+  },
+  {
+    id: 2,
+    name: "Dominos Pizza",
+    image: "/lovable-uploads/bc5a7aa2-424a-4b9b-82c9-423b3da8ef4a.png",
+    position: [0, 0, 0] as [number, number, number]
+  },
+  {
+    id: 3,
+    name: "Burger King",
+    image: "/lovable-uploads/bc5a7aa2-424a-4b9b-82c9-423b3da8ef4a.png",
+    position: [2, 0, 0] as [number, number, number]
+  }
+];
 
 export const VRScene = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
   return (
-    <VRErrorBoundary>
-      <Canvas
-        camera={{ 
-          position: [0, 1.6, 1.5], // Moved camera even closer for better zoom
-          fov: 60,               // Narrower field of view for more focus
-          near: 0.1,
-          far: 1000
-        }}
-        gl={{ 
-          antialias: true,
-          alpha: true,
-          powerPreference: "high-performance",
-          preserveDrawingBuffer: true
-        }}
-        dpr={[1, 2]}
-        shadows
-      >
-        <Suspense fallback={null}>
-          <Environment preset="sunset" />
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} castShadow />
-          
-          <group position={[0, 0, 0]}>
-            <VRShowroom />
-            <VRCategoryMenu 
-              categories={categoryData.categories}
-              onSelectCategory={setSelectedCategory}
-            />
+    <div className="h-screen w-screen">
+      <VRErrorBoundary>
+        <Canvas
+          camera={{ position: [0, 0, 5], fov: 75 }}
+          gl={{ 
+            antialias: true,
+            alpha: true,
+            powerPreference: "high-performance",
+          }}
+          dpr={[1, 2]}
+        >
+          <Suspense fallback={null}>
+            <Environment preset="sunset" />
+            <ambientLight intensity={0.5} />
+            <pointLight position={[10, 10, 10]} />
+            
+            {restaurants.map((restaurant) => (
+              <VRRestaurantCard
+                key={restaurant.id}
+                name={restaurant.name}
+                image={restaurant.image}
+                position={restaurant.position}
+              />
+            ))}
+            
             <VRNavigation />
-          </group>
-          
-          <OrbitControls 
-            enableZoom={true} 
-            enablePan={true} 
-            enableRotate={true}
-            maxPolarAngle={Math.PI / 1.8}
-            minPolarAngle={Math.PI / 3}
-            maxDistance={6}    // Further reduced max distance
-            minDistance={1}    // Reduced min distance for closer zoom
-            makeDefault
-          />
-          <Preload all />
-        </Suspense>
-      </Canvas>
-    </VRErrorBoundary>
+            <OrbitControls 
+              enableZoom={true} 
+              enablePan={true} 
+              enableRotate={true}
+              makeDefault
+            />
+          </Suspense>
+        </Canvas>
+      </VRErrorBoundary>
+    </div>
   );
 };
