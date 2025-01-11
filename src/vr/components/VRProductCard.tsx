@@ -1,6 +1,6 @@
 import { Text } from '@react-three/drei';
 import { useFrame, useThree, useLoader } from '@react-three/fiber';
-import { useRef, useState } from 'react';
+import { useRef, useState, useTransition } from 'react';
 import * as THREE from 'three';
 import { TextureLoader } from 'three';
 
@@ -16,6 +16,7 @@ export const VRProductCard = ({ name, image, position, productId }: VRProductCar
   const [hovered, setHovered] = useState(false);
   const { camera } = useThree();
   const texture = useLoader(TextureLoader, image);
+  const [isPending, startTransition] = useTransition();
 
   useFrame(() => {
     if (meshRef.current) {

@@ -1,6 +1,6 @@
 import { Text } from '@react-three/drei';
 import { useFrame, useThree, useLoader } from '@react-three/fiber';
-import { useRef, useState } from 'react';
+import { useRef, useState, useTransition } from 'react';
 import * as THREE from 'three';
 import { useNavigate } from 'react-router-dom';
 import { TextureLoader } from 'three';
@@ -18,6 +18,7 @@ export const VRCategoryCard = ({ name, image, position, categoryId }: VRCategory
   const navigate = useNavigate();
   const { camera } = useThree();
   const texture = useLoader(TextureLoader, image);
+  const [isPending, startTransition] = useTransition();
 
   useFrame(() => {
     if (meshRef.current) {
@@ -26,7 +27,9 @@ export const VRCategoryCard = ({ name, image, position, categoryId }: VRCategory
   });
 
   const handleClick = () => {
-    navigate(`/vr-category/${categoryId}`);
+    startTransition(() => {
+      navigate(`/vr-category/${categoryId}`);
+    });
   };
 
   // Apply filter effects to texture
