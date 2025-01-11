@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom"
 import { Login } from "./pages/Login";
 import { Index } from "./pages/Index";
 import { Categories } from "./pages/Categories";
@@ -25,6 +25,9 @@ import { DeliveryWallet } from "./pages/delivery/Wallet";
 import { DeliveryChat } from "./pages/delivery/Chat";
 import { OrderDetailsScreen } from "./pages/delivery/OrderDetailsScreen";
 import { DropLocationScreen } from "./pages/delivery/DropLocationScreen";
+
+// Import shop pages
+import { ShopDashboard } from "./pages/shop/Index"
 
 export default function App() {
   return (
@@ -59,6 +62,9 @@ export default function App() {
       <Route path="/delivery/profile" element={<ProtectedRoute><DeliveryProfile /></ProtectedRoute>} />
       <Route path="/delivery/wallet" element={<ProtectedRoute><DeliveryWallet /></ProtectedRoute>} />
       <Route path="/delivery/chat" element={<ProtectedRoute><DeliveryChat /></ProtectedRoute>} />
+
+      {/* Protected Shop Partner Routes */}
+      <Route path="/shop" element={<ProtectedRoute><ShopDashboard /></ProtectedRoute>} />
     </Routes>
-  );
+  )
 }

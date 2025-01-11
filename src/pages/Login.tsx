@@ -11,7 +11,7 @@ export const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [showOTP, setShowOTP] = useState(false)
   const [mobileNumber, setMobileNumber] = useState("")
-  const [userRole, setUserRole] = useState<"user" | "delivery">("user")
+  const [userRole, setUserRole] = useState<"user" | "delivery" | "shop">("user")
   const navigate = useNavigate()
   const { toast } = useToast()
 
@@ -21,6 +21,8 @@ export const Login = () => {
     if (isAuthenticated) {
       if (role === "delivery") {
         navigate("/delivery")
+      } else if (role === "shop") {
+        navigate("/shop")
       } else {
         navigate("/")
       }
@@ -35,20 +37,15 @@ export const Login = () => {
         setUserRole("user")
         setMobileNumber(values.mobile)
         setShowOTP(true)
-        toast({
-          title: "Success",
-          description: "OTP sent successfully",
-        })
       } else if (values.mobile === "9900990099") {
         setUserRole("delivery")
         setMobileNumber(values.mobile)
         setShowOTP(true)
-        toast({
-          title: "Success",
-          description: "OTP sent successfully",
-        })
+      } else if (values.mobile === "9988998899") {
+        setUserRole("shop")
+        setMobileNumber(values.mobile)
+        setShowOTP(true)
       } else {
-        console.log("Invalid mobile number")
         toast({
           variant: "destructive",
           title: "Error",
