@@ -2,14 +2,14 @@ import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 
 export const VRShowroom = () => {
-  // Using a placeholder showroom background image
-  const texture = useTexture('https://images.unsplash.com/photo-1487958449943-2429e8be8625');
+  // Using the provided showroom background image
+  const texture = useTexture('https://media.istockphoto.com/id/1219824966/video/a-fashionistas-haven.jpg?s=640x640&k=20&c=J1CFL-ZA46Fz9hS8EVNP0VvdkgcASXGDmsn0WbG2ztU=');
   
   return (
     <group>
       {/* Floor */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]} receiveShadow>
-        <planeGeometry args={[40, 40]} />
+        <planeGeometry args={[20, 20]} />
         <meshStandardMaterial 
           color="#1A1F2C"
           metalness={0.2}
@@ -18,20 +18,19 @@ export const VRShowroom = () => {
       </mesh>
 
       {/* Main wall with showroom background */}
-      <mesh position={[0, 8, -20]}>
-        <planeGeometry args={[40, 20]} />
+      <mesh position={[0, 4, -10]}>
+        <planeGeometry args={[20, 10]} />
         <meshStandardMaterial 
           map={texture}
-          color="#221F26"
-          opacity={0.9}
           transparent
+          opacity={0.95}
           side={THREE.DoubleSide}
         />
       </mesh>
 
       {/* Side walls */}
-      <mesh position={[-20, 8, 0]} rotation={[0, Math.PI / 2, 0]}>
-        <planeGeometry args={[40, 20]} />
+      <mesh position={[-10, 4, 0]} rotation={[0, Math.PI / 2, 0]}>
+        <planeGeometry args={[20, 10]} />
         <meshStandardMaterial 
           color="#1A1F2C"
           metalness={0.2}
@@ -40,8 +39,8 @@ export const VRShowroom = () => {
         />
       </mesh>
 
-      <mesh position={[20, 8, 0]} rotation={[0, -Math.PI / 2, 0]}>
-        <planeGeometry args={[40, 20]} />
+      <mesh position={[10, 4, 0]} rotation={[0, -Math.PI / 2, 0]}>
+        <planeGeometry args={[20, 10]} />
         <meshStandardMaterial 
           color="#1A1F2C"
           metalness={0.2}
@@ -50,15 +49,13 @@ export const VRShowroom = () => {
         />
       </mesh>
 
-      {/* Mannequins (simplified as geometric shapes) */}
-      {[-5, 0, 5].map((x, index) => (
-        <group key={index} position={[x, -1, -15]}>
-          {/* Body */}
+      {/* Mannequins */}
+      {[-3, 0, 3].map((x, index) => (
+        <group key={index} position={[x, -1, -8]}>
           <mesh castShadow>
             <capsuleGeometry args={[0.3, 1.5, 4, 8]} />
             <meshStandardMaterial color="#444" metalness={0.2} roughness={0.8} />
           </mesh>
-          {/* Head */}
           <mesh position={[0, 1.2, 0]} castShadow>
             <sphereGeometry args={[0.2, 16, 16]} />
             <meshStandardMaterial color="#444" metalness={0.2} roughness={0.8} />
@@ -66,25 +63,24 @@ export const VRShowroom = () => {
         </group>
       ))}
 
-      {/* Lighting */}
+      {/* Enhanced Lighting */}
       <spotLight
-        position={[0, 10, 0]}
-        angle={0.3}
+        position={[0, 8, 0]}
+        angle={0.4}
         penumbra={1}
-        intensity={1}
+        intensity={1.5}
         castShadow
       />
       
-      {/* Additional ambient lighting for better visibility */}
-      <ambientLight intensity={0.4} />
+      <ambientLight intensity={0.6} />
       
-      {/* Point lights for dramatic effect */}
-      {[-10, 0, 10].map((x, index) => (
+      {/* Accent lights */}
+      {[-5, 0, 5].map((x, index) => (
         <pointLight
           key={index}
-          position={[x, 8, -10]}
-          intensity={0.5}
-          distance={20}
+          position={[x, 6, -5]}
+          intensity={0.8}
+          distance={15}
           decay={2}
         />
       ))}

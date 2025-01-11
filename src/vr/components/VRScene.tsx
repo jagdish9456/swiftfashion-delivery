@@ -13,7 +13,12 @@ export const VRScene = () => {
   return (
     <VRErrorBoundary>
       <Canvas
-        camera={{ position: [0, 2, 8], fov: 75 }}
+        camera={{ 
+          position: [0, 1.6, 3], // Adjusted for better human-height perspective
+          fov: 70,               // Slightly wider field of view
+          near: 0.1,
+          far: 1000
+        }}
         gl={{ 
           antialias: true,
           alpha: true,
@@ -41,8 +46,10 @@ export const VRScene = () => {
             enableZoom={true} 
             enablePan={true} 
             enableRotate={true}
-            maxPolarAngle={Math.PI / 1.5}
-            minPolarAngle={Math.PI / 4}
+            maxPolarAngle={Math.PI / 1.8}
+            minPolarAngle={Math.PI / 3}
+            maxDistance={10}
+            minDistance={2}
             makeDefault
           />
           <Preload all />
