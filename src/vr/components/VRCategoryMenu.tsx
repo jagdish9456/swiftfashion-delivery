@@ -36,13 +36,17 @@ export const VRCategoryMenu = ({ categories, onSelectCategory }: VRCategoryMenuP
             onPointerOver={() => setHoveredIndex(index)}
             onPointerOut={() => setHoveredIndex(null)}
           >
-            <mesh>
+            <mesh castShadow>
               <planeGeometry args={[1.5, 1]} />
               <meshStandardMaterial 
                 color={hoveredIndex === index ? "#9b87f5" : "#7c6bd6"}
                 metalness={0.5}
                 roughness={0.5}
-              />
+                transparent
+                opacity={0.9}
+              >
+                <primitive attach="map" object={new THREE.TextureLoader().load(category.image)} />
+              </meshStandardMaterial>
             </mesh>
             <Text
               position={[0, 0, 0.1]}
