@@ -10,10 +10,10 @@ interface VRRestaurantCardProps {
 }
 
 export const VRRestaurantCard = ({ name, image, position }: VRRestaurantCardProps) => {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const meshRef = useRef<THREE.Mesh>(null!);
   const [hovered, setHovered] = useState(false);
 
-  useFrame((state) => {
+  useFrame(() => {
     if (meshRef.current) {
       meshRef.current.rotation.y += 0.01;
     }
