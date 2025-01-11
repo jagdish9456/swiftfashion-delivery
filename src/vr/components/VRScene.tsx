@@ -1,12 +1,9 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment, Text } from '@react-three/drei';
-import { Suspense, useEffect } from 'react';
-import { VRCategoryCard } from './VRCategoryCard';
-import { VRNavigation } from './VRNavigation';
+import { Suspense, lazy } from 'react';
 import { VRErrorBoundary } from './VRErrorBoundary';
-import * as THREE from 'three';
-import { useLoader } from '@react-three/fiber';
-import { TextureLoader } from 'three';
+import { VRCategoryCard } from './VRCategoryCard';
+import { VRBackground } from './VRBackground';
 
 const categories = [
   {
@@ -65,57 +62,6 @@ const categories = [
   }
 ];
 
-// Background component with proper THREE.js initialization
-const Background = () => {
-  const textures = {
-    background: useLoader(TextureLoader, "https://images.unsplash.com/photo-1441986300917-64674bd600d8"),
-    left: useLoader(TextureLoader, "https://images.unsplash.com/photo-1490481651871-ab68de25d43d"),
-    right: useLoader(TextureLoader, "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc"),
-    top: useLoader(TextureLoader, "https://images.unsplash.com/photo-1469334031218-e382a71b716b"),
-    bottom: useLoader(TextureLoader, "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04")
-  };
-
-  useEffect(() => {
-    Object.values(textures).forEach(texture => {
-      if (texture) {
-        texture.colorSpace = THREE.SRGBColorSpace;
-        texture.needsUpdate = true;
-        return () => texture.dispose();
-      }
-    });
-  }, [textures]);
-
-  return (
-    <group>
-      <mesh position={[0, 0, -5]} renderOrder={-1}>
-        <planeGeometry args={[20, 10]} />
-        <meshBasicMaterial map={textures.background} transparent opacity={0.8} />
-      </mesh>
-      
-      <mesh position={[-10, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
-        <planeGeometry args={[10, 10]} />
-        <meshBasicMaterial map={textures.left} transparent opacity={0.8} />
-      </mesh>
-      
-      <mesh position={[10, 0, 0]} rotation={[0, -Math.PI / 2, 0]}>
-        <planeGeometry args={[10, 10]} />
-        <meshBasicMaterial map={textures.right} transparent opacity={0.8} />
-      </mesh>
-      
-      <mesh position={[0, 5, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[20, 10]} />
-        <meshBasicMaterial map={textures.top} transparent opacity={0.8} />
-      </mesh>
-      
-      <mesh position={[0, -5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[20, 10]} />
-        <meshBasicMaterial map={textures.bottom} transparent opacity={0.8} />
-      </mesh>
-    </group>
-  );
-};
-
-// CategoryCards component with proper initialization
 const CategoryCards = () => {
   return (
     <group>
@@ -123,7 +69,18 @@ const CategoryCards = () => {
         const row = Math.floor(index / 3);
         const col = index % 3;
         return (
-          <Suspense key={category.id} fallback={null}>
+          <Suspense 
+            key={category.id} 
+            fallback={
+              <Text
+                position={[(col - 1) * 4, 1 - row * 2.5, -2]}
+                fontSize={0.2}
+                color="white"
+              >
+                Loading...
+              </Text>
+            }
+          >
             <VRCategoryCard
               name={category.name}
               image={category.image}
@@ -149,12 +106,11 @@ const VRContent = () => {
       <pointLight position={[10, 10, 10]} intensity={1.5} />
       
       <Suspense fallback={null}>
-        <Background />
+        <VRBackground />
       </Suspense>
 
       <CategoryCards />
       
-      <VRNavigation />
       <OrbitControls 
         enableZoom={true}
         minDistance={3}
