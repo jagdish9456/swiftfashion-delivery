@@ -22,7 +22,8 @@ const dummyProducts = [
 
 export const VRCategoryView = () => {
   const { categoryId } = useParams();
-  const backgroundTexture = useLoader(TextureLoader, "https://media.istockphoto.com/id/1219824966/video/a-fashionistas-haven.jpg");
+  const backgroundTexture = useLoader(TextureLoader, "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1470&auto=format&fit=crop");
+  backgroundTexture.colorSpace = THREE.SRGBColorSpace;
   
   useEffect(() => {
     const enterFullscreen = () => {
