@@ -65,6 +65,8 @@ export default function App() {
 
       {/* Protected Shop Partner Routes */}
       <Route path="/shop" element={<ProtectedRoute><ShopDashboard /></ProtectedRoute>} />
+      <Route path="/shop/profile" element={<ProtectedRoute><ShopDashboard /></ProtectedRoute>} />
+      <Route path="/shop/settings" element={<ProtectedRoute><ShopDashboard /></ProtectedRoute>} />
     </Routes>
   )
 }
