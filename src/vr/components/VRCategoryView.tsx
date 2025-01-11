@@ -5,6 +5,7 @@ import { VRProductCard } from './VRProductCard';
 import { VRErrorBoundary } from './VRErrorBoundary';
 import { useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
+import { TextureLoader } from 'three';
 
 const dummyProducts = [
   { id: '1', name: 'Product 1', image: '/placeholder.svg', position: [-4, 2, -2] as [number, number, number] },
