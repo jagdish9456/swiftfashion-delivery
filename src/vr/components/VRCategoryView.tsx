@@ -20,11 +20,64 @@ const dummyProducts = [
   { id: '9', name: 'Product 9', image: '/placeholder.svg', position: [4, -2, -2] as [number, number, number] }
 ];
 
-export const VRCategoryView = () => {
-  const { categoryId } = useParams();
+// Separate component for the VR content to handle Suspense
+const VRContent = () => {
   const backgroundTexture = useLoader(TextureLoader, "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1470&auto=format&fit=crop");
   backgroundTexture.colorSpace = THREE.SRGBColorSpace;
-  
+
+  return (
+    <>
+      <Environment preset="sunset" />
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} />
+      
+      {/* Background */}
+      <mesh position={[0, 0, -5]}>
+        <planeGeometry args={[20, 10]} />
+        <meshBasicMaterial map={backgroundTexture} />
+      </mesh>
+
+      {/* Product Cards */}
+      {dummyProducts.map((product) => (
+        <VRProductCard
+          key={product.id}
+          name={product.name}
+          image={product.image}
+          position={product.position}
+          productId={product.id}
+        />
+      ))}
+      
+      <OrbitControls 
+        enableZoom={true}
+        minDistance={3}
+        maxDistance={10}
+        enablePan={false}
+        maxPolarAngle={Math.PI / 2}
+        makeDefault
+      />
+    </>
+  );
+};
+
+// Loading component
+const LoadingScreen = () => {
+  return (
+    <Text
+      position={[0, 0, 0]}
+      fontSize={0.5}
+      color="white"
+      anchorX="center"
+      anchorY="middle"
+    >
+      Loading...
+    </Text>
+  );
+};
+
+export const VRCategoryView = () => {
+  const { categoryId } = useParams();
+
   useEffect(() => {
     const enterFullscreen = () => {
       if (document.documentElement.requestFullscreen) {
@@ -53,36 +106,8 @@ export const VRCategoryView = () => {
           }}
           dpr={[1, 2]}
         >
-          <Suspense fallback={null}>
-            <Environment preset="sunset" />
-            <ambientLight intensity={0.5} />
-            <pointLight position={[10, 10, 10]} />
-            
-            {/* Background */}
-            <mesh position={[0, 0, -5]}>
-              <planeGeometry args={[20, 10]} />
-              <meshBasicMaterial map={backgroundTexture} />
-            </mesh>
-
-            {/* Product Cards */}
-            {dummyProducts.map((product) => (
-              <VRProductCard
-                key={product.id}
-                name={product.name}
-                image={product.image}
-                position={product.position}
-                productId={product.id}
-              />
-            ))}
-            
-            <OrbitControls 
-              enableZoom={true}
-              minDistance={3}
-              maxDistance={10}
-              enablePan={false}
-              maxPolarAngle={Math.PI / 2}
-              makeDefault
-            />
+          <Suspense fallback={<LoadingScreen />}>
+            <VRContent />
           </Suspense>
         </Canvas>
       </VRErrorBoundary>
