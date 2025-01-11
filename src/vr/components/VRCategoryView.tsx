@@ -1,12 +1,10 @@
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment, Text } from '@react-three/drei';
+import { OrbitControls, Environment } from '@react-three/drei';
 import { Suspense, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { VRErrorBoundary } from './VRErrorBoundary';
 import { VRProductCard } from './VRProductCard';
-import * as THREE from 'three';
+import { VRErrorBoundary } from './VRErrorBoundary';
 import { useLoader } from '@react-three/fiber';
-import { TextureLoader } from 'three';
+import * as THREE from 'three';
 
 const dummyProducts = [
   { id: '1', name: 'Product 1', image: '/placeholder.svg', position: [-4, 2, -2] as [number, number, number] },
@@ -20,33 +18,77 @@ const dummyProducts = [
   { id: '9', name: 'Product 9', image: '/placeholder.svg', position: [4, -2, -2] as [number, number, number] }
 ];
 
-// Separate component for the VR content to handle Suspense
 const VRContent = () => {
-  const backgroundTexture = useLoader(TextureLoader, "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1470&auto=format&fit=crop");
-  backgroundTexture.colorSpace = THREE.SRGBColorSpace;
+  const backgroundTexture = useLoader(TextureLoader, "https://images.unsplash.com/photo-1441986300917-64674bd600d8");
+  const leftTexture = useLoader(TextureLoader, "https://images.unsplash.com/photo-1490481651871-ab68de25d43d");
+  const rightTexture = useLoader(TextureLoader, "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc");
+  const topTexture = useLoader(TextureLoader, "https://images.unsplash.com/photo-1469334031218-e382a71b716b");
+  const bottomTexture = useLoader(TextureLoader, "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04");
+
+  [backgroundTexture, leftTexture, rightTexture, topTexture, bottomTexture].forEach(texture => {
+    if (texture) {
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.needsUpdate = true;
+    }
+  });
 
   return (
     <>
       <Environment preset="sunset" />
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
+      <ambientLight intensity={0.7} />
+      <pointLight position={[10, 10, 10]} intensity={1.5} />
       
-      {/* Background */}
-      <mesh position={[0, 0, -5]}>
-        <planeGeometry args={[20, 10]} />
-        <meshBasicMaterial map={backgroundTexture} />
-      </mesh>
+      {/* Background walls */}
+      <group>
+        {/* Back wall */}
+        <mesh position={[0, 0, -5]} renderOrder={-1}>
+          <planeGeometry args={[20, 10]} />
+          <meshBasicMaterial map={backgroundTexture} transparent opacity={0.8} />
+        </mesh>
+        
+        {/* Left wall */}
+        <mesh position={[-10, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+          <planeGeometry args={[10, 10]} />
+          <meshBasicMaterial map={leftTexture} transparent opacity={0.8} />
+        </mesh>
+        
+        {/* Right wall */}
+        <mesh position={[10, 0, 0]} rotation={[0, -Math.PI / 2, 0]}>
+          <planeGeometry args={[10, 10]} />
+          <meshBasicMaterial map={rightTexture} transparent opacity={0.8} />
+        </mesh>
+        
+        {/* Top wall */}
+        <mesh position={[0, 5, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[20, 10]} />
+          <meshBasicMaterial map={topTexture} transparent opacity={0.8} />
+        </mesh>
+        
+        {/* Bottom wall */}
+        <mesh position={[0, -5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[20, 10]} />
+          <meshBasicMaterial map={bottomTexture} transparent opacity={0.8} />
+        </mesh>
+      </group>
 
-      {/* Product Cards */}
-      {dummyProducts.map((product) => (
-        <VRProductCard
-          key={product.id}
-          name={product.name}
-          image={product.image}
-          position={product.position}
-          productId={product.id}
-        />
-      ))}
+      {/* Product Cards with increased spacing */}
+      {dummyProducts.map((product, index) => {
+        const row = Math.floor(index / 3);
+        const col = index % 3;
+        return (
+          <VRProductCard
+            key={product.id}
+            name={product.name}
+            image={product.image}
+            position={[
+              (col - 1) * 4, // Increased horizontal gap
+              1 - row * 2.5,  // Increased vertical gap
+              -2
+            ]}
+            productId={product.id}
+          />
+        );
+      })}
       
       <OrbitControls 
         enableZoom={true}
@@ -55,62 +97,32 @@ const VRContent = () => {
         enablePan={false}
         maxPolarAngle={Math.PI / 2}
         makeDefault
+        enableDamping={true}
+        dampingFactor={0.05}
+        rotateSpeed={0.5}
+        zoomSpeed={0.5}
       />
     </>
   );
 };
 
-// Loading component
-const LoadingScreen = () => {
-  return (
-    <Text
-      position={[0, 0, 0]}
-      fontSize={0.5}
-      color="white"
-      anchorX="center"
-      anchorY="middle"
-    >
-      Loading...
-    </Text>
-  );
-};
-
 export const VRCategoryView = () => {
-  const { categoryId } = useParams();
-
-  useEffect(() => {
-    const enterFullscreen = () => {
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-      }
-    };
-
-    enterFullscreen();
-
-    return () => {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      }
-    };
-  }, []);
-
   return (
     <div className="h-screen w-screen">
-      <VRErrorBoundary>
-        <Canvas
-          camera={{ position: [0, 0, 5], fov: 60 }}
-          gl={{ 
-            antialias: true,
-            alpha: true,
-            powerPreference: "high-performance",
-          }}
-          dpr={[1, 2]}
-        >
-          <Suspense fallback={<LoadingScreen />}>
-            <VRContent />
-          </Suspense>
-        </Canvas>
-      </VRErrorBoundary>
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 60 }}
+        gl={{ 
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+          preserveDrawingBuffer: true
+        }}
+        dpr={[1, 2]}
+      >
+        <Suspense fallback={null}>
+          <VRContent />
+        </Suspense>
+      </Canvas>
     </div>
   );
 };

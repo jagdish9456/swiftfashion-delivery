@@ -18,15 +18,22 @@ export const VRProductCard = ({ name, image, position, productId }: VRProductCar
   const texture = useLoader(TextureLoader, image);
   const [isPending, startTransition] = useTransition();
 
-  useFrame(() => {
+  // Smooth animation for hover effect
+  useFrame((state) => {
     if (meshRef.current) {
       meshRef.current.lookAt(camera.position);
+      meshRef.current.scale.lerp(new THREE.Vector3(
+        hovered ? 1.1 : 1,
+        hovered ? 1.1 : 1,
+        hovered ? 1.1 : 1
+      ), 0.1);
     }
   });
 
-  // Apply filter effects to texture
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.needsUpdate = true;
+  if (texture) {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.needsUpdate = true;
+  }
 
   return (
     <group position={position}>
@@ -34,10 +41,15 @@ export const VRProductCard = ({ name, image, position, productId }: VRProductCar
         ref={meshRef}
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
-        scale={hovered ? 1.2 : 1}
       >
-        <planeGeometry args={[2, 2]} />
-        <meshBasicMaterial transparent opacity={0.8} map={texture} />
+        <boxGeometry args={[2, 2, 0.2]} />
+        <meshPhongMaterial
+          map={texture}
+          transparent
+          opacity={0.9}
+          color="#D6BCFA"
+          side={THREE.DoubleSide}
+        />
       </mesh>
       <Text
         position={[0, -1.2, 0]}
