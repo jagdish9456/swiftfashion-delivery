@@ -48,17 +48,19 @@ export const VRCategoryMenu = ({ categories, onSelectCategory }: VRCategoryMenuP
                 <primitive attach="map" object={new THREE.TextureLoader().load(category.image)} />
               </meshStandardMaterial>
             </mesh>
-            <Text
-              position={[0, 0, 0.1]}
-              fontSize={0.15}
-              color="white"
-              anchorX="center"
-              anchorY="middle"
-              maxWidth={1.3}
-              renderOrder={1}
-            >
-              {category.name}
-            </Text>
+            <group position={[0, 0, 0.1]}>
+              <Text
+                position={[0, 0, 0]}
+                fontSize={0.15}
+                color="white"
+                anchorX="center"
+                anchorY="middle"
+                maxWidth={1.3}
+                renderOrder={1}
+              >
+                {category.name}
+              </Text>
+            </group>
           </group>
         );
       })}
