@@ -9,19 +9,19 @@ const restaurants = [
     id: 1,
     name: "Pizza Hut",
     image: "/lovable-uploads/bc5a7aa2-424a-4b9b-82c9-423b3da8ef4a.png",
-    position: [-2, 0, 0]
+    position: [-2, 0, 0] as [number, number, number]
   },
   {
     id: 2,
     name: "Dominos Pizza",
     image: "/lovable-uploads/bc5a7aa2-424a-4b9b-82c9-423b3da8ef4a.png",
-    position: [0, 0, 0]
+    position: [0, 0, 0] as [number, number, number]
   },
   {
     id: 3,
     name: "Burger King",
     image: "/lovable-uploads/bc5a7aa2-424a-4b9b-82c9-423b3da8ef4a.png",
-    position: [2, 0, 0]
+    position: [2, 0, 0] as [number, number, number]
   }
 ];
 
