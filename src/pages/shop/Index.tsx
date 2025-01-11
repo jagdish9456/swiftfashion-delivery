@@ -14,6 +14,7 @@ import {
 
 export const ShopDashboard = () => {
   const [activeTab, setActiveTab] = useState<"NEW" | "PREPARING" | "READY" | "PAST">("NEW")
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -28,9 +29,27 @@ export const ShopDashboard = () => {
       <header className="fixed top-0 left-0 right-0 bg-white border-b z-50">
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon">
-              <Menu className="h-5 w-5" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56">
+                <DropdownMenuItem onClick={() => navigate("/shop")}>
+                  <Package className="mr-2 h-4 w-4" />
+                  Orders
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/shop/metrics")}>
+                  <BarChart3 className="mr-2 h-4 w-4" />
+                  Metrics
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/shop/settings")}>
+                  <Settings className="mr-2 h-4 w-4" />
+                  Settings
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <h1 className="font-semibold">MANAGE ORDERS</h1>
           </div>
           <div className="flex items-center gap-2">
@@ -73,31 +92,31 @@ export const ShopDashboard = () => {
       {/* Main Content */}
       <main className="flex-1 mt-28 mb-16 px-4">
         {/* Order Tabs */}
-        <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4">
+        <div className="bg-gray-900 rounded-lg p-1 flex gap-1 overflow-x-auto -mx-4 px-4">
           <Button
-            variant={activeTab === "NEW" ? "default" : "outline"}
-            className="whitespace-nowrap"
+            variant={activeTab === "NEW" ? "default" : "ghost"}
+            className={`whitespace-nowrap flex-1 ${activeTab === "NEW" ? "bg-orange-500" : "text-white hover:text-white hover:bg-white/10"}`}
             onClick={() => setActiveTab("NEW")}
           >
             NEW (2)
           </Button>
           <Button
-            variant={activeTab === "PREPARING" ? "default" : "outline"}
-            className="whitespace-nowrap"
+            variant={activeTab === "PREPARING" ? "default" : "ghost"}
+            className={`whitespace-nowrap flex-1 ${activeTab === "PREPARING" ? "bg-white" : "text-white hover:text-white hover:bg-white/10"}`}
             onClick={() => setActiveTab("PREPARING")}
           >
             PREPARING
           </Button>
           <Button
-            variant={activeTab === "READY" ? "default" : "outline"}
-            className="whitespace-nowrap"
+            variant={activeTab === "READY" ? "default" : "ghost"}
+            className={`whitespace-nowrap flex-1 ${activeTab === "READY" ? "bg-white" : "text-white hover:text-white hover:bg-white/10"}`}
             onClick={() => setActiveTab("READY")}
           >
             READY
           </Button>
           <Button
-            variant={activeTab === "PAST" ? "default" : "outline"}
-            className="whitespace-nowrap"
+            variant={activeTab === "PAST" ? "default" : "ghost"}
+            className={`whitespace-nowrap flex-1 ${activeTab === "PAST" ? "bg-white" : "text-white hover:text-white hover:bg-white/10"}`}
             onClick={() => setActiveTab("PAST")}
           >
             PAST ORDERS
@@ -148,15 +167,15 @@ export const ShopDashboard = () => {
       {/* Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t">
         <div className="flex justify-around items-center h-16">
-          <Button variant="ghost" className="flex flex-col items-center gap-1">
-            <BarChart3 className="h-5 w-5" />
-            <span className="text-xs">Dashboard</span>
-          </Button>
-          <Button variant="ghost" className="flex flex-col items-center gap-1">
+          <Button variant="ghost" className="flex flex-col items-center gap-1" onClick={() => navigate("/shop")}>
             <Package className="h-5 w-5" />
             <span className="text-xs">Orders</span>
           </Button>
-          <Button variant="ghost" className="flex flex-col items-center gap-1">
+          <Button variant="ghost" className="flex flex-col items-center gap-1" onClick={() => navigate("/shop/metrics")}>
+            <BarChart3 className="h-5 w-5" />
+            <span className="text-xs">Metrics</span>
+          </Button>
+          <Button variant="ghost" className="flex flex-col items-center gap-1" onClick={() => navigate("/shop/settings")}>
             <Settings className="h-5 w-5" />
             <span className="text-xs">Settings</span>
           </Button>
