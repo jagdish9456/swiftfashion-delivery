@@ -3,6 +3,7 @@ import { OrbitControls, Environment } from '@react-three/drei';
 import { Suspense } from 'react';
 import { VRRestaurantCard } from './VRRestaurantCard';
 import { VRNavigation } from './VRNavigation';
+import { VRErrorBoundary } from './VRErrorBoundary';
 
 const restaurants = [
   {
@@ -28,34 +29,40 @@ const restaurants = [
 export const VRScene = () => {
   return (
     <div className="h-screen w-screen">
-      <Canvas
-        camera={{ position: [0, 0, 5], fov: 75 }}
-        gl={{ antialias: true }}
-        dpr={[1, 2]}
-      >
-        <Suspense fallback={null}>
-          <Environment preset="sunset" />
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} />
-          
-          {restaurants.map((restaurant) => (
-            <VRRestaurantCard
-              key={restaurant.id}
-              name={restaurant.name}
-              image={restaurant.image}
-              position={restaurant.position}
+      <VRErrorBoundary>
+        <Canvas
+          camera={{ position: [0, 0, 5], fov: 75 }}
+          gl={{ 
+            antialias: true,
+            alpha: true,
+            powerPreference: "high-performance",
+          }}
+          dpr={[1, 2]}
+        >
+          <Suspense fallback={null}>
+            <Environment preset="sunset" />
+            <ambientLight intensity={0.5} />
+            <pointLight position={[10, 10, 10]} />
+            
+            {restaurants.map((restaurant) => (
+              <VRRestaurantCard
+                key={restaurant.id}
+                name={restaurant.name}
+                image={restaurant.image}
+                position={restaurant.position}
+              />
+            ))}
+            
+            <VRNavigation />
+            <OrbitControls 
+              enableZoom={true} 
+              enablePan={true} 
+              enableRotate={true}
+              makeDefault
             />
-          ))}
-          
-          <VRNavigation />
-          <OrbitControls 
-            enableZoom={true} 
-            enablePan={true} 
-            enableRotate={true}
-            makeDefault
-          />
-        </Suspense>
-      </Canvas>
+          </Suspense>
+        </Canvas>
+      </VRErrorBoundary>
     </div>
   );
 };
