@@ -2,7 +2,6 @@ import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 
 export const VRShowroom = () => {
-  // Using the provided showroom background image
   const texture = useTexture('https://media.istockphoto.com/id/1219824966/video/a-fashionistas-haven.jpg?s=640x640&k=20&c=J1CFL-ZA46Fz9hS8EVNP0VvdkgcASXGDmsn0WbG2ztU=');
   
   return (

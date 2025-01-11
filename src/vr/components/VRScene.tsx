@@ -14,8 +14,8 @@ export const VRScene = () => {
     <VRErrorBoundary>
       <Canvas
         camera={{ 
-          position: [0, 1.6, 2], // Moved camera closer for better zoom
-          fov: 65,               // Slightly narrower field of view for more focus
+          position: [0, 1.6, 1.5], // Moved camera even closer for better zoom
+          fov: 60,               // Narrower field of view for more focus
           near: 0.1,
           far: 1000
         }}
@@ -48,8 +48,8 @@ export const VRScene = () => {
             enableRotate={true}
             maxPolarAngle={Math.PI / 1.8}
             minPolarAngle={Math.PI / 3}
-            maxDistance={8}    // Reduced max distance
-            minDistance={1.5}  // Reduced min distance
+            maxDistance={6}    // Further reduced max distance
+            minDistance={1}    // Reduced min distance for closer zoom
             makeDefault
           />
           <Preload all />
