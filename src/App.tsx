@@ -28,6 +28,7 @@ import { DropLocationScreen } from "./pages/delivery/DropLocationScreen";
 
 // Import shop pages
 import { ShopDashboard } from "./pages/shop/Index"
+import { Menu } from "./pages/shop/Menu"
 
 export default function App() {
   return (
@@ -65,6 +66,7 @@ export default function App() {
 
       {/* Protected Shop Partner Routes */}
       <Route path="/shop" element={<ProtectedRoute><ShopDashboard /></ProtectedRoute>} />
+      <Route path="/shop/menu" element={<ProtectedRoute><Menu /></ProtectedRoute>} />
       <Route path="/shop/profile" element={<ProtectedRoute><ShopDashboard /></ProtectedRoute>} />
       <Route path="/shop/settings" element={<ProtectedRoute><ShopDashboard /></ProtectedRoute>} />
       <Route path="/shop/metrics" element={<ProtectedRoute><ShopDashboard /></ProtectedRoute>} />

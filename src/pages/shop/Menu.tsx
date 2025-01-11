@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Bell, Search, Package, BarChart3, Settings, Menu, LogOut, User, BookOpen } from "lucide-react"
+import { Bell, Search, Package, BarChart3, Settings, Menu as MenuIcon, LogOut, User, BookOpen, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useNavigate } from "react-router-dom"
@@ -11,9 +11,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
-export const ShopDashboard = () => {
-  const [activeTab, setActiveTab] = useState<"NEW" | "PREPARING" | "READY" | "PAST">("NEW")
+export const Menu = () => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -31,7 +36,7 @@ export const ShopDashboard = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
-                  <Menu className="h-5 w-5" />
+                  <MenuIcon className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-56">
@@ -53,7 +58,7 @@ export const ShopDashboard = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <h1 className="font-semibold">MANAGE ORDERS</h1>
+            <h1 className="font-semibold">MENU</h1>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="icon" className="relative">
@@ -85,7 +90,7 @@ export const ShopDashboard = () => {
           <div className="relative">
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
             <Input 
-              placeholder="Search orders..." 
+              placeholder="Search menu items..." 
               className="pl-9 bg-gray-50"
             />
           </div>
@@ -93,78 +98,78 @@ export const ShopDashboard = () => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 mt-32 mb-16 px-4">
-        {/* Order Tabs */}
-        <div className="bg-gray-900 rounded-lg p-1 flex gap-1 overflow-x-auto -mx-4 px-4">
-          <Button
-            variant={activeTab === "NEW" ? "default" : "ghost"}
-            className={`whitespace-nowrap flex-1 ${activeTab === "NEW" ? "bg-orange-500" : "text-white hover:text-white hover:bg-white/10"}`}
-            onClick={() => setActiveTab("NEW")}
-          >
-            NEW (2)
-          </Button>
-          <Button
-            variant={activeTab === "PREPARING" ? "default" : "ghost"}
-            className={`whitespace-nowrap flex-1 ${activeTab === "PREPARING" ? "bg-white" : "text-white hover:text-white hover:bg-white/10"}`}
-            onClick={() => setActiveTab("PREPARING")}
-          >
-            PREPARING
-          </Button>
-          <Button
-            variant={activeTab === "READY" ? "default" : "ghost"}
-            className={`whitespace-nowrap flex-1 ${activeTab === "READY" ? "bg-white" : "text-white hover:text-white hover:bg-white/10"}`}
-            onClick={() => setActiveTab("READY")}
-          >
-            READY
-          </Button>
-          <Button
-            variant={activeTab === "PAST" ? "default" : "ghost"}
-            className={`whitespace-nowrap flex-1 ${activeTab === "PAST" ? "bg-white" : "text-white hover:text-white hover:bg-white/10"}`}
-            onClick={() => setActiveTab("PAST")}
-          >
-            PAST ORDERS
+      <main className="flex-1 mt-28 mb-16 px-4">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-semibold">Menu Categories</h2>
+          <Button size="sm" className="gap-1">
+            <Plus className="h-4 w-4" />
+            Add Category
           </Button>
         </div>
 
-        {/* Order Cards */}
-        <div className="space-y-4 mt-4">
-          <div className="bg-white p-4 rounded-lg shadow-sm">
-            <div className="flex justify-between items-start mb-3">
-              <div>
-                <h3 className="text-orange-500 font-semibold">#567100248</h3>
-                <p className="text-sm text-gray-500">2 Items for ₹187.2</p>
-                <p className="text-xs text-gray-400">Received 6 minutes ago</p>
+        <Accordion type="single" collapsible className="space-y-4">
+          <AccordionItem value="starters" className="border rounded-lg bg-white">
+            <AccordionTrigger className="px-4">
+              <div className="flex justify-between items-center w-full">
+                <span className="font-medium">Starters</span>
+                <span className="text-sm text-gray-500">12 items</span>
               </div>
-              <Button variant="outline" size="sm">
-                Print
-              </Button>
-            </div>
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="font-medium">Hi-Tech Bawarchi</p>
-                  <p className="text-sm text-gray-500">MAIN COURSE</p>
+            </AccordionTrigger>
+            <AccordionContent className="px-4">
+              <div className="space-y-4">
+                <div className="flex justify-between items-center py-2 border-b">
+                  <div>
+                    <h3 className="font-medium">Chicken 65</h3>
+                    <p className="text-sm text-gray-500">₹250</p>
+                  </div>
+                  <Button variant="outline" size="sm">Edit</Button>
                 </div>
-                <p className="font-medium">₹187.2</p>
-              </div>
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="font-medium">Golconda Chefs</p>
-                  <p className="text-sm text-gray-500">STARTERS</p>
+                <div className="flex justify-between items-center py-2 border-b">
+                  <div>
+                    <h3 className="font-medium">Paneer Tikka</h3>
+                    <p className="text-sm text-gray-500">₹220</p>
+                  </div>
+                  <Button variant="outline" size="sm">Edit</Button>
                 </div>
-                <p className="font-medium">₹256.2</p>
               </div>
-            </div>
-            <div className="flex gap-2 mt-4">
-              <Button className="w-full" variant="secondary">
-                MARK OUT OF STOCK
+              <Button className="w-full mt-4" variant="outline">
+                <Plus className="h-4 w-4 mr-2" />
+                Add Item
               </Button>
-              <Button className="w-full">
-                CONFIRM ORDER
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="main-course" className="border rounded-lg bg-white">
+            <AccordionTrigger className="px-4">
+              <div className="flex justify-between items-center w-full">
+                <span className="font-medium">Main Course</span>
+                <span className="text-sm text-gray-500">15 items</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-4">
+              <div className="space-y-4">
+                <div className="flex justify-between items-center py-2 border-b">
+                  <div>
+                    <h3 className="font-medium">Butter Chicken</h3>
+                    <p className="text-sm text-gray-500">₹350</p>
+                  </div>
+                  <Button variant="outline" size="sm">Edit</Button>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b">
+                  <div>
+                    <h3 className="font-medium">Dal Makhani</h3>
+                    <p className="text-sm text-gray-500">₹280</p>
+                  </div>
+                  <Button variant="outline" size="sm">Edit</Button>
+                </div>
+              </div>
+              <Button className="w-full mt-4" variant="outline">
+                <Plus className="h-4 w-4 mr-2" />
+                Add Item
               </Button>
-            </div>
-          </div>
-        </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </main>
 
       {/* Bottom Navigation */}
