@@ -33,8 +33,10 @@ export const VRCategoryCard = ({ name, image, position, categoryId }: VRCategory
   };
 
   // Apply filter effects to texture
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.needsUpdate = true;
+  if (texture) {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.needsUpdate = true;
+  }
 
   return (
     <group position={position}>
@@ -46,7 +48,12 @@ export const VRCategoryCard = ({ name, image, position, categoryId }: VRCategory
         scale={hovered ? 1.2 : 1}
       >
         <planeGeometry args={[2, 2]} />
-        <meshBasicMaterial transparent opacity={0.8} map={texture} />
+        <meshBasicMaterial 
+          map={texture} 
+          transparent 
+          opacity={0.8}
+          side={THREE.DoubleSide}
+        />
       </mesh>
       <Text
         position={[0, -1.2, 0]}

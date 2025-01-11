@@ -89,6 +89,7 @@ const VRContent = () => {
   }
 
   backgroundTexture.colorSpace = THREE.SRGBColorSpace;
+  backgroundTexture.needsUpdate = true;
 
   return (
     <>
@@ -97,9 +98,9 @@ const VRContent = () => {
       <pointLight position={[10, 10, 10]} />
       
       {/* Background */}
-      <mesh position={[0, 0, -5]}>
+      <mesh position={[0, 0, -5]} renderOrder={-1}>
         <planeGeometry args={[20, 10]} />
-        <meshBasicMaterial map={backgroundTexture} />
+        <meshBasicMaterial map={backgroundTexture} transparent opacity={1} />
       </mesh>
 
       {/* Category Cards */}
@@ -135,8 +136,10 @@ export const VRScene = () => {
           antialias: true,
           alpha: true,
           powerPreference: "high-performance",
+          preserveDrawingBuffer: true
         }}
         dpr={[1, 2]}
+        style={{ background: '#1a1a1a' }}
       >
         <Suspense fallback={<LoadingScreen />}>
           <VRContent />
