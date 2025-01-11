@@ -65,9 +65,29 @@ const categories = [
   }
 ];
 
+// Loading component
+const LoadingScreen = () => {
+  return (
+    <Text
+      position={[0, 0, 0]}
+      fontSize={0.5}
+      color="white"
+      anchorX="center"
+      anchorY="middle"
+    >
+      Loading...
+    </Text>
+  );
+};
+
 // Separate component for the VR content to handle Suspense
 const VRContent = () => {
   const backgroundTexture = useLoader(TextureLoader, "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1470&auto=format&fit=crop");
+  
+  if (!backgroundTexture) {
+    return <LoadingScreen />;
+  }
+
   backgroundTexture.colorSpace = THREE.SRGBColorSpace;
 
   return (
@@ -106,55 +126,22 @@ const VRContent = () => {
   );
 };
 
-// Loading component
-const LoadingScreen = () => {
-  return (
-    <Text
-      position={[0, 0, 0]}
-      fontSize={0.5}
-      color="white"
-      anchorX="center"
-      anchorY="middle"
-    >
-      Loading...
-    </Text>
-  );
-};
-
 export const VRScene = () => {
-  useEffect(() => {
-    const enterFullscreen = () => {
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-      }
-    };
-
-    enterFullscreen();
-
-    return () => {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      }
-    };
-  }, []);
-
   return (
     <div className="h-screen w-screen">
-      <VRErrorBoundary>
-        <Canvas
-          camera={{ position: [0, 0, 5], fov: 60 }}
-          gl={{ 
-            antialias: true,
-            alpha: true,
-            powerPreference: "high-performance",
-          }}
-          dpr={[1, 2]}
-        >
-          <Suspense fallback={<LoadingScreen />}>
-            <VRContent />
-          </Suspense>
-        </Canvas>
-      </VRErrorBoundary>
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 60 }}
+        gl={{ 
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+        }}
+        dpr={[1, 2]}
+      >
+        <Suspense fallback={<LoadingScreen />}>
+          <VRContent />
+        </Suspense>
+      </Canvas>
     </div>
   );
 };
