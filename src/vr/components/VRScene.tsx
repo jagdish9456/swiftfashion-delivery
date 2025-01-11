@@ -96,34 +96,32 @@ const CategoryCards = () => (
   </>
 );
 
-const VRContent = () => {
-  return (
-    <>
-      <Environment preset="sunset" />
-      <ambientLight intensity={0.7} />
-      <pointLight position={[10, 10, 10]} intensity={1.5} />
-      
-      <Suspense fallback={null}>
-        <VRBackground />
-      </Suspense>
+const VRContent = () => (
+  <>
+    <Environment preset="sunset" />
+    <ambientLight intensity={0.7} />
+    <pointLight position={[10, 10, 10]} intensity={1.5} />
+    
+    <Suspense fallback={null}>
+      <VRBackground />
+    </Suspense>
 
-      <CategoryCards />
-      
-      <OrbitControls 
-        enableZoom={true}
-        minDistance={3}
-        maxDistance={10}
-        enablePan={false}
-        maxPolarAngle={Math.PI / 2}
-        makeDefault
-        enableDamping={true}
-        dampingFactor={0.05}
-        rotateSpeed={0.5}
-        zoomSpeed={0.5}
-      />
-    </>
-  );
-};
+    <CategoryCards />
+    
+    <OrbitControls 
+      enableZoom={true}
+      minDistance={3}
+      maxDistance={10}
+      enablePan={false}
+      maxPolarAngle={Math.PI / 2}
+      makeDefault
+      enableDamping={true}
+      dampingFactor={0.05}
+      rotateSpeed={0.5}
+      zoomSpeed={0.5}
+    />
+  </>
+);
 
 export const VRScene = () => {
   return (
