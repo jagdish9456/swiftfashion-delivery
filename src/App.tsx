@@ -31,6 +31,7 @@ import { ShopDashboard } from "./pages/shop/Index"
 import { Menu } from "./pages/shop/Menu"
 
 import { VRView } from "./pages/VRView";
+import { VRCategoryView } from "./vr/components/VRCategoryView";
 
 export default function App() {
   return (
@@ -55,6 +56,7 @@ export default function App() {
       <Route path="/search" element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
       <Route path="/track-order/:orderId" element={<ProtectedRoute><TrackOrder /></ProtectedRoute>} />
       <Route path="/vr-view" element={<ProtectedRoute><VRView /></ProtectedRoute>} />
+      <Route path="/vr-category/:categoryId" element={<ProtectedRoute><VRCategoryView /></ProtectedRoute>} />
       <Route path="/delivery" element={<ProtectedRoute><DeliveryIndex /></ProtectedRoute>} />
       <Route path="/delivery/search-order" element={<ProtectedRoute><SearchOrder /></ProtectedRoute>} />
       <Route path="/delivery/pickup/:orderId" element={<ProtectedRoute><PickupScreen /></ProtectedRoute>} />

@@ -1,4 +1,4 @@
-import { Bell, UserRound, Glasses } from "lucide-react";
+import { Bell, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -57,7 +57,11 @@ export const Header = () => {
               className="h-8 w-8"
               onClick={() => navigate("/vr-view")}
             >
-              <Glasses className="h-4 w-4" />
+              <img 
+                src="https://thumbs.dreamstime.com/b/virtual-reality-vr-headset-icon-isolated-d-render-illustration-potrait-340239847.jpg" 
+                alt="VR"
+                className="h-6 w-6 object-contain"
+              />
             </Button>
             <Button 
               variant="ghost" 
