@@ -29,9 +29,9 @@ export const VRScene = () => {
   return (
     <div className="h-screen w-screen">
       <Canvas
-        camera={{ position: [0, 0, 5] }}
+        camera={{ position: [0, 0, 5], fov: 75 }}
         gl={{ antialias: true }}
-        shadows
+        dpr={[1, 2]}
       >
         <Suspense fallback={null}>
           <Environment preset="sunset" />

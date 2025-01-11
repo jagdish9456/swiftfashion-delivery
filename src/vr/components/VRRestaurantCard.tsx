@@ -34,15 +34,17 @@ export const VRRestaurantCard = ({ name, image, position }: VRRestaurantCardProp
           metalness={0.5}
         />
       </mesh>
-      <Text
-        position={[0, -0.8, 0]}
-        fontSize={0.2}
-        color="white"
-        anchorX="center"
-        anchorY="middle"
-      >
-        {name}
-      </Text>
+      <group position={[0, -0.8, 0]}>
+        <Text
+          fontSize={0.2}
+          color="white"
+          anchorX="center"
+          anchorY="middle"
+          maxWidth={2}
+        >
+          {name}
+        </Text>
+      </group>
     </group>
   );
 };
