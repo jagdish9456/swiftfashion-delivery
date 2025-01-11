@@ -28,7 +28,11 @@ const restaurants = [
 export const VRScene = () => {
   return (
     <div className="h-screen w-screen">
-      <Canvas camera={{ position: [0, 0, 5] }}>
+      <Canvas
+        camera={{ position: [0, 0, 5] }}
+        gl={{ antialias: true }}
+        shadows
+      >
         <Suspense fallback={null}>
           <Environment preset="sunset" />
           <ambientLight intensity={0.5} />
@@ -37,12 +41,19 @@ export const VRScene = () => {
           {restaurants.map((restaurant) => (
             <VRRestaurantCard
               key={restaurant.id}
-              {...restaurant}
+              name={restaurant.name}
+              image={restaurant.image}
+              position={restaurant.position}
             />
           ))}
           
           <VRNavigation />
-          <OrbitControls enableZoom={true} enablePan={true} enableRotate={true} />
+          <OrbitControls 
+            enableZoom={true} 
+            enablePan={true} 
+            enableRotate={true}
+            makeDefault
+          />
         </Suspense>
       </Canvas>
     </div>

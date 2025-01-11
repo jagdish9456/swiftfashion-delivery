@@ -28,7 +28,11 @@ export const VRRestaurantCard = ({ name, image, position }: VRRestaurantCardProp
         scale={hovered ? 1.2 : 1}
       >
         <boxGeometry args={[1, 1, 0.1]} />
-        <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
+        <meshStandardMaterial 
+          color={hovered ? "hotpink" : "orange"}
+          roughness={0.5}
+          metalness={0.5}
+        />
       </mesh>
       <Text
         position={[0, -0.8, 0]}

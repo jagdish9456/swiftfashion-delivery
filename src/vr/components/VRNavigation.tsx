@@ -1,15 +1,26 @@
-import { Html } from '@react-three/drei';
+import { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
 
 export const VRNavigation = () => {
+  const groupRef = useRef<THREE.Group>(null!);
+
+  useFrame(() => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y += 0.001;
+    }
+  });
+
   return (
-    <Html fullscreen>
-      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-4 py-2 rounded-full">
-        <div className="flex gap-4">
-          <button className="hover:text-primary-500">Home</button>
-          <button className="hover:text-primary-500">Search</button>
-          <button className="hover:text-primary-500">Orders</button>
-        </div>
-      </div>
-    </Html>
+    <group ref={groupRef} position={[0, -2, 0]}>
+      <mesh position={[0, 0, 0]}>
+        <sphereGeometry args={[0.3, 32, 32]} />
+        <meshStandardMaterial 
+          color="blue"
+          roughness={0.5}
+          metalness={0.5}
+        />
+      </mesh>
+    </group>
   );
 };
