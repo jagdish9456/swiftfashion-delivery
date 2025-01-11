@@ -70,37 +70,35 @@ const LoadingScreen = () => (
   </Html>
 );
 
-const CategoryCards = () => {
-  return (
-    <group>
-      {categories.map((category) => (
-        <Suspense 
-          key={category.id} 
-          fallback={
-            <Text
-              position={category.position}
-              fontSize={0.2}
-              color="white"
-            >
-              Loading...
-            </Text>
-          }
-        >
-          <VRCategoryCard
-            name={category.name}
-            image={category.image}
+const CategoryCards = () => (
+  <>
+    {categories.map((category) => (
+      <Suspense 
+        key={category.id} 
+        fallback={
+          <Text
             position={category.position}
-            categoryId={category.id}
-          />
-        </Suspense>
-      ))}
-    </group>
-  );
-};
+            fontSize={0.2}
+            color="white"
+          >
+            Loading...
+          </Text>
+        }
+      >
+        <VRCategoryCard
+          name={category.name}
+          image={category.image}
+          position={category.position}
+          categoryId={category.id}
+        />
+      </Suspense>
+    ))}
+  </>
+);
 
 const VRContent = () => {
   return (
-    <group>
+    <>
       <Environment preset="sunset" />
       <ambientLight intensity={0.7} />
       <pointLight position={[10, 10, 10]} intensity={1.5} />
@@ -123,7 +121,7 @@ const VRContent = () => {
         rotateSpeed={0.5}
         zoomSpeed={0.5}
       />
-    </group>
+    </>
   );
 };
 
