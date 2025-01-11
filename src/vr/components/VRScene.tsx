@@ -8,6 +8,22 @@ import * as THREE from 'three';
 import { useLoader } from '@react-three/fiber';
 import { TextureLoader } from 'three';
 
+// Extend THREE.Group to ensure proper initialization
+class CustomGroup extends THREE.Group {
+  constructor() {
+    super();
+    this.type = 'Group';
+  }
+}
+
+// Extend THREE.Mesh for custom mesh handling
+class CustomMesh extends THREE.Mesh {
+  constructor() {
+    super();
+    this.type = 'Mesh';
+  }
+}
+
 const categories = [
   {
     id: 'formal-wear',
@@ -65,7 +81,7 @@ const categories = [
   }
 ];
 
-// Separate component for background to handle texture loading
+// Background component with proper THREE.js initialization
 const Background = () => {
   const textures = {
     background: useLoader(TextureLoader, "https://images.unsplash.com/photo-1441986300917-64674bd600d8"),
@@ -80,8 +96,6 @@ const Background = () => {
       if (texture) {
         texture.colorSpace = THREE.SRGBColorSpace;
         texture.needsUpdate = true;
-        
-        // Cleanup textures on unmount
         return () => texture.dispose();
       }
     });
@@ -117,10 +131,10 @@ const Background = () => {
   );
 };
 
-// Separate component for category cards to handle loading
+// CategoryCards component with proper initialization
 const CategoryCards = () => {
   return (
-    <>
+    <CustomGroup>
       {categories.map((category, index) => {
         const row = Math.floor(index / 3);
         const col = index % 3;
@@ -139,13 +153,13 @@ const CategoryCards = () => {
           </Suspense>
         );
       })}
-    </>
+    </CustomGroup>
   );
 };
 
 const VRContent = () => {
   return (
-    <>
+    <CustomGroup>
       <Environment preset="sunset" />
       <ambientLight intensity={0.7} />
       <pointLight position={[10, 10, 10]} intensity={1.5} />
@@ -169,7 +183,7 @@ const VRContent = () => {
         rotateSpeed={0.5}
         zoomSpeed={0.5}
       />
-    </>
+    </CustomGroup>
   );
 };
 
