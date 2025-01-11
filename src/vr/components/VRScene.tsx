@@ -5,6 +5,7 @@ import { VRCategoryCard } from './VRCategoryCard';
 import { VRNavigation } from './VRNavigation';
 import { VRErrorBoundary } from './VRErrorBoundary';
 import * as THREE from 'three';
+import { useLoader } from '@react-three/fiber';
 
 const categories = [
   {
@@ -80,6 +81,9 @@ export const VRScene = () => {
     };
   }, []);
 
+  const backgroundTexture = useLoader(THREE.TextureLoader, "https://media.istockphoto.com/id/1219824966/video/a-fashionistas-haven.jpg");
+  backgroundTexture.encoding = THREE.sRGBEncoding;
+
   return (
     <div className="h-screen w-screen">
       <VRErrorBoundary>
@@ -100,15 +104,7 @@ export const VRScene = () => {
             {/* Background */}
             <mesh position={[0, 0, -5]}>
               <planeGeometry args={[20, 10]} />
-              <meshBasicMaterial>
-                <texture
-                  attach="map"
-                  url="https://media.istockphoto.com/id/1219824966/video/a-fashionistas-haven.jpg"
-                  onLoad={(texture) => {
-                    texture.image.style.filter = 'brightness(0.7)';
-                  }}
-                />
-              </meshBasicMaterial>
+              <meshBasicMaterial map={backgroundTexture} />
             </mesh>
 
             {/* Category Cards */}

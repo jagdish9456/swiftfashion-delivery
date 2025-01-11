@@ -1,8 +1,9 @@
 import { Text } from '@react-three/drei';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame, useThree, useLoader } from '@react-three/fiber';
 import { useRef, useState } from 'react';
 import * as THREE from 'three';
 import { useNavigate } from 'react-router-dom';
+import { TextureLoader } from 'three';
 
 interface VRCategoryCardProps {
   name: string;
@@ -16,6 +17,7 @@ export const VRCategoryCard = ({ name, image, position, categoryId }: VRCategory
   const [hovered, setHovered] = useState(false);
   const navigate = useNavigate();
   const { camera } = useThree();
+  const texture = useLoader(TextureLoader, image);
 
   useFrame(() => {
     if (meshRef.current) {
@@ -27,6 +29,10 @@ export const VRCategoryCard = ({ name, image, position, categoryId }: VRCategory
     navigate(`/vr-category/${categoryId}`);
   };
 
+  // Apply filter effects to texture
+  texture.encoding = THREE.sRGBEncoding;
+  texture.needsUpdate = true;
+
   return (
     <group position={position}>
       <mesh
@@ -37,15 +43,7 @@ export const VRCategoryCard = ({ name, image, position, categoryId }: VRCategory
         scale={hovered ? 1.2 : 1}
       >
         <planeGeometry args={[2, 2]} />
-        <meshBasicMaterial transparent opacity={0.8}>
-          <texture
-            attach="map"
-            url={image}
-            onLoad={(texture) => {
-              texture.image.style.filter = 'brightness(0.7) sepia(0.3) hue-rotate(240deg)';
-            }}
-          />
-        </meshBasicMaterial>
+        <meshBasicMaterial transparent opacity={0.8} map={texture} />
       </mesh>
       <Text
         position={[0, -1.2, 0]}

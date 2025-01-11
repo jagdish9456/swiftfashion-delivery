@@ -1,7 +1,8 @@
 import { Text } from '@react-three/drei';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame, useThree, useLoader } from '@react-three/fiber';
 import { useRef, useState } from 'react';
 import * as THREE from 'three';
+import { TextureLoader } from 'three';
 
 interface VRProductCardProps {
   name: string;
@@ -14,12 +15,17 @@ export const VRProductCard = ({ name, image, position, productId }: VRProductCar
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
   const { camera } = useThree();
+  const texture = useLoader(TextureLoader, image);
 
   useFrame(() => {
     if (meshRef.current) {
       meshRef.current.lookAt(camera.position);
     }
   });
+
+  // Apply filter effects to texture
+  texture.encoding = THREE.sRGBEncoding;
+  texture.needsUpdate = true;
 
   return (
     <group position={position}>
@@ -30,15 +36,7 @@ export const VRProductCard = ({ name, image, position, productId }: VRProductCar
         scale={hovered ? 1.2 : 1}
       >
         <planeGeometry args={[2, 2]} />
-        <meshBasicMaterial transparent opacity={0.8}>
-          <texture
-            attach="map"
-            url={image}
-            onLoad={(texture) => {
-              texture.image.style.filter = 'brightness(0.7) sepia(0.3) hue-rotate(240deg)';
-            }}
-          />
-        </meshBasicMaterial>
+        <meshBasicMaterial transparent opacity={0.8} map={texture} />
       </mesh>
       <Text
         position={[0, -1.2, 0]}
