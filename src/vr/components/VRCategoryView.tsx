@@ -51,10 +51,17 @@ export const VRCategoryView = () => {
     };
   }, []);
 
-  const itemPositions = [
-    [-4, 2, 0], [0, 2, 0], [4, 2, 0],
-    [-4, 0, 0], [0, 0, 0], [4, 0, 0],
-    [-4, -2, 0], [0, -2, 0], [4, -2, 0]
+  // Define positions as tuples of exactly 3 numbers
+  const itemPositions: [number, number, number][] = [
+    [-4, 2, 0],
+    [0, 2, 0],
+    [4, 2, 0],
+    [-4, 0, 0],
+    [0, 0, 0],
+    [4, 0, 0],
+    [-4, -2, 0],
+    [0, -2, 0],
+    [4, -2, 0]
   ];
 
   return (

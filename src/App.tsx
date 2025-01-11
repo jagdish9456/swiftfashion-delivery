@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { VRView } from './pages/VRView';
 import { VRCategoryView } from './vr/components/VRCategoryView';
 
-export const App = () => {
+const App = () => {
   return (
     <Router>
       <Routes>
@@ -12,3 +12,5 @@ export const App = () => {
     </Router>
   );
 };
+
+export default App;
