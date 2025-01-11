@@ -6,8 +6,8 @@ const backgroundImages = {
   main: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=50",
   left: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=50",
   right: "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?w=800&q=50",
-  top: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=50",
-  bottom: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=800&q=50"
+  top: "https://www.nerolac.com/sites/default/files/2023-05/fibre-ceilings.webp?w=800&q=50",
+  bottom: "https://www.warmup.com/wp-content/uploads/carpet-flooring.jpg?w=800&q=50"
 };
 
 export const VRBackground = () => {
