@@ -1,6 +1,6 @@
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment, Text } from '@react-three/drei';
-import { Suspense, lazy } from 'react';
+import { OrbitControls, Environment, Text, Html } from '@react-three/drei';
+import { Suspense } from 'react';
 import { VRErrorBoundary } from './VRErrorBoundary';
 import { VRCategoryCard } from './VRCategoryCard';
 import { VRBackground } from './VRBackground';
@@ -9,19 +9,19 @@ const categories = [
   {
     id: 'formal-wear',
     name: "Formal Wear",
-    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35",
+    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&q=80",
     position: [-4, 2, -2] as [number, number, number]
   },
   {
     id: 'casual-wear',
     name: "Casual Wear",
-    image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27",
+    image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400&q=80",
     position: [0, 2, -2] as [number, number, number]
   },
   {
     id: 'ethnic-wear',
     name: "Ethnic Wear",
-    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c",
+    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&q=80",
     position: [4, 2, -2] as [number, number, number]
   },
   {
@@ -62,38 +62,38 @@ const categories = [
   }
 ];
 
+const LoadingScreen = () => (
+  <Html center>
+    <div className="text-white text-xl">
+      Loading VR Experience...
+    </div>
+  </Html>
+);
+
 const CategoryCards = () => {
   return (
     <group>
-      {categories.map((category, index) => {
-        const row = Math.floor(index / 3);
-        const col = index % 3;
-        return (
-          <Suspense 
-            key={category.id} 
-            fallback={
-              <Text
-                position={[(col - 1) * 4, 1 - row * 2.5, -2]}
-                fontSize={0.2}
-                color="white"
-              >
-                Loading...
-              </Text>
-            }
-          >
-            <VRCategoryCard
-              name={category.name}
-              image={category.image}
-              position={[
-                (col - 1) * 4,
-                1 - row * 2.5,
-                -2
-              ]}
-              categoryId={category.id}
-            />
-          </Suspense>
-        );
-      })}
+      {categories.map((category) => (
+        <Suspense 
+          key={category.id} 
+          fallback={
+            <Text
+              position={category.position}
+              fontSize={0.2}
+              color="white"
+            >
+              Loading...
+            </Text>
+          }
+        >
+          <VRCategoryCard
+            name={category.name}
+            image={category.image}
+            position={category.position}
+            categoryId={category.id}
+          />
+        </Suspense>
+      ))}
     </group>
   );
 };
@@ -124,20 +124,6 @@ const VRContent = () => {
         zoomSpeed={0.5}
       />
     </group>
-  );
-};
-
-const LoadingScreen = () => {
-  return (
-    <Text
-      position={[0, 0, 0]}
-      fontSize={0.5}
-      color="white"
-      anchorX="center"
-      anchorY="middle"
-    >
-      Loading VR Experience...
-    </Text>
   );
 };
 
