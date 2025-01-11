@@ -22,7 +22,7 @@ export const VRBackground = () => {
         try {
           const texture = await loadOptimizedTexture(url);
           if (texture) {
-            texture.encoding = THREE.sRGBEncoding;
+            texture.colorSpace = THREE.SRGBColorSpace;
             texture.minFilter = THREE.LinearFilter;
             texture.magFilter = THREE.LinearFilter;
             loadedTextures[key] = texture;
