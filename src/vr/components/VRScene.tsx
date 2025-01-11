@@ -8,22 +8,6 @@ import * as THREE from 'three';
 import { useLoader } from '@react-three/fiber';
 import { TextureLoader } from 'three';
 
-// Extend THREE.Group to ensure proper initialization
-class CustomGroup extends THREE.Group {
-  constructor() {
-    super();
-    this.type = 'Group';
-  }
-}
-
-// Extend THREE.Mesh for custom mesh handling
-class CustomMesh extends THREE.Mesh {
-  constructor() {
-    super();
-    this.type = 'Mesh';
-  }
-}
-
 const categories = [
   {
     id: 'formal-wear',
@@ -134,7 +118,7 @@ const Background = () => {
 // CategoryCards component with proper initialization
 const CategoryCards = () => {
   return (
-    <CustomGroup>
+    <group>
       {categories.map((category, index) => {
         const row = Math.floor(index / 3);
         const col = index % 3;
@@ -153,13 +137,13 @@ const CategoryCards = () => {
           </Suspense>
         );
       })}
-    </CustomGroup>
+    </group>
   );
 };
 
 const VRContent = () => {
   return (
-    <CustomGroup>
+    <group>
       <Environment preset="sunset" />
       <ambientLight intensity={0.7} />
       <pointLight position={[10, 10, 10]} intensity={1.5} />
@@ -183,7 +167,7 @@ const VRContent = () => {
         rotateSpeed={0.5}
         zoomSpeed={0.5}
       />
-    </CustomGroup>
+    </group>
   );
 };
 
