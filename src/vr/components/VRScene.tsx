@@ -65,77 +65,96 @@ const categories = [
   }
 ];
 
+// Separate component for background to handle texture loading
+const Background = () => {
+  const textures = {
+    background: useLoader(TextureLoader, "https://images.unsplash.com/photo-1441986300917-64674bd600d8"),
+    left: useLoader(TextureLoader, "https://images.unsplash.com/photo-1490481651871-ab68de25d43d"),
+    right: useLoader(TextureLoader, "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc"),
+    top: useLoader(TextureLoader, "https://images.unsplash.com/photo-1469334031218-e382a71b716b"),
+    bottom: useLoader(TextureLoader, "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04")
+  };
+
+  useEffect(() => {
+    Object.values(textures).forEach(texture => {
+      if (texture) {
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.needsUpdate = true;
+        
+        // Cleanup textures on unmount
+        return () => texture.dispose();
+      }
+    });
+  }, [textures]);
+
+  return (
+    <group>
+      <mesh position={[0, 0, -5]} renderOrder={-1}>
+        <planeGeometry args={[20, 10]} />
+        <meshBasicMaterial map={textures.background} transparent opacity={0.8} />
+      </mesh>
+      
+      <mesh position={[-10, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+        <planeGeometry args={[10, 10]} />
+        <meshBasicMaterial map={textures.left} transparent opacity={0.8} />
+      </mesh>
+      
+      <mesh position={[10, 0, 0]} rotation={[0, -Math.PI / 2, 0]}>
+        <planeGeometry args={[10, 10]} />
+        <meshBasicMaterial map={textures.right} transparent opacity={0.8} />
+      </mesh>
+      
+      <mesh position={[0, 5, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[20, 10]} />
+        <meshBasicMaterial map={textures.top} transparent opacity={0.8} />
+      </mesh>
+      
+      <mesh position={[0, -5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[20, 10]} />
+        <meshBasicMaterial map={textures.bottom} transparent opacity={0.8} />
+      </mesh>
+    </group>
+  );
+};
+
+// Separate component for category cards to handle loading
+const CategoryCards = () => {
+  return (
+    <>
+      {categories.map((category, index) => {
+        const row = Math.floor(index / 3);
+        const col = index % 3;
+        return (
+          <Suspense key={category.id} fallback={null}>
+            <VRCategoryCard
+              name={category.name}
+              image={category.image}
+              position={[
+                (col - 1) * 4,
+                1 - row * 2.5,
+                -2
+              ]}
+              categoryId={category.id}
+            />
+          </Suspense>
+        );
+      })}
+    </>
+  );
+};
+
 const VRContent = () => {
-  const backgroundTexture = useLoader(TextureLoader, "https://images.unsplash.com/photo-1441986300917-64674bd600d8");
-  const leftTexture = useLoader(TextureLoader, "https://images.unsplash.com/photo-1490481651871-ab68de25d43d");
-  const rightTexture = useLoader(TextureLoader, "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc");
-  const topTexture = useLoader(TextureLoader, "https://images.unsplash.com/photo-1469334031218-e382a71b716b");
-  const bottomTexture = useLoader(TextureLoader, "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04");
-
-  [backgroundTexture, leftTexture, rightTexture, topTexture, bottomTexture].forEach(texture => {
-    if (texture) {
-      texture.colorSpace = THREE.SRGBColorSpace;
-      texture.needsUpdate = true;
-    }
-  });
-
   return (
     <>
       <Environment preset="sunset" />
       <ambientLight intensity={0.7} />
       <pointLight position={[10, 10, 10]} intensity={1.5} />
       
-      {/* Background walls */}
-      <group>
-        {/* Back wall */}
-        <mesh position={[0, 0, -5]} renderOrder={-1}>
-          <planeGeometry args={[20, 10]} />
-          <meshBasicMaterial map={backgroundTexture} transparent opacity={0.8} />
-        </mesh>
-        
-        {/* Left wall */}
-        <mesh position={[-10, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
-          <planeGeometry args={[10, 10]} />
-          <meshBasicMaterial map={leftTexture} transparent opacity={0.8} />
-        </mesh>
-        
-        {/* Right wall */}
-        <mesh position={[10, 0, 0]} rotation={[0, -Math.PI / 2, 0]}>
-          <planeGeometry args={[10, 10]} />
-          <meshBasicMaterial map={rightTexture} transparent opacity={0.8} />
-        </mesh>
-        
-        {/* Top wall */}
-        <mesh position={[0, 5, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <planeGeometry args={[20, 10]} />
-          <meshBasicMaterial map={topTexture} transparent opacity={0.8} />
-        </mesh>
-        
-        {/* Bottom wall */}
-        <mesh position={[0, -5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-          <planeGeometry args={[20, 10]} />
-          <meshBasicMaterial map={bottomTexture} transparent opacity={0.8} />
-        </mesh>
-      </group>
+      <Suspense fallback={null}>
+        <Background />
+      </Suspense>
 
-      {/* Category Cards with increased spacing */}
-      {categories.map((category, index) => {
-        const row = Math.floor(index / 3);
-        const col = index % 3;
-        return (
-          <VRCategoryCard
-            key={category.id}
-            name={category.name}
-            image={category.image}
-            position={[
-              (col - 1) * 4, // Increased horizontal gap
-              1 - row * 2.5,  // Increased vertical gap
-              -2
-            ]}
-            categoryId={category.id}
-          />
-        );
-      })}
+      <CategoryCards />
       
       <VRNavigation />
       <OrbitControls 
@@ -163,7 +182,7 @@ const LoadingScreen = () => {
       anchorX="center"
       anchorY="middle"
     >
-      Loading...
+      Loading VR Experience...
     </Text>
   );
 };
@@ -182,9 +201,11 @@ export const VRScene = () => {
         dpr={[1, 2]}
         style={{ background: '#1a1a1a' }}
       >
-        <Suspense fallback={<LoadingScreen />}>
-          <VRContent />
-        </Suspense>
+        <VRErrorBoundary>
+          <Suspense fallback={<LoadingScreen />}>
+            <VRContent />
+          </Suspense>
+        </VRErrorBoundary>
       </Canvas>
     </div>
   );
