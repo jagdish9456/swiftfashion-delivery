@@ -7,6 +7,7 @@ export const OfferBanners = () => {
           <img
             src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=800"
             alt="Special Offer on Designer Wear"
+            loading="lazy"
             className="w-full h-40 object-cover"
           />
           <div className="absolute top-0 left-0 p-4 text-white">
@@ -22,6 +23,7 @@ export const OfferBanners = () => {
           <img
             src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800"
             alt="Summer Collection Sale"
+            loading="lazy"
             className="w-full h-40 object-cover"
           />
           <div className="absolute top-0 left-0 p-4 text-white">

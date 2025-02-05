@@ -31,7 +31,7 @@ export const TrackOrder = () => {
       price: 199,
       originalPrice: 299,
       discount: "33% OFF",
-      image: "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=500"
+      image: "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=500",
     },
     // ... Add more items
   ];
@@ -74,7 +74,7 @@ export const TrackOrder = () => {
               <Package2 className="h-4 w-4 text-primary-500" />
               <div>
                 <h3 className="text-xs font-semibold">Order is getting packed</h3>
-                <button className="text-xs text-primary-500">See all items &gt;</button>
+                <button className="text-xs text-primary-500">See all items {'>'}</button>
               </div>
             </div>
 
@@ -104,7 +104,7 @@ export const TrackOrder = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white p-3 flex items-center justify-between border-b">
+      <div className="bg-white p-3 flex items-center justify-between border-b sticky top-0 z-10">
         <div className="flex items-center gap-2">
           <Link to="/" className="p-1.5">
             <ArrowLeft className="h-4 w-4" />

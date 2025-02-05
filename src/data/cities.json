@@ -1,0 +1,114 @@
+{
+  "cities": [
+    {
+      "id": "c1",
+      "name": "Bangalore",
+      "state": "Karnataka",
+      "country": "India",
+      "population": 10000000,
+      "coordinates": {
+        "latitude": 12.9716,
+        "longitude": 77.5946
+      }
+    },
+    {
+      "id": "c2",
+      "name": "Mumbai",
+      "state": "Maharashtra",
+      "country": "India",
+      "population": 20000000,
+      "coordinates": {
+        "latitude": 19.0760,
+        "longitude": 72.8777
+      }
+    },
+    {
+      "id": "c3",
+      "name": "Delhi",
+      "state": "Delhi",
+      "country": "India",
+      "population": 30000000,
+      "coordinates": {
+        "latitude": 28.7041,
+        "longitude": 77.1025
+      }
+    },
+    {
+      "id": "c4",
+      "name": "Chennai",
+      "state": "Tamil Nadu",
+      "country": "India",
+      "population": 9000000,
+      "coordinates": {
+        "latitude": 13.0827,
+        "longitude": 80.2707
+      }
+    },
+    {
+      "id": "c5",
+      "name": "Kolkata",
+      "state": "West Bengal",
+      "country": "India",
+      "population": 15000000,
+      "coordinates": {
+        "latitude": 22.5726,
+        "longitude": 88.3639
+      }
+    },
+    {
+      "id": "c6",
+      "name": "Hyderabad",
+      "state": "Telangana",
+      "country": "India",
+      "population": 12000000,
+      "coordinates": {
+        "latitude": 17.3850,
+        "longitude": 78.4867
+      }
+    },
+    {
+      "id": "c7",
+      "name": "Ahmedabad",
+      "state": "Gujarat",
+      "country": "India",
+      "population": 8000000,
+      "coordinates": {
+        "latitude": 23.0225,
+        "longitude": 72.5714
+      }
+    },
+    {
+      "id": "c8",
+      "name": "Pune",
+      "state": "Maharashtra",
+      "country": "India",
+      "population": 7000000,
+      "coordinates": {
+        "latitude": 18.5204,
+        "longitude": 73.8567
+      }
+    },
+    {
+      "id": "c9",
+      "name": "Surat",
+      "state": "Gujarat",
+      "country": "India",
+      "population": 6000000,
+      "coordinates": {
+        "latitude": 21.1702,
+        "longitude": 72.8311
+      }
+    },
+    {
+      "id": "c10",
+      "name": "Jaipur",
+      "state": "Rajasthan",
+      "country": "India",
+      "population": 5000000,
+      "coordinates": {
+        "latitude": 26.9124,
+        "longitude": 75.7873
+      }
+    }
+  ]
+}
