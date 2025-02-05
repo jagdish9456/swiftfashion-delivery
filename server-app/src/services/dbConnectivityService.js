@@ -9,11 +9,13 @@ const checkMongoDBConnection = async () => {
 
   try {
     await mongoose.connect(mongoURI);
+    console.log('MongoDB connection successful');
     return true;
   } catch (error) {
+    console.error('MongoDB connection failed:', error);
     throw new Error(`MongoDB connection failed: ${error.message}`);
   } finally {
-    await mongoose.disconnect(); // Ensure disconnection
+    mongoose.disconnect(); // Ensure disconnection even if error occurs
   }
 };
 
