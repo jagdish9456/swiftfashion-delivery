@@ -1,0 +1,20 @@
+{
+  "cities": [
+    { "id": 1, "name": "Los Angeles", "stateId": 1, "population": 3990456 },
+    { "id": 2, "name": "San Diego", "stateId": 1, "population": 1425976 },
+    { "id": 3, "name": "San Jose", "stateId": 1, "population": 1030119 },
+    { "id": 4, "name": "San Antonio", "stateId": 2, "population": 1547253 },
+    { "id": 5, "name": "Dallas", "stateId": 2, "population": 1345047 },
+    { "id": 6, "name": "Houston", "stateId": 2, "population": 2325502 },
+    { "id": 7, "name": "Jacksonville", "stateId": 3, "population": 949611 },
+    { "id": 8, "name": "Miami", "stateId": 3, "population": 470913 },
+    { "id": 9, "name": "New York City", "stateId": 4, "population": 8405837 },
+    { "id": 10, "name": "Chicago", "stateId": 5, "population": 2746388 },
+    { "id": 11, "name": "Austin", "stateId": 2, "population": 964254 },
+    { "id": 12, "name": "Fort Worth", "stateId": 2, "population": 918915 },
+    { "id": 13, "name": "Philadelphia", "stateId": 6, "population": 1603797 },
+    { "id": 14, "name": "Phoenix", "stateId": 7, "population": 1660272 },
+    { "id": 15, "name": "San Francisco", "stateId": 1, "population": 881549 },
+    { "id": 16, "name": "San Antonio", "stateId": 2, "population": 1547253 }
+  ]
+}
