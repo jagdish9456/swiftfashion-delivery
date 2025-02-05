@@ -8,7 +8,6 @@ export const ChristmasBanner = () => {
         <img
           src="https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=1200"
           alt="Christmas Special Offer"
-          loading="lazy"
           className="w-full h-24 object-cover"
         />
         <div className="absolute inset-0 flex items-center justify-center">

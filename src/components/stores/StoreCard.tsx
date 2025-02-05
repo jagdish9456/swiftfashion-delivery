@@ -22,7 +22,6 @@ export const StoreCard = ({
         <img
           src={image}
           alt={name}
-          loading="lazy"
           className="w-full h-32 object-cover"
         />
         <Badge className="absolute top-2 left-2 bg-red-500">

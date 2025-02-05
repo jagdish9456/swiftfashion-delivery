@@ -1,15 +1,14 @@
 module.exports = {
-  port: process.env.PORT || 3001,
+  port: process.env.PORT || 3000,
   cors: {
-    origin: 'http://localhost:5173', // Update with your frontend URL
+    origin: 'http://localhost:5173', // Frontend URL
     credentials: true
   },
   mongodb: {
-    uri: process.env.MONGODB_URI || 'mongodb+srv://jpsharma9456:SPGYjc5qafGcUPn9@quickyy.cg7ct.mongodb.net/swiftdelivery?retryWrites=true&w=majority&appName=quickyy',
+    uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/fashion_ecommerce',
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true
     }
-  },
-  secret: process.env.SECRET || 'jpharma9456forquickyy' // For JWT, replace with a strong secret
+  }
 };

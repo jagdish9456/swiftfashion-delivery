@@ -1,19 +1,24 @@
 const errorHandler = (err, req, res, next) => {
-  console.error(err.stack); // Log the full error stack for debugging
+  console.error(err.stack);
 
-  // Check for Mongoose validation errors
   if (err.name === 'ValidationError') {
-    const errors = Object.values(err.errors).map(e => e.message);
-    return res.status(400).json({ error: 'Validation Error', details: errors });
+    return res.status(400).json({
+      error: 'Validation Error',
+      details: err.message
+    });
   }
 
-  // Check for CastError (invalid ObjectId)
   if (err.name === 'CastError') {
-    return res.status(400).json({ error: 'Invalid ID format' });
+    return res.status(400).json({
+      error: 'Invalid ID format',
+      details: err.message
+    });
   }
 
-  // Handle other errors
-  res.status(500).json({ error: 'Internal Server Error', details: err.message });
+  res.status(500).json({
+    error: 'Internal Server Error',
+    details: err.message
+  });
 };
 
 module.exports = errorHandler;
