@@ -9,39 +9,41 @@ const shopRoutes = require('./src/routes/shopRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const errorHandler = require('./src/middleware/errorHandler');
 const dbConnectivityService = require('./src/services/dbConnectivityService');
-const healthCheckRoutes = require('./src/routes/healthCheckRoutes'); // Import health check routes
+const healthCheckRoutes = require('./src/routes/healthCheckRoutes');
 
-
-// Connect to MongoDB and test connectivity
+// Asynchronous function to test DB connectivity before server start
 const testDBConnectivity = async () => {
   try {
     await dbConnectivityService.checkMongoDBConnection();
+    console.log('MongoDB connection successful');
   } catch (error) {
     console.error('Failed to connect to MongoDB:', error);
-    process.exit(1); // Exit if connection fails
+    process.exit(1); // Exit process if connection fails
   }
 };
 
-testDBConnectivity();
+// Run the DB connectivity test before starting the server
+testDBConnectivity().then(() => {
+  const app = express();
 
-const app = express();
+  // Middleware
+  app.use(cors(config.cors));
+  app.use(express.json());
 
-// Middleware
-app.use(cors(config.cors));
-app.use(express.json());
+  // Routes
+  app.use('/api/auth', authRoutes);
+  app.use('/api/products', productRoutes);
+  app.use('/api/shops', shopRoutes);
+  app.use('/api/users', userRoutes);
+  app.use('/api', healthCheckRoutes);
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/shops', shopRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api', healthCheckRoutes); // Mount health check routes at /api/health
+  // Error handling middleware (must be after all routes)
+  app.use(errorHandler);
 
-// Error handling middleware (must be placed after all routes)
-app.use(errorHandler);
+  // Start server
+  const port = config.port;
+  app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+  });
+}).catch(err => console.error("Failed to start server due to DB connection error:", err));
 
-// Start server
-const port = config.port;
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
