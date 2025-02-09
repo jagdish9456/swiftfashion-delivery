@@ -14,8 +14,6 @@ const checkMongoDBConnection = async () => {
   } catch (error) {
     console.error('MongoDB connection failed:', error);
     throw new Error(`MongoDB connection failed: ${error.message}`);
-  } finally {
-    mongoose.disconnect(); // Ensure disconnection even if error occurs
   }
 };
 

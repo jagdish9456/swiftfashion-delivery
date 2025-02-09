@@ -1,50 +1,24 @@
-const ProductService = require('../services/productService');
+const productService = require('../services/productService');
 
-class ProductController {
-  async getAllProducts(req, res) {
+const productController = {
+  async getProductsByLocation(req, res) {
     try {
-      const products = await ProductService.getAllProducts();
+      const { latitude, longitude, radius } = req.query;
+      // Input validation: Check if latitude, longitude, and radius are provided and are numbers.
+      if (!latitude || !longitude || !radius || isNaN(parseFloat(latitude)) || isNaN(parseFloat(longitude)) || isNaN(parseFloat(radius))) {
+        return res.status(400).json({ error: 'Invalid input parameters' });
+      }
+      const products = await productService.getProductsByLocation(
+        parseFloat(latitude),
+        parseFloat(longitude),
+        parseFloat(radius)
+      );
       res.json(products);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      console.error("Error in getProductsByLocation:", error); // Log the error for debugging
+      res.status(500).json({ error: error.message || 'Internal Server Error' });
     }
   }
+};
 
-  async getProductById(req, res) {
-    try {
-      const product = await ProductService.getProductById(req.params.id);
-      res.json(product);
-    } catch (error) {
-      res.status(404).json({ error: error.message });
-    }
-  }
-
-  async createProduct(req, res) {
-    try {
-      const product = await ProductService.createProduct(req.body);
-      res.status(201).json(product);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  }
-
-  async updateProduct(req, res) {
-    try {
-      const product = await ProductService.updateProduct(req.params.id, req.body);
-      res.json(product);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  }
-
-  async deleteProduct(req, res) {
-    try {
-      const product = await ProductService.deleteProduct(req.params.id);
-      res.json({ message: 'Product deleted successfully' });
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  }
-}
-
-module.exports = new ProductController();
+module.exports = productController;

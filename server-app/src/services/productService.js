@@ -1,60 +1,42 @@
-const Product = require('../models/Product');
+const Shop = require('../models/Shop');
 
-class ProductService {
-  async getAllProducts() {
-    try {
-      const products = await Product.find();
-      return products;
-    } catch (error) {
-      throw new Error('Error fetching products: ' + error.message);
+const productService = {
+  async getProductsByLocation(latitude, longitude, radius) {
+    // Input validation: Check if latitude, longitude, and radius are valid numbers.
+    if (
+      isNaN(latitude) ||
+      isNaN(longitude) ||
+      isNaN(radius) ||
+      radius <= 0
+    ) {
+      throw new Error('Invalid latitude, longitude, or radius');
     }
-  }
 
-  async getProductById(id) {
-    try {
-      const product = await Product.findById(id);
-      if (!product) {
-        throw new Error('Product not found');
-      }
-      return product;
-    } catch (error) {
-      throw new Error('Error fetching product: ' + error.message);
-    }
-  }
+    // Geospatial query to find shops within the radius
+    const shops = await Shop.aggregate([
+      {
+        $geoNear: {
+          near: { type: "Point", coordinates: [longitude, latitude] },
+          distanceField: "dist",
+          maxDistance: radius * 1000, // Convert radius to meters
+          spherical: true
+        }
+      },
+      {
+        $match: {
+          isActive: true // Only include active shops
+        }
+      },
+      { $project: { _id: 1, name: 1, address: 1, products: 1, dist: 1 } } // Project necessary fields
+    ]);
 
-  async createProduct(productData) {
-    try {
-      const product = new Product(productData);
-      await product.save();
-      return product;
-    } catch (error) {
-      throw new Error('Error creating product: ' + error.message);
-    }
+    // Extract and return products from shops
+    return shops.flatMap((shop) => shop.products).map(product => ({
+      ...product,
+      shopId: shop._id,
+      distance: shop.dist
+    }));
   }
+};
 
-  async updateProduct(id, productData) {
-    try {
-      const product = await Product.findByIdAndUpdate(id, productData, { new: true });
-      if (!product) {
-        throw new Error('Product not found');
-      }
-      return product;
-    } catch (error) {
-      throw new Error('Error updating product: ' + error.message);
-    }
-  }
-
-  async deleteProduct(id) {
-    try {
-      const product = await Product.findByIdAndDelete(id);
-      if (!product) {
-        throw new Error('Product not found');
-      }
-      return product;
-    } catch (error) {
-      throw new Error('Error deleting product: ' + error.message);
-    }
-  }
-}
-
-module.exports = new ProductService();
+module.exports = productService;

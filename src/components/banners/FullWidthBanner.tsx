@@ -6,6 +6,7 @@ export const FullWidthBanner = () => {
         <img
           src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200"
           alt="Special Discount Offer"
+          loading="lazy"
           className="w-full h-32 object-cover"
         />
         <div className="absolute inset-0 flex items-center justify-center">

@@ -17,7 +17,7 @@ export const OrdersCard = () => {
                 onClick={() => navigate('/delivery/search-order')} 
                 className="text-primary hover:underline"
               >
-                View details >
+                View details {'>'}
               </button>
             </div>
             <div className="bg-orange-100 px-4 py-2 rounded-xl flex items-center space-x-2">
