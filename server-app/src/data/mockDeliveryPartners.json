@@ -1,0 +1,119 @@
+[
+  {
+    "partnerId": "DP001",
+    "personalDetails": {
+      "firstName": "John",
+      "lastName": "Doe",
+      "dateOfBirth": "1990-05-15",
+      "phoneNumber": "+15551234567",
+      "email": "john.doe@example.com",
+      "address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "state": "CA",
+        "zip": "90210",
+        "geoLocation": {
+          "type": "Point",
+          "coordinates": [-118.2437, 34.0522]
+        }
+      }
+    },
+    "identification": {
+      "documentType": "DrivingLicense",
+      "documentNumber": "DL1234567890",
+      "documentImage": "url-to-document-image",
+      "verificationStatus": "approved"
+    },
+    "vehicleDetails": {
+      "vehicleType": "Motorcycle",
+      "vehicleNumber": "ABC1234",
+      "vehicleDocuments": ["url-to-vehicle-document"]
+    },
+    "bankDetails": {
+      "accountNumber": "1234567890",
+      "bankName": "Bank of America",
+      "ifscCode": "SBIN0000001",
+      "panNumber": "ABCDE1234F"
+    },
+    "status": "approved",
+    "onboardingDate": "2024-10-26T10:00:00Z",
+    "lastUpdated": "2024-10-26T10:00:00Z",
+    "ratings": {
+      "averageRating": 4.8,
+      "totalRatings": 100
+    },
+    "earnings": {
+      "totalEarnings": 1500,
+      "weeklyEarnings": 300
+    },
+    "availability": {
+      "isAvailable": true,
+      "availabilitySchedule": [
+        { "day": "Monday", "startTime": "09:00", "endTime": "17:00" },
+        { "day": "Tuesday", "startTime": "09:00", "endTime": "17:00" },
+        { "day": "Wednesday", "startTime": "09:00", "endTime": "17:00" },
+        { "day": "Thursday", "startTime": "09:00", "endTime": "17:00" },
+        { "day": "Friday", "startTime": "09:00", "endTime": "17:00" }
+      ]
+    }
+  },
+  {
+    "partnerId": "DP002",
+    "personalDetails": {
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "dateOfBirth": "1985-11-20",
+      "phoneNumber": "+15559876543",
+      "email": "jane.smith@example.com",
+      "address": {
+        "street": "456 Elm St",
+        "city": "Anytown",
+        "state": "TX",
+        "zip": "78701",
+        "geoLocation": {
+          "type": "Point",
+          "coordinates": [-97.7431, 30.2672]
+        }
+      }
+    },
+    "identification": {
+      "documentType": "AadhaarCard",
+      "documentNumber": "AAD123456789012",
+      "documentImage": "url-to-document-image",
+      "verificationStatus": "approved"
+    },
+    "vehicleDetails": {
+      "vehicleType": "Scooter",
+      "vehicleNumber": "XYZ5678",
+      "vehicleDocuments": ["url-to-vehicle-document"]
+    },
+    "bankDetails": {
+      "accountNumber": "0987654321",
+      "bankName": "Chase Bank",
+      "ifscCode": "HDFC0000002",
+      "panNumber": "FGHIJ1234K"
+    },
+    "status": "approved",
+    "onboardingDate": "2024-10-26T10:00:00Z",
+    "lastUpdated": "2024-10-26T10:00:00Z",
+    "ratings": {
+      "averageRating": 4.2,
+      "totalRatings": 50
+    },
+    "earnings": {
+      "totalEarnings": 1200,
+      "weeklyEarnings": 240
+    },
+    "availability": {
+      "isAvailable": true,
+      "availabilitySchedule": [
+        { "day": "Monday", "startTime": "10:00", "endTime": "18:00" },
+        { "day": "Tuesday", "startTime": "10:00", "endTime": "18:00" },
+        { "day": "Wednesday", "startTime": "10:00", "endTime": "18:00" },
+        { "day": "Thursday", "startTime": "10:00", "endTime": "18:00" },
+        { "day": "Friday", "startTime": "10:00", "endTime": "18:00" },
+        { "day": "Saturday", "startTime": "11:00", "endTime": "19:00" }
+      ]
+    }
+  }
+]

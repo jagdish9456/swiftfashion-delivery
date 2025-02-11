@@ -13,7 +13,7 @@ const healthCheckRoutes = require('./src/routes/healthCheckRoutes');
 const seedRoutes = require('./src/routes/seedRoutes');
 const stateRoutes = require('./src/routes/stateRoutes');
 const cityRoutes = require('./src/routes/cityRoutes'); // Import city routes
-const deliveryPartnerRoutes = require('./src/routes/deliveryPartnerRoutes');
+
 
 // Asynchronous function to test DB connectivity before server start
 const testDBConnectivity = async () => {
@@ -43,7 +43,6 @@ testDBConnectivity().then(() => {
   app.use('/api/seed', seedRoutes); // Mount seed routes
   app.use('/api/states', stateRoutes); // Mount state routes
   app.use('/api/cities', cityRoutes); // Mount city routes
-	app.use('/api/deliveryPartners', deliveryPartnerRoutes);
 
   // Error handling middleware (must be after all routes)
   app.use(errorHandler);
