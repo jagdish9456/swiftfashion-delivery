@@ -5,8 +5,8 @@ export const DeliveryWallet = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-primary p-6 relative">
+    <div className="min-h-screen bg-gray-50 dark:bg-black dark:text-white">
+      <div className="bg-orange-500 dark:bg-orange-600 p-6 relative">
         <button onClick={() => navigate(-1)} className="absolute top-6 left-4">
           <ArrowLeft className="h-6 w-6 text-white" />
         </button>
@@ -14,7 +14,7 @@ export const DeliveryWallet = () => {
       </div>
 
       <div className="p-4 -mt-6">
-        <div className="bg-white rounded-xl p-6 shadow-sm">
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm dark:shadow-gray-800">
           <div className="space-y-4">
             <div className="text-center">
               <p className="text-sm text-gray-500">Available Balance</p>
@@ -27,7 +27,7 @@ export const DeliveryWallet = () => {
                   <p className="font-medium">Today's Earnings</p>
                   <p className="text-sm text-gray-500">March 15, 2024</p>
                 </div>
-                <p className="text-lg font-bold text-primary">₹ 450.00</p>
+                <p className="text-lg font-bold text-orange-500">₹ 450.00</p>
               </div>
 
               <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">

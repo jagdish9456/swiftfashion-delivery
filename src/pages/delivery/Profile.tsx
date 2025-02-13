@@ -12,8 +12,8 @@ export const DeliveryProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-primary p-6 relative">
+    <div className="min-h-screen bg-gray-50 dark:bg-black dark:text-white">
+      <div className="bg-orange-500 dark:bg-orange-600 p-6 relative">
         <button onClick={() => navigate(-1)} className="absolute top-6 left-4">
           <ArrowLeft className="h-6 w-6 text-white" />
         </button>
@@ -21,7 +21,7 @@ export const DeliveryProfile = () => {
       </div>
 
       <div className="p-4 -mt-6">
-        <div className="bg-white rounded-xl p-6 shadow-sm">
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm dark:shadow-gray-800">
           <div className="flex flex-col items-center">
             <div className="w-24 h-24 bg-primary-50 rounded-full mb-4 relative">
               <img
@@ -41,7 +41,7 @@ export const DeliveryProfile = () => {
                 <div className="bg-primary-50 p-2 rounded-lg mb-1">
                   <Award className="h-5 w-5 text-primary" />
                 </div>
-                <p className="text-xs font-medium">Level 4</p>
+                <p className="text-xs font-medium text-orange-500">Level 4</p>
               </div>
               <div className="text-center">
                 <div className="bg-yellow-50 p-2 rounded-lg mb-1">

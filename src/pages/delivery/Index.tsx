@@ -1,20 +1,33 @@
 import { Home, Wallet, MessageSquare, User } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { StatusCard } from "@/components/delivery/StatusCard";
 import { OrdersCard } from "@/components/delivery/OrdersCard";
 import { TransactionCard } from "@/components/delivery/TransactionCard";
-import { Dialog, DialogContent, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { SearchOrder } from "./SearchOrder";
 
 export const DeliveryIndex = () => {
   const [isOnline, setIsOnline] = useState(true);
-  const [showModal, setShowModal] = useState(true); // State for the modal
+  const [showSearchOrder, setShowSearchOrder] = useState(true);
+
+  useEffect(() => {
+    // Automatically close the popup after 30 seconds
+    const timer = setTimeout(() => {
+      setShowSearchOrder(false);
+    }, 30000); // 30 seconds
+
+    return () => clearTimeout(timer); // Cleanup the timer on component unmount
+  }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-black text-gray-800 dark:text-white relative">
+      {showSearchOrder && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <SearchOrder onClose={() => setShowSearchOrder(false)} />
+        </div>
+      )}
       {/* Header Section */}
-      <div className="bg-primary p-6 rounded-b-[30px]">
+      <div className="bg-orange-500 dark:bg-orange-600 p-6 rounded-b-[30px]">
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
             <span className="bg-primary-600 px-3 py-1 rounded-full text-sm text-white">Level 4</span>
@@ -37,30 +50,21 @@ export const DeliveryIndex = () => {
         <StatusCard isOnline={isOnline} onStatusChange={setIsOnline} />
       </div>
 
+     
 
       {/* Recent Transactions */}
       <div className="p-4">
         <h2 className="text-xl font-semibold mb-4 text-gray-800">Recent Transactions</h2>
-        <TransactionCard className="mb-4" />
-				 <TransactionCard className="mb-4" />
-				 <TransactionCard className="mb-4" />
-				 <TransactionCard className="mb-4" />
-				 <TransactionCard className="mb-4" />
+        <div className="mb-4"><TransactionCard /></div>
+        <div className="mb-4"><TransactionCard /></div>
+        <div className="mb-4"><TransactionCard /></div>
+        <div className="mb-4"><TransactionCard /></div>
+        <div className="mb-4"><TransactionCard /></div>
+        <div className="mb-4"><TransactionCard /></div>
       </div>
 
-      {/* Modal Popup */}
-      <Dialog open={showModal} onOpenChange={setShowModal}>
-        <DialogContent className="sm:max-w-[600px]">
-          <DialogTitle>New Order</DialogTitle>
-          <SearchOrder />
-          <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-            <button onClick={() => setShowModal(false)}>Deny</button>
-          </DialogClose>
-        </DialogContent>
-      </Dialog>
-
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
         <div className="flex justify-around items-center h-16">
           <Link to="/delivery" className="flex flex-col items-center text-primary">
             <Home className="h-6 w-6" />

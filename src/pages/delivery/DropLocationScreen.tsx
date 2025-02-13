@@ -12,8 +12,8 @@ export const DropLocationScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white p-4 flex items-center gap-2 border-b">
+    <div className="min-h-screen bg-gray-50 dark:bg-black dark:text-white">
+      <div className="bg-white dark:bg-gray-900 p-4 flex items-center gap-2 border-b dark:border-gray-700">
         <button onClick={() => navigate(-1)} className="p-2">
           <ArrowLeft className="h-5 w-5" />
         </button>
@@ -25,7 +25,7 @@ export const DropLocationScreen = () => {
       </div>
 
       <div className="p-4 space-y-4">
-        <div className="bg-white rounded-lg shadow-sm">
+        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm dark:shadow-gray-800">
           <div className="p-4 space-y-4">
             <h2 className="text-xl font-semibold">Shreni Dand</h2>
             <p className="text-gray-600">

@@ -29,7 +29,7 @@ const testDBConnectivity = async () => {
 // Run the DB connectivity test before starting the server
 testDBConnectivity().then(() => {
   const app = express();
-  
+
   // Middleware
   app.use(cors(config.cors));
   app.use(express.json());

@@ -10,15 +10,15 @@ export const OrderDetailsScreen = () => {
   const [isCustomerDetailsOpen, setIsCustomerDetailsOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white p-4 flex items-center gap-2 border-b">
+    <div className="min-h-screen bg-gray-50 dark:bg-black dark:text-white">
+      <div className="bg-white dark:bg-gray-900 p-4 flex items-center gap-2 border-b dark:border-gray-700">
         <button onClick={() => navigate(-1)} className="p-2">
           <ArrowLeft className="h-5 w-5" />
         </button>
         <h1 className="text-lg font-medium">Pick order</h1>
       </div>
 
-      <div className="p-4 bg-blue-50">
+      <div className="p-4 bg-blue-50 dark:bg-gray-800">
         <div className="flex items-center gap-2 text-blue-600">
           <span className="text-sm">Pick order in 2 mins</span>
         </div>
@@ -26,11 +26,11 @@ export const OrderDetailsScreen = () => {
 
       <div className="p-4 space-y-4">
         <div className="text-center">
-          <p className="text-gray-500 text-sm">ORDER ID</p>
+          <p className="text-orange-500 text-sm">Order ID</p>
           <p className="text-2xl font-semibold">{orderId}</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm">
+        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm dark:shadow-gray-800">
           <button 
             className="w-full p-4 flex items-center justify-between"
             onClick={() => setIsOrderDetailsOpen(!isOrderDetailsOpen)}
@@ -60,7 +60,7 @@ export const OrderDetailsScreen = () => {
           )}
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm">
+        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm dark:shadow-gray-800">
           <button 
             className="w-full p-4 flex items-center justify-between"
             onClick={() => setIsRestaurantDetailsOpen(!isRestaurantDetailsOpen)}
@@ -73,7 +73,7 @@ export const OrderDetailsScreen = () => {
           </button>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm">
+        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm dark:shadow-gray-800">
           <button 
             className="w-full p-4 flex items-center justify-between"
             onClick={() => setIsCustomerDetailsOpen(!isCustomerDetailsOpen)}
@@ -87,7 +87,7 @@ export const OrderDetailsScreen = () => {
         </div>
 
         <button 
-          className="w-full bg-green-500 hover:bg-green-600 text-white p-4 rounded-full flex items-center justify-center gap-2"
+          className="w-full bg-orange-500 dark:bg-orange-600 hover:bg-orange-600 dark:hover:bg-orange-700 text-white p-4 rounded-full flex items-center justify-center gap-2"
           onClick={() => navigate(`/delivery/drop-location/${orderId}`)}
         >
           <span className="text-2xl">»</span>
