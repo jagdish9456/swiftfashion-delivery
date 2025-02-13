@@ -1,4 +1,5 @@
 const shopService = require('../services/shopService');
+const { validationResult } = require('express-validator');
 
 const shopController = {
   async getAllShops(req, res) {
@@ -25,6 +26,28 @@ const shopController = {
     } catch (error) {
       console.error("Error fetching shop by ID:", error); // Log the error for debugging
       res.status(500).json({ error: error.message || 'Internal Server Error' });
+    }
+  },
+  async createShop(req, res) {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      const shop = await shopService.createShop(req.body);
+      res.status(201).json(shop);
+    } catch (error) {
+      console.error("Error creating shop:", error);
+      res.status(400).json({ error: error.message });
+    }
+  },
+  async deleteShop(req, res) {
+    try {
+      const result = await shopService.deleteShop(req.params.id);
+      res.json(result);
+    } catch (error) {
+      console.error("Error deleting shop:", error);
+      res.status(error.message.includes('Invalid') ? 400 : 500).json({ error: error.message });
     }
   }
 };
