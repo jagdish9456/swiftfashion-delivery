@@ -1,12 +1,15 @@
 import { Home, Wallet, MessageSquare, User } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { StatusCard } from "@/components/delivery/StatusCard";
 import { OrdersCard } from "@/components/delivery/OrdersCard";
 import { TransactionCard } from "@/components/delivery/TransactionCard";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
+import { SearchOrder } from "./SearchOrder";
 
 export const DeliveryIndex = () => {
   const [isOnline, setIsOnline] = useState(true);
+  const [showModal, setShowModal] = useState(true); // State for the modal
 
   return (
     <div className="min-h-screen bg-white">
@@ -34,16 +37,27 @@ export const DeliveryIndex = () => {
         <StatusCard isOnline={isOnline} onStatusChange={setIsOnline} />
       </div>
 
-      {/* Orders Section */}
-      <div className="p-4">
-        <OrdersCard />
-      </div>
 
       {/* Recent Transactions */}
       <div className="p-4">
         <h2 className="text-xl font-semibold mb-4 text-gray-800">Recent Transactions</h2>
-        <TransactionCard />
+        <TransactionCard className="mb-4" />
+				 <TransactionCard className="mb-4" />
+				 <TransactionCard className="mb-4" />
+				 <TransactionCard className="mb-4" />
+				 <TransactionCard className="mb-4" />
       </div>
+
+      {/* Modal Popup */}
+      <Dialog open={showModal} onOpenChange={setShowModal}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogTitle>New Order</DialogTitle>
+          <SearchOrder />
+          <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+            <button onClick={() => setShowModal(false)}>Deny</button>
+          </DialogClose>
+        </DialogContent>
+      </Dialog>
 
       {/* Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200">
