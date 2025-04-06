@@ -7,13 +7,38 @@ const categorySchema = new mongoose.Schema({
         trim: true,
         unique: true
     },
+    gender: {
+        type: String,
+        required: true,
+        enum: ['men', 'women', 'unisex'],
+        trim: true
+    },
     description: {
         type: String,
+        trim: true
+    },
+    adults: {
+        type: Boolean,
+        default: true
+    },
+    superSelect: {
+        type: String,
+        default: 'clothing',
         trim: true
     },
     isActive: {
         type: Boolean,
         default: true
+    },
+    createdModifiedBy: {
+        type: String,
+        // ref: 'User',
+        default:"admin",
+        required: true
+    },
+    createdModifiedOn: {
+        type: Date,
+        default: Date.now
     }
 }, {
     timestamps: true,

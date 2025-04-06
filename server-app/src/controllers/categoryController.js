@@ -1,11 +1,12 @@
 const Category = require('../models/categoryModel');
 const Subcategory = require('../models/subcategoryModel');
+const categoryService = require('../services/categoryService');
 
 // Create new category
 exports.createCategory = async (req, res) => {
     try {
-        const category = new Category(req.body);
-        const savedCategory = await category.save();
+        const userId = req.user.id; // Assuming user info is attached to req by auth middleware
+        const savedCategory = await categoryService.createCategory(req.body, userId);
         res.status(201).json(savedCategory);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -15,12 +16,14 @@ exports.createCategory = async (req, res) => {
 // Get all categories with their subcategories
 exports.getAllCategories = async (req, res) => {
     try {
-        const categories = await Category.find({ isActive: true })
-            .populate({
-                path: 'subcategories',
-                match: { isActive: true },
-                select: 'name description'
-            });
+        const { gender, adults, superSelect } = req.query;
+        const filter = { isActive: true };
+        
+        if (gender) filter.gender = gender;
+        if (adults !== undefined) filter.adults = adults === 'true';
+        if (superSelect) filter.superSelect = superSelect;
+
+        const categories = await categoryService.getAllCategories(filter);
         res.status(200).json(categories);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -30,17 +33,15 @@ exports.getAllCategories = async (req, res) => {
 // Get category by ID with its subcategories
 exports.getCategoryById = async (req, res) => {
     try {
-        const category = await Category.findById(req.params.id)
-            .populate({
-                path: 'subcategories',
-                match: { isActive: true },
-                select: 'name description'
-            });
-        if (!category) {
-            return res.status(404).json({ message: 'Category not found' });
-        }
+        const category = await categoryService.getCategoryById(req.params.id);
         res.status(200).json(category);
     } catch (error) {
+        if (error.message === 'Category not found') {
+            return res.status(404).json({ message: error.message });
+        }
+        if (error.message === 'Invalid category ID') {
+            return res.status(400).json({ message: error.message });
+        }
         res.status(500).json({ message: error.message });
     }
 };
@@ -48,20 +49,16 @@ exports.getCategoryById = async (req, res) => {
 // Update category
 exports.updateCategory = async (req, res) => {
     try {
-        const category = await Category.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true, runValidators: true }
-        ).populate({
-            path: 'subcategories',
-            match: { isActive: true },
-            select: 'name description'
-        });
-        if (!category) {
-            return res.status(404).json({ message: 'Category not found' });
-        }
+        const userId = req.user.id; // Assuming user info is attached to req by auth middleware
+        const category = await categoryService.updateCategory(req.params.id, req.body, userId);
         res.status(200).json(category);
     } catch (error) {
+        if (error.message === 'Category not found') {
+            return res.status(404).json({ message: error.message });
+        }
+        if (error.message === 'Invalid category ID') {
+            return res.status(400).json({ message: error.message });
+        }
         res.status(400).json({ message: error.message });
     }
 };
@@ -69,42 +66,16 @@ exports.updateCategory = async (req, res) => {
 // Delete category and its subcategories (soft delete)
 exports.deleteCategory = async (req, res) => {
     try {
-        const session = await Category.startSession();
-        session.startTransaction();
-
-        try {
-            // Soft delete the category
-            const category = await Category.findByIdAndUpdate(
-                req.params.id,
-                { isActive: false },
-                { new: true, session }
-            );
-
-            if (!category) {
-                await session.abortTransaction();
-                session.endSession();
-                return res.status(404).json({ message: 'Category not found' });
-            }
-
-            // Soft delete all associated subcategories
-            await Subcategory.updateMany(
-                { category: req.params.id },
-                { isActive: false },
-                { session }
-            );
-
-            await session.commitTransaction();
-            session.endSession();
-
-            res.status(200).json({ 
-                message: 'Category and its subcategories deleted successfully' 
-            });
-        } catch (error) {
-            await session.abortTransaction();
-            session.endSession();
-            throw error;
-        }
+        const userId = req.user.id; // Assuming user info is attached to req by auth middleware
+        const category = await categoryService.deleteCategory(req.params.id, userId);
+        res.status(200).json({ message: 'Category and related subcategories deleted successfully' });
     } catch (error) {
+        if (error.message === 'Category not found') {
+            return res.status(404).json({ message: error.message });
+        }
+        if (error.message === 'Invalid category ID') {
+            return res.status(400).json({ message: error.message });
+        }
         res.status(500).json({ message: error.message });
     }
 };
